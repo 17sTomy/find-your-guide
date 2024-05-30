@@ -1,5 +1,7 @@
 package modelos.states;
 
+import clases.Viaje;
+
 public interface IEstadoViaje {
     public void reservarViaje(Viaje viaje);
     public void cancelarViaje(Viaje viaje);
