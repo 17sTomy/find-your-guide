@@ -1,5 +1,6 @@
 package clases;
 
+import Interfaces.IAdapterEnvioEmail;
 import modelos.strategies.IAuthenticacion;
 
 /**

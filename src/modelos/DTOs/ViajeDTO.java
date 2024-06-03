@@ -1,11 +1,16 @@
-package modelos;
+package modelos.DTOs;
+
+import enumeraciones.Ciudad;
+import enumeraciones.Pais;
+
+import java.time.LocalDate;
 
 public class ViajeDTO {
 
     private Ciudad ciudadDestino;
     private Pais paisDestino;
-    private Date fechaInicio;
-    private Date fechaFin;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
     private GuiaDTO guia;
     private TuristaDTO turista;
 
@@ -25,19 +30,19 @@ public class ViajeDTO {
         this.paisDestino = paisDestino;
     }
 
-    public Date getFechaInicio() {
+    public LocalDate getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaFin() {
+    public LocalDate getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(Date fechaFin) {
+    public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
 

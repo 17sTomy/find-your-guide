@@ -1,7 +1,6 @@
 package clases;
 
-import java.io.*;
-import java.util.*;
+import modelos.states.IEstadoReserva;
 
 /**
  * 
@@ -20,7 +19,7 @@ public class Reserva {
     private IEstadoReserva estadoReserva;
 
     /**
-     * @param IEstadoReserva 
+     * @param estadoReserva
      * @return
      */
     public void cambiarEstado(IEstadoReserva estadoReserva) {

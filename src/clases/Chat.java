@@ -1,5 +1,8 @@
 package clases;
 
+import controladores.ChatController;
+import modelos.adapters.IAdapterChat;
+
 import java.util.List;
 
 /**

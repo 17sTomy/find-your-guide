@@ -1,4 +1,8 @@
-package modelos;
+package modelos.DTOs;
+
+import enumeraciones.Sexo;
+
+import java.util.stream.Stream;
 
 public class TuristaDTO {
 

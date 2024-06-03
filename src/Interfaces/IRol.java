@@ -1,7 +1,6 @@
-package clases;
+package Interfaces;
 
-import java.io.*;
-import java.util.*;
+import modelos.DTOs.UsuarioDTO;
 
 /**
  * 

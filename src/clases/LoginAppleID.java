@@ -1,5 +1,7 @@
 package clases;
 
+import Interfaces.ILogin;
+
 /**
  * 
  */

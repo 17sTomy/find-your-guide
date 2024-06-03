@@ -1,4 +1,6 @@
-package modelos;
+package modelos.DTOs;
+
+import java.util.stream.Stream;
 
 public class CredencialDTO {
 

@@ -1,4 +1,6 @@
-package modelos;
+package modelos.DTOs;
+
+import enumeraciones.Sexo;
 
 public class GuiaDTO {
     private String nombre;

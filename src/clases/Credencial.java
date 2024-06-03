@@ -2,10 +2,12 @@ package clases;
 
 import modelos.adapters.IAdapterCredencial;
 
+import java.util.stream.Stream;
+
 /**
  * 
  */
-public class Credencial extends IAdapterCredencial {
+public class Credencial {
 
     /**
      * Default constructor

@@ -1,5 +1,11 @@
 package controladores;
 
+import clases.Guia;
+import enumeraciones.ModoAuth;
+import modelos.DTOs.GuiaDTO;
+
+import java.util.List;
+
 public class GuiaController {
 
     private Guia guia;

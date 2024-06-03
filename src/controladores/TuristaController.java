@@ -1,5 +1,10 @@
 package controladores;
 
+import clases.Turista;
+import enumeraciones.ModoAuth;
+import modelos.DTOs.GuiaDTO;
+import modelos.DTOs.TuristaDTO;
+
 public class TuristaController {
     private Turista turista;
 

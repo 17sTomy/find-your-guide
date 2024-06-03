@@ -1,4 +1,4 @@
-package clases;
+package modelos.DTOs;
 
 import enumeraciones.EstadoFactura;
 

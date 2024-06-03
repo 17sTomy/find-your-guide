@@ -1,7 +1,6 @@
 package clases;
 
-import java.io.*;
-import java.util.*;
+import java.time.LocalDate;
 
 /**
  * 
@@ -32,6 +31,6 @@ public class Mensaje {
     /**
      * 
      */
-    private DateTime fecha; //cambiar tipo de dato
+    private LocalDate fecha;
 
 }

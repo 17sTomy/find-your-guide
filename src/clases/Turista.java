@@ -1,8 +1,11 @@
 package clases;
 
+import Interfaces.IRol;
+import controladores.TuristaController;
 import enumeraciones.ModoAuth;
+import modelos.DTOs.UsuarioDTO;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * 
@@ -28,7 +31,7 @@ public class Turista extends Usuario implements IRol {
     /**
      * 
      */
-    private List<Reseñas> reseñas;
+    private List<Reseña> reseñas;
 
     /**
      * 
@@ -36,7 +39,7 @@ public class Turista extends Usuario implements IRol {
     private TuristaController turistaController;
 
     /**
-     * @param Reserva 
+     * @param reserva
      * @return
      */
     public Void cancelarReserva(Reserva reserva) {
@@ -69,14 +72,6 @@ public class Turista extends Usuario implements IRol {
      */
     public void loginTurista(Turista usuario, ModoAuth modoLogin) {
         // TODO implement here
-    }
-
-    /**
-     * @param usuario 
-     * @return
-     */
-    public void asignarRol(UsuarioDTO usuario) {
-        // TODO implement IRol.asignarRol() here
     }
 
 }

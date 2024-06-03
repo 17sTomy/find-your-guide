@@ -1,10 +1,16 @@
 package clases;
 
+import Interfaces.IRol;
+import controladores.GuiaController;
 import enumeraciones.Ciudad;
 import enumeraciones.ModoAuth;
 import enumeraciones.Pais;
+import modelos.DTOs.GuiaDTO;
+import modelos.DTOs.UsuarioDTO;
+import modelos.states.IEstadoGuia;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 
@@ -55,17 +61,12 @@ public class Guia extends Usuario implements IRol {
     /**
      * 
      */
-    private List<Viaje> viajes;
-
-    /**
-     * 
-     */
     private boolean trofeoAlExito;
 
     /**
      * 
      */
-    private List<Reseñas> reseñas;
+    private List<Reseña> reseñas;
 
     /**
      * 
@@ -177,14 +178,6 @@ public class Guia extends Usuario implements IRol {
      */
     public void loginGuia(Guia usuario, ModoAuth modoLogin) {
         // TODO implement here
-    }
-
-    /**
-     * @param usuario 
-     * @return
-     */
-    public void asignarRol(UsuarioDTO usuario) {
-        // TODO implement IRol.asignarRol() here
     }
 
 }

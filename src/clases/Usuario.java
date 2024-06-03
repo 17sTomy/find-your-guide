@@ -1,6 +1,11 @@
 package clases;
 
+import Interfaces.ILogin;
+import controladores.TuristaController;
 import enumeraciones.Sexo;
+import modelos.strategies.IAuthenticacion;
+
+import java.util.stream.Stream;
 
 /**
  * 
@@ -51,7 +56,7 @@ public abstract class Usuario {
     /**
      * 
      */
-    private Sring numTelefono;
+    private String numTelefono;
 
     /**
      * 

@@ -1,14 +1,14 @@
-package clases;
+package controladores;
 
 /**
  * 
  */
-public class FacturaContoller {
+public class FacturaController {
 
     /**
      * Default constructor
      */
-    public FacturaContoller() {
+    public FacturaController() {
     }
 
     /**

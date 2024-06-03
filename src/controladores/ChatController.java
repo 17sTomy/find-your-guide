@@ -1,5 +1,8 @@
 package controladores;
 
+import clases.Chat;
+import clases.Usuario;
+
 public class ChatController {
 
     private Chat chat;
@@ -8,7 +11,7 @@ public class ChatController {
         this.chat = chat;
     }
 
-    public void enviarMensaje(Usuario emisor, receptor Usaurio, String contenido){
+    public void enviarMensaje(Usuario emisor, Usuario receptor, String contenido){
         // Implementacion
         return;
     }

@@ -2,6 +2,8 @@ package clases;
 
 import enumeraciones.Sexo;
 
+import java.util.stream.Stream;
+
 /**
  * 
  */

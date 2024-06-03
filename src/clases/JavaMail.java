@@ -1,7 +1,6 @@
 package clases;
 
-import java.io.*;
-import java.util.*;
+import modelos.adapters.IAdapterMail;
 
 /**
  * 

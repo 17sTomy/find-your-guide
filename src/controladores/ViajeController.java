@@ -1,5 +1,11 @@
 package controladores;
 
+import clases.Viaje;
+import modelos.DTOs.GuiaDTO;
+import modelos.DTOs.TuristaDTO;
+
+import java.time.LocalDate;
+
 public class ViajeController {
 
     private Viaje viaje;
@@ -8,7 +14,7 @@ public class ViajeController {
         this.viaje = viaje;
     }
 
-    public void reservarViaje(Date fechaInicio, Date fechaFin, GuiaDTO guia, TuristaDTO turista){
+    public void reservarViaje(LocalDate fechaInicio, LocalDate fechaFin, GuiaDTO guia, TuristaDTO turista){
         // Implementacion
 
         return;
