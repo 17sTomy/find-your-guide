@@ -1,7 +1,7 @@
 package controladores;
 
-import clases.Chat;
-import clases.Usuario;
+import modelos.clases.Chat;
+import modelos.clases.Usuario;
 
 public class ChatController {
 

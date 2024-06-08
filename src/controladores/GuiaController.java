@@ -1,8 +1,8 @@
 package controladores;
 
-import clases.Guia;
-import enumeraciones.ModoAuth;
-import modelos.DTOs.GuiaDTO;
+import modelos.clases.Guia;
+import enums.ModoAuth;
+import modelos.dtos.GuiaDTO;
 
 import java.util.List;
 

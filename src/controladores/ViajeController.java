@@ -1,8 +1,8 @@
 package controladores;
 
-import clases.Viaje;
-import modelos.DTOs.GuiaDTO;
-import modelos.DTOs.TuristaDTO;
+import modelos.clases.Viaje;
+import modelos.dtos.GuiaDTO;
+import modelos.dtos.TuristaDTO;
 
 import java.time.LocalDate;
 

@@ -1,9 +1,9 @@
 package controladores;
 
-import clases.Turista;
-import enumeraciones.ModoAuth;
-import modelos.DTOs.GuiaDTO;
-import modelos.DTOs.TuristaDTO;
+import modelos.clases.Turista;
+import enums.ModoAuth;
+import modelos.dtos.GuiaDTO;
+import modelos.dtos.TuristaDTO;
 
 public class TuristaController {
     private Turista turista;
