@@ -1,32 +1,29 @@
 package modelos.clases;
 
+import modelos.DataBase;
+import modelos.dtos.UsuarioDTO;
 import modelos.interfaces.IAuthenticacion;
 
-/**
- * 
- */
 public class RegistroGoogle implements IAuthenticacion {
+    DataBase db = DataBase.getInstance();
 
-    /**
-     * Default constructor
-     */
-    public RegistroGoogle() {
+    public boolean register(Usuario usuario) {
+        if(!db.usuarioExiste(usuario.getDni(), usuario.getEmail())) {
+            db.addUsuario(usuario);
+            return true;
+        };
+        return false;
     }
 
-    /**
-     * @param usuario 
-     * @return
-     */
-    public void registrarUsuario(Usuario usuario) {
-        // TODO implement here
+    public UsuarioDTO login(String email, String password) {
+        Usuario usuario = db.getUsuarioByEmail(email);
+        if (usuario != null && usuario.getPassword().equals(password)) {
+            return UsuarioDTOFactory.createUsuarioDTO(usuario);
+        }
+        return null;
     }
 
-    /**
-     * @param usuario 
-     * @return
-     */
-    public void loguearUsuario(Usuario usuario) {
-        // TODO implement here
+    public String toString() {
+        return "Google";
     }
-
 }

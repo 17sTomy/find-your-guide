@@ -1,7 +1,7 @@
 package controladores;
 
 import modelos.clases.Guia;
-import enums.ModoAuth;
+import enums.Auth;
 import modelos.dtos.GuiaDTO;
 
 import java.util.List;
@@ -14,12 +14,12 @@ public class GuiaController {
         this.guia = guia;
     }
 
-    public void registrarGuia(GuiaDTO usuarioDTO, ModoAuth modoRegistro){
+    public void registrarGuia(GuiaDTO usuarioDTO, Auth modoRegistro){
         // Implementacion
         return;
     }
 
-    public void loginGuia(GuiaDTO usuarioDTO, ModoAuth modoLogin){
+    public void loginGuia(GuiaDTO usuarioDTO, Auth modoLogin){
         // Implementacion
         return;
     }

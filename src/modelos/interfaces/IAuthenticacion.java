@@ -1,8 +1,9 @@
 package modelos.interfaces;
 
 import modelos.clases.Usuario;
+import modelos.dtos.UsuarioDTO;
 
 public interface IAuthenticacion {
-    public void registrarUsuario(Usuario usuario);
-    public void loguearUsuario(Usuario usuario);
+    public boolean register(Usuario usuario);
+    public UsuarioDTO login(String email, String password);
 }

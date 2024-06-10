@@ -3,7 +3,7 @@ package enums;
 /**
  * 
  */
-public enum ModoAuth {
+public enum Auth {
     BASICO,
     GOOGLE,
     FACEBOOK,

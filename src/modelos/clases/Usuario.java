@@ -1,127 +1,94 @@
 package modelos.clases;
 
-import modelos.interfaces.ILogin;
-import controladores.TuristaController;
+import enums.Auth;
 import enums.Sexo;
+import modelos.dtos.UsuarioDTO;
 import modelos.interfaces.IAuthenticacion;
 
 import java.util.stream.Stream;
 
-/**
- * 
- */
 public abstract class Usuario {
-
-    /**
-     * Default constructor
-     */
-    public Usuario() {
-    }
-
-    /**
-     * 
-     */
     private String nombre;
-
-    /**
-     * 
-     */
     private String apellido;
-
-    /**
-     * 
-     */
     private Sexo sexo;
-
-    /**
-     * 
-     */
+    private String dni;
+    private String email;
+    private String password;
+    private String numTelefono;
+    private Stream fotoPerfil;
     private IAuthenticacion auth;
 
-    /**
-     * 
-     */
-    private TuristaController turistaController;
-
-    /**
-     * 
-     */
-    private String dni;
-
-    /**
-     * 
-     */
-    private String email;
-
-    /**
-     * 
-     */
-    private String numTelefono;
-
-    /**
-     * 
-     */
-    private Stream fotoPerfil;
-
-    /**
-     * @param usuario 
-     * @return
-     */
-    public void asignarRol(Usuario usuario) {
-        // TODO implement here
+    public Usuario(String nombre, String apellido, Sexo sexo, String dni, String email, String password, String numTelefono, Stream fotoPerfil, IAuthenticacion auth) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.sexo = sexo;
+        this.dni = dni;
+        this.email = email;
+        this.password = password;
+        this.numTelefono = numTelefono;
+        this.fotoPerfil = fotoPerfil;
+        this.auth = auth;
     }
 
-    /**
-     * @param registro 
-     * @return
-     */
-    public void setAutenticacion(IAuthenticacion registro) {
-        // TODO implement here
+    public void setAutenticacion(IAuthenticacion selectedAuth) {
+        this.auth = selectedAuth;
     }
 
-    /**
-     * @param usuario 
-     * @return
-     */
-    public void registrarUsuario(Usuario usuario) {
-        // TODO implement here
+    public boolean register() {
+        return auth.register(this);
     }
 
-    /**
-     * @param usuario 
-     * @return
-     */
-    public void loguearUsuario(Usuario usuario) {
-        // TODO implement here
+    public static UsuarioDTO login(String email, String password, IAuthenticacion modoLogin) {
+        return modoLogin.login(email, password);
     }
 
-    /**
-     * @param login 
-     * @return
-     */
-    public void setLogin(ILogin login) {
-        // TODO implement here
+    public void actualizarPerfil(String nombre, String apellido, Sexo sexo, String numTelefono, Stream fotoPerfil) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.sexo = sexo;
+        this.numTelefono = numTelefono;
+        this.fotoPerfil = fotoPerfil;
     }
 
-    /**
-     * @param nombre 
-     * @param apellido 
-     * @param sexo 
-     * @param dni 
-     * @param email 
-     * @param numTelefono 
-     * @return
-     */
-    public void actualizarPerfil(String nombre, String apellido, Enum sexo, String dni, String email, String numTelefono) {
-        // TODO implement here
+    public void cargarFotoPerfil(Stream image) {
+        this.fotoPerfil = image;
     }
 
-    /**
-     * @param Image 
-     * @return
-     */
-    public void cargarFotoPerfil(Stream Image) {
-        // TODO implement here
+    public String getNombre() {
+        return nombre;
     }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getNumTelefono() {
+        return numTelefono;
+    }
+
+    public Stream getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public String getAuth() {
+        return auth.toString();
+    }
+
 
 }
