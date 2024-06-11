@@ -1,4 +1,4 @@
-package vistas;
+package vistas.logueo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +33,7 @@ public class SeleccionRol {
         centerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
 
         JButton turistaButton = createRoleButton("Turista");
-        JButton guiaButton = createRoleButton("Guía");
+        JButton guiaButton = createRoleButton("Guia");
 
         centerPanel.add(turistaButton);
         centerPanel.add(guiaButton);
@@ -60,7 +60,7 @@ public class SeleccionRol {
             public void actionPerformed(ActionEvent e) {
                 // Abrir la ventana de inicio de sesión como Guía
                 frame.dispose(); // Cerrar la ventana actual
-                new Login("Guía"); // Abrir la ventana de login
+                new Login("Guia"); // Abrir la ventana de login
             }
         });
     }
