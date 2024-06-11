@@ -15,10 +15,10 @@ public abstract class Usuario {
     private String email;
     private String password;
     private String numTelefono;
-    private Stream fotoPerfil;
+    private String fotoPerfil;
     private IAuthenticacion auth;
 
-    public Usuario(String nombre, String apellido, Sexo sexo, String dni, String email, String password, String numTelefono, Stream fotoPerfil, IAuthenticacion auth) {
+    public Usuario(String nombre, String apellido, Sexo sexo, String dni, String email, String password, String numTelefono, String fotoPerfil, IAuthenticacion auth) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.sexo = sexo;
@@ -42,7 +42,7 @@ public abstract class Usuario {
         return modoLogin.login(email, password);
     }
 
-    public void actualizarPerfil(String nombre, String apellido, Sexo sexo, String numTelefono, Stream fotoPerfil) {
+    public void actualizarPerfil(String nombre, String apellido, Sexo sexo, String numTelefono, String fotoPerfil) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.sexo = sexo;
@@ -50,7 +50,7 @@ public abstract class Usuario {
         this.fotoPerfil = fotoPerfil;
     }
 
-    public void cargarFotoPerfil(Stream image) {
+    public void cargarFotoPerfil(String image) {
         this.fotoPerfil = image;
     }
 
@@ -82,7 +82,7 @@ public abstract class Usuario {
         return numTelefono;
     }
 
-    public Stream getFotoPerfil() {
+    public String getFotoPerfil() {
         return fotoPerfil;
     }
 

@@ -12,10 +12,10 @@ public class UsuarioDTO {
     private Sexo sexo;
     private String email;
     private String numTelefono;
-    private Stream fotoPerfil;
+    private String fotoPerfil;
     private String auth;
 
-    public UsuarioDTO(String nombre, String apellido, String dni, Sexo sexo, String email, String numTelefono, Stream fotoPerfil, String auth) {
+    public UsuarioDTO(String nombre, String apellido, String dni, Sexo sexo, String email, String numTelefono, String fotoPerfil, String auth) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -50,7 +50,8 @@ public class UsuarioDTO {
         return numTelefono;
     }
 
-    public Stream getFotoPerfil() {
+    public String getFotoPerfil() {
+        //Esto regresa la ruta, no una imagen
         return fotoPerfil;
     }
 

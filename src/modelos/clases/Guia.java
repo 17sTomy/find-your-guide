@@ -19,7 +19,7 @@ public class Guia extends Usuario {
     private boolean trofeoAlExito;
     private List<Reseña> reseñas;
 
-    public Guia(String nombre, String apellido, Sexo sexo, String dni, String email, String password, String numTelefono, Stream fotoPerfil, IAuthenticacion auth) {
+    public Guia(String nombre, String apellido, Sexo sexo, String dni, String email, String password, String numTelefono, String fotoPerfil, IAuthenticacion auth) {
         super(nombre, apellido, sexo, dni, email, password, numTelefono, fotoPerfil, auth);
     }
 
