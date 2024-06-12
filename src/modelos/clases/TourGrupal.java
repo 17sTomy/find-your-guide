@@ -4,11 +4,8 @@ package modelos.clases;
  * 
  */
 public final class TourGrupal extends Servicio {
-
-    /**
-     * Default constructor
-     */
-    public TourGrupal() {
+    public TourGrupal(String nombre, String descripcion, Double precio) {
+        super(nombre, descripcion, precio);
     }
 
     /**

@@ -4,11 +4,8 @@ package modelos.clases;
  * 
  */
 public final class Traduccion extends Servicio {
-
-    /**
-     * Default constructor
-     */
-    public Traduccion() {
+    public Traduccion(String nombre, String descripcion, Double precio) {
+        super(nombre, descripcion, precio);
     }
 
     /**

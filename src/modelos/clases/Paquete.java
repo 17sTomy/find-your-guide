@@ -6,38 +6,22 @@ import java.util.List;
  * 
  */
 public class Paquete extends Servicio {
-
-    /**
-     * Default constructor
-     */
-    public Paquete() {
-    }
-
-    /**
-     * 
-     */
     private List<Servicio> servicios;
 
-    /**
-     * @return
-     */
+    public Paquete(String nombre, String descripcion, Double precio, List<Servicio> servicios) {
+        super(nombre, descripcion, precio);
+        this.servicios = servicios;
+    }
+
     public Double getPrecio() {
         // TODO implement here
         return null;
     }
 
-    /**
-     * @param servicio 
-     * @return
-     */
     public void agregarServicio(Servicio servicio) {
         // TODO implement here
     }
 
-    /**
-     * @param servicio 
-     * @return
-     */
     public void eliminarServicio(Servicio servicio) {
         // TODO implement here
     }

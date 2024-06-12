@@ -4,48 +4,34 @@ package modelos.clases;
  * 
  */
 public class Servicio {
-
-    /**
-     * Default constructor
-     */
-    public Servicio() {
-    }
-
-    /**
-     * 
-     */
     private String nombre;
-
-    /**
-     * 
-     */
     private String descripcion;
-
-    /**
-     * 
-     */
     private Double precio;
 
-    /**
-     * @return
-     */
+    public Servicio(String nombre, String descripcion, Double precio) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+
     public Double getPrecio() {
         // TODO implement here
         return null;
     }
 
-    /**
-     * @param servicio 
-     * @return
-     */
     public void agregarServicio(Servicio servicio) {
         // TODO implement here
     }
 
-    /**
-     * @param servicio 
-     * @return
-     */
     public void eliminarServicio(Servicio servicio) {
         // TODO implement here
     }

@@ -1,28 +1,33 @@
 package modelos.dtos;
 
 import enums.Ciudad;
+import enums.Idioma;
 import enums.Pais;
-import enums.Sexo;
+import modelos.clases.Credencial;
+import modelos.clases.Guia;
+import modelos.clases.Servicio;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 public class GuiaDTO extends UsuarioDTO {
-    private String servicio;
+    private List<Servicio> servicios;
     private Pais pais;
     private Ciudad ciudad;
-    private String credencial;
+    private Credencial credencial;
+    private List<Idioma> idiomas;
+    private Double puntuacion;
 
-    public GuiaDTO(String nombre, String apellido, String dni, Sexo sexo, String email, String numTelefono, String fotoPerfil, String auth, String servicio, Pais pais, Ciudad ciudad, String credencial) {
-        super(nombre, apellido, dni, sexo, email, numTelefono, fotoPerfil, auth);
-        this.servicio = servicio;
-        this.pais = pais;
-        this.ciudad = ciudad;
-        this.credencial = credencial;
+
+    public GuiaDTO(Guia guia) {
+        super(guia.getNombre(), guia.getApellido(), guia.getDni(), guia.getSexo(), guia.getEmail(), guia.getNumTelefono(), guia.getFotoPerfil(), guia.getAuth());
+        this.servicios = guia.getServicios();
+        this.pais = guia.getPais();
+        this.ciudad = guia.getCiudad();
+        this.credencial = guia.getCredencial();
+        this.idiomas = guia.getIdiomas();
+        this.puntuacion = guia.getPuntuacion();
     }
 
-    public String getServicio() {
-        return servicio;
-    }
 
     public Pais getPais() {
         return pais;
@@ -32,8 +37,20 @@ public class GuiaDTO extends UsuarioDTO {
         return ciudad;
     }
 
-    public String getCredencial() {
+    public List<Servicio> getServicios() {
+        return servicios;
+    }
+
+    public Credencial getCredencial() {
         return credencial;
+    }
+
+    public Double getPuntuacion() {
+        return puntuacion;
+    }
+
+    public List<Idioma> getIdiomas() {
+        return idiomas;
     }
 }
 
