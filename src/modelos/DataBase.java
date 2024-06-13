@@ -1,9 +1,11 @@
 package modelos;
 
+import modelos.clases.Guia;
 import modelos.clases.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DataBase {
     private static DataBase instance;
@@ -26,6 +28,13 @@ public class DataBase {
 
     public List<Usuario> getUsuarios() {
         return usuarios;
+    }
+
+    public List<Guia> getGuias() {
+        return usuarios.stream()
+                .filter(usuario -> usuario instanceof Guia)
+                .map(usuario -> (Guia) usuario)
+                .collect(Collectors.toList());
     }
 
     public boolean usuarioExiste(String dni, String email) {

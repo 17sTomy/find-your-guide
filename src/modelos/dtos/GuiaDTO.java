@@ -10,7 +10,7 @@ import modelos.clases.Servicio;
 import java.util.List;
 
 public class GuiaDTO extends UsuarioDTO {
-    private List<Servicio> servicios;
+    private Servicio servicio;
     private Pais pais;
     private Ciudad ciudad;
     private Credencial credencial;
@@ -20,7 +20,7 @@ public class GuiaDTO extends UsuarioDTO {
 
     public GuiaDTO(Guia guia) {
         super(guia.getNombre(), guia.getApellido(), guia.getDni(), guia.getSexo(), guia.getEmail(), guia.getNumTelefono(), guia.getFotoPerfil(), guia.getAuth());
-        this.servicios = guia.getServicios();
+        this.servicio = guia.getServicio();
         this.pais = guia.getPais();
         this.ciudad = guia.getCiudad();
         this.credencial = guia.getCredencial();
@@ -37,8 +37,8 @@ public class GuiaDTO extends UsuarioDTO {
         return ciudad;
     }
 
-    public List<Servicio> getServicios() {
-        return servicios;
+    public Servicio getServicio() {
+        return servicio;
     }
 
     public Credencial getCredencial() {
