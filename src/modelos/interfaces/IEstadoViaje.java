@@ -3,7 +3,6 @@ package modelos.interfaces;
 import modelos.clases.Viaje;
 
 public interface IEstadoViaje {
-    public void reservarViaje(Viaje viaje);
     public void cancelarViaje(Viaje viaje);
     public void iniciarViaje(Viaje viaje);
     public void finalizarViaje(Viaje viaje);

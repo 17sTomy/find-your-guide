@@ -7,50 +7,22 @@ import modelos.interfaces.IEstadoViaje;
  */
 public class Cancelado implements IEstadoViaje {
 
-    /**
-     * Default constructor
-     */
-    public Cancelado() {
-    }
 
-    /**
-     * @param viaje 
-     * @return
-     */
-    public void reservarViaje(Viaje viaje) {
-        // TODO implement IEstadoViaje.reservarViaje() here
-    }
-
-    /**
-     * @param viaje 
-     * @return
-     */
-    public void cancelarViaje(Viaje viaje) {
-        // TODO implement IEstadoViaje.cancelarViaje() here
-    }
-
-    /**
-     * @param viaje 
-     * @return
-     */
-    public void iniciarViaje(Viaje viaje) {
-        // TODO implement IEstadoViaje.iniciarViaje() here
-    }
-
-    /**
-     * @param viaje 
-     * @return
-     */
-    public void finalizarViaje(Viaje viaje) {
-        // TODO implement IEstadoViaje.finalizarViaje() here
-    }
-
-    /**
-     * @param viaje 
-     * @return
-     */
     public void aceptarViaje(Viaje viaje) {
-        // TODO implement IEstadoViaje.aceptarViaje() here
+
     }
+
+    public void cancelarViaje(Viaje viaje) {
+        System.out.println("El viaje ya se encuentra cancelado.");
+    }
+
+    public void iniciarViaje(Viaje viaje) {
+        System.out.println("No se puede iniciar el viaje. El mismo fue cancelado");
+    }
+    public void finalizarViaje(Viaje viaje) {
+
+    }
+
+
 
 }
