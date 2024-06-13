@@ -1,14 +1,16 @@
 package modelos.clases;
 
 import enums.*;
+import modelos.DataBase;
 import modelos.dtos.*;
 import modelos.interfaces.IAuthenticacion;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Guia extends Usuario {
-    private List<Servicio> servicios;
+    private Servicio servicio;
     private Pais pais;
     private Ciudad ciudad;
     private Credencial credencial;
@@ -20,14 +22,30 @@ public class Guia extends Usuario {
         super(nombre, apellido, sexo, dni, email, password, numTelefono, fotoPerfil, auth);
     }
 
-    public void setInfoExtra(List<Servicio> servicios, Pais pais, Ciudad ciudad, Credencial credencial, boolean trofeoAlExito, List<Reseña> reseñas, List<Idioma> idiomas) {
-        this.servicios = servicios;
+    public void setInfoExtra(Servicio servicio, Pais pais, Ciudad ciudad, Credencial credencial, boolean trofeoAlExito, List<Reseña> reseñas, List<Idioma> idiomas) {
+        this.servicio = servicio;
         this.pais = pais;
         this.ciudad = ciudad;
         this.credencial = credencial;
         this.trofeoAlExito = trofeoAlExito;
         this.reseñas = reseñas;
         this.idiomas = idiomas;
+    }
+
+    public List<GuiaDTO> buscarGuias(GuiaDTO guiaDTO) {
+        List<Guia> guias = DataBase.getInstance().getGuias();
+        return guias.stream()
+                .filter(guia ->
+                        (guiaDTO.getNombre() == null || guia.getNombre().equalsIgnoreCase(guiaDTO.getNombre())) &&
+                                (guiaDTO.getApellido() == null || guia.getApellido().equalsIgnoreCase(guiaDTO.getApellido())) &&
+                                (guiaDTO.getIdiomas() == null || guiaDTO.getIdiomas().stream().anyMatch(idioma -> guia.getIdiomas().contains(idioma))) &&
+                                (guiaDTO.getServicio() == null || guia.getServicio() == guiaDTO.getServicio()) &&
+                                (guiaDTO.getPuntuacion() == 0.0 || guia.getPuntuacion() >= guiaDTO.getPuntuacion()) &&
+                                (guiaDTO.getPais() == null || guia.getPais() == guiaDTO.getPais()) &&
+                                (guiaDTO.getCiudad() == null || guia.getCiudad() == guiaDTO.getCiudad())
+                )
+                .map(GuiaDTO::new)
+                .collect(Collectors.toList());
     }
 
     public Void contratarGuia(Guia guia, Date fechaInicio, Date fechaFin) { // poner en el diagrama nombre de la variable
@@ -62,8 +80,8 @@ public class Guia extends Usuario {
         return idiomas;
     }
 
-    public List<Servicio> getServicios() {
-        return servicios;
+    public Servicio getServicio() {
+        return servicio;
     }
 
     public Double getPuntuacion() {
