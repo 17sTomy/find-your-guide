@@ -3,8 +3,8 @@ package modelos.dtos;
 import enums.Ciudad;
 import enums.Idioma;
 import enums.Pais;
+import enums.Sexo;
 import modelos.clases.Credencial;
-import modelos.clases.Guia;
 import modelos.clases.Servicio;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class GuiaDTO extends UsuarioDTO {
     private List<Idioma> idiomas;
     private Double puntuacion;
 
-
+/*
     public GuiaDTO(Guia guia) {
         super(guia.getNombre(), guia.getApellido(), guia.getDni(), guia.getSexo(), guia.getEmail(), guia.getNumTelefono(), guia.getFotoPerfil(), guia.getAuth());
         this.servicio = guia.getServicio();
@@ -27,7 +27,16 @@ public class GuiaDTO extends UsuarioDTO {
         this.idiomas = guia.getIdiomas();
         this.puntuacion = guia.getPuntuacion();
     }
-
+*/
+    public GuiaDTO(String nombre, String apellido, String dni, Sexo sexo, String email, String numTelefono, String fotoPerfil, String auth, Servicio servicios, Pais pais, Ciudad ciudad, Credencial credencial, List<Idioma> idiomas, Double puntuacion) {
+        super(nombre, apellido, dni, sexo, email, numTelefono, fotoPerfil, auth);
+        this.servicio = servicios;
+        this.pais = pais;
+        this.ciudad = ciudad;
+        this.credencial = credencial;
+        this.idiomas = idiomas;
+        this.puntuacion = puntuacion;
+    }
 
     public Pais getPais() {
         return pais;

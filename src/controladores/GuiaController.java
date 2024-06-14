@@ -1,28 +1,62 @@
 package controladores;
 
-import modelos.clases.Guia;
 import enums.Auth;
+import modelos.clases.*;
 import modelos.dtos.GuiaDTO;
+import modelos.dtos.UsuarioDTO;
+import modelos.interfaces.IAuthenticacion;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GuiaController {
     private Guia guia;
 
 
-    public void registrarGuia(GuiaDTO usuarioDTO, Auth modoRegistro){
-        // Implementacion
-        return;
+    public void registrarGuia(GuiaDTO guiaDTO, String password, Auth modoRegistro){
+        IAuthenticacion autenticacion = this.convertAuth(modoRegistro);
+
+        Guia nuevoGuia = new Guia(
+                guiaDTO.getNombre(),
+                guiaDTO.getApellido(),
+                guiaDTO.getSexo(),
+                guiaDTO.getDni(),
+                guiaDTO.getEmail(),
+                password,
+                guiaDTO.getNumTelefono(),
+                guiaDTO.getFotoPerfil(),
+                autenticacion
+        );
+
+        nuevoGuia.setInfoExtra(
+                guiaDTO.getServicio(),
+                guiaDTO.getPais(),
+                guiaDTO.getCiudad(),
+                guiaDTO.getCredencial(),
+                guiaDTO.getIdiomas()
+        );
+
+        boolean registroExitoso = nuevoGuia.register();
+        System.out.println(registroExitoso);
     }
 
-    public void loginGuia(GuiaDTO usuarioDTO, Auth modoLogin){
-        // Implementacion
-        return;
+    public void loginGuia(String email, String password, Auth modoLogin){
+        IAuthenticacion autenticacion = this.convertAuth(modoLogin);
+
+        UsuarioDTO infoGuia =  Usuario.login(email, password, autenticacion);
+        System.out.println(infoGuia);
     }
 
     public List<GuiaDTO> buscarGuias(GuiaDTO guiaDTO) {
         return guia.buscarGuias(guiaDTO);
+    }
+
+    public IAuthenticacion convertAuth(Auth modo) {
+        return switch (modo) {
+            case APPLEID -> new RegistroAppleId();
+            case GOOGLE -> new RegistroGoogle();
+            case BASICO -> new RegistroBasico();
+            case FACEBOOK -> new RegistroFacebook();
+            default -> null;
+        };
     }
 }

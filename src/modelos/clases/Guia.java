@@ -1,8 +1,11 @@
 package modelos.clases;
 
-import enums.*;
+import enums.Ciudad;
+import enums.Idioma;
+import enums.Pais;
+import enums.Sexo;
 import modelos.DataBase;
-import modelos.dtos.*;
+import modelos.dtos.GuiaDTO;
 import modelos.interfaces.IAuthenticacion;
 
 import java.util.Date;
@@ -14,21 +17,17 @@ public class Guia extends Usuario {
     private Pais pais;
     private Ciudad ciudad;
     private Credencial credencial;
-    private boolean trofeoAlExito;
-    private List<Reseña> reseñas;
     private List<Idioma> idiomas; //agregar atributo y enum en el diagrama
 
     public Guia(String nombre, String apellido, Sexo sexo, String dni, String email, String password, String numTelefono, String fotoPerfil, IAuthenticacion auth) {
         super(nombre, apellido, sexo, dni, email, password, numTelefono, fotoPerfil, auth);
     }
 
-    public void setInfoExtra(Servicio servicio, Pais pais, Ciudad ciudad, Credencial credencial, boolean trofeoAlExito, List<Reseña> reseñas, List<Idioma> idiomas) {
+    public void setInfoExtra(Servicio servicio, Pais pais, Ciudad ciudad, Credencial credencial, List<Idioma> idiomas) {
         this.servicio = servicio;
         this.pais = pais;
         this.ciudad = ciudad;
         this.credencial = credencial;
-        this.trofeoAlExito = trofeoAlExito;
-        this.reseñas = reseñas;
         this.idiomas = idiomas;
     }
 
@@ -85,23 +84,26 @@ public class Guia extends Usuario {
     }
 
     public Double getPuntuacion() {
-        return reseñas.stream()
-                .mapToDouble(Reseña::getPuntuacion)
-                .average()
-                .orElse(0.0);
+        DataBase db = DataBase.getInstance();
+        List<Reseña> resenias = db.getResenias();
+        Double puntuacion = 0.0;
+        Integer contador = 0;
+        for (Reseña resenia : resenias) {
+            if (resenia.getGuia().getEmail().equals(this.getEmail())) {
+                puntuacion += resenia.getPuntuacion();
+                contador += 1;
+            }
+        }
+        if (contador == 0) {
+            return 0.0;
+        }
+        return puntuacion / contador;
     }
+
 
 
     public Credencial getCredencial() {
         return credencial;
     }
 
-
-    public boolean isTrofeoAlExito() {
-        return trofeoAlExito;
-    }
-
-    public List<Reseña> getReseñas() {
-        return reseñas;
-    }
 }

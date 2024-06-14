@@ -2,7 +2,6 @@ package modelos.clases;
 
 import modelos.DataBase;
 import modelos.dtos.UsuarioDTO;
-import modelos.interfaces.IAdapterEnvioEmail;
 import modelos.interfaces.IAuthenticacion;
 
 public class RegistroBasico implements IAuthenticacion {
