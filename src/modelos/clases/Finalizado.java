@@ -7,50 +7,25 @@ import modelos.interfaces.IEstadoViaje;
  */
 public class Finalizado implements IEstadoViaje {
 
-    /**
-     * Default constructor
-     */
-    public Finalizado() {
-    }
 
-    /**
-     * @param viaje 
-     * @return
-     */
-    public void reservarViaje(Viaje viaje) {
-        // TODO implement IEstadoViaje.reservarViaje() here
-    }
-
-    /**
-     * @param viaje 
-     * @return
-     */
     public void cancelarViaje(Viaje viaje) {
-        // TODO implement IEstadoViaje.cancelarViaje() here
+        this.mostrarMensajeFinalizado();
     }
 
-    /**
-     * @param viaje 
-     * @return
-     */
     public void iniciarViaje(Viaje viaje) {
-        // TODO implement IEstadoViaje.iniciarViaje() here
+        this.mostrarMensajeFinalizado();
     }
 
-    /**
-     * @param viaje 
-     * @return
-     */
     public void finalizarViaje(Viaje viaje) {
-        // TODO implement IEstadoViaje.finalizarViaje() here
+        this.mostrarMensajeFinalizado();
     }
 
-    /**
-     * @param viaje 
-     * @return
-     */
     public void aceptarViaje(Viaje viaje) {
-        // TODO implement IEstadoViaje.aceptarViaje() here
+        this.mostrarMensajeFinalizado();
+    }
+
+    private void mostrarMensajeFinalizado(){
+        System.out.println("El viaje ya fue finalizado");
     }
 
 }
