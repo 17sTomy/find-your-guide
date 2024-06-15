@@ -1,6 +1,7 @@
 package modelos;
 
 import modelos.clases.Guia;
+import modelos.clases.Reseña;
 import modelos.clases.Usuario;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.stream.Collectors;
 public class DataBase {
     private static DataBase instance;
     private List<Usuario> usuarios;
-
+    private List<Reseña> resenias;
     private DataBase() {
         usuarios = new ArrayList<>();
     }
@@ -53,5 +54,8 @@ public class DataBase {
             }
         }
         return null;
+    }
+    public List<Reseña> getResenias(){
+        return resenias;
     }
 }

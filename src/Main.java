@@ -1,19 +1,14 @@
-import controladores.*;
+import controladores.GuiaController;
 import enums.*;
-import modelos.DataBase;
-import modelos.clases.*;
-import modelos.dtos.TuristaDTO;
+import modelos.clases.Credencial;
+import modelos.clases.Servicio;
 import modelos.dtos.GuiaDTO;
-import modelos.dtos.UsuarioDTO;
-import modelos.interfaces.IAuthenticacion;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-
+/*
         // Crear instancia de TuristaController
         TuristaController turistaController = new TuristaController();
 
@@ -22,7 +17,7 @@ public class Main {
                 "Juan",
                 "Pérez",
                 "12345678",
-                Sexo.Masculino,
+                Sexo.MASCULINO,
                 "juan@example.com",
                 "123456789",
                 "ruta/a/la/foto.jpg",
@@ -32,6 +27,9 @@ public class Main {
         // Modo de registro (por ejemplo, registro básico)
         Auth modoRegistro = Auth.BASICO;
 
+        // Modo de inicio de sesión (por ejemplo, autenticación básica)
+        Auth modoLogin = Auth.BASICO;
+
         // Registrar al nuevo turista
         turistaController.registrarTurista(nuevoTuristaDTO, "password123", modoRegistro);
 
@@ -39,13 +37,41 @@ public class Main {
         String email = "juan@example.com";
         String password = "password123";
 
-        // Modo de inicio de sesión (por ejemplo, autenticación básica)
-        Auth modoLogin = Auth.BASICO;
-
         // Iniciar sesión del turista
         turistaController.loginTurista(email, password, modoLogin);
 
+*/
+        //////////////////
+        // PRUEBA GUIA //
+        //////////////////
+
+        // Crear GuiaDTO
+        Servicio servicio = new Servicio("trabajador sexual", "orales", 5.5);
+        Credencial credencial = new Credencial();
+
+        GuiaDTO guiaDTO = new GuiaDTO(
+                "Jose",
+                "Pérez",
+                "12345678",
+                Sexo.MASCULINO,
+                "jose@example.com",
+                "123456789",
+                "ruta/a/la/foto.jpg",
+                "BASICO",
+                servicio,
+                Pais.ARGENTINA,
+                Ciudad.BUENOS_AIRES,
+                credencial,
+                List.of(Idioma.ESPAÑOL),
+                4.5
+        );
+
         // Crear instancia de GuiaController
         GuiaController guiaController = new GuiaController();
+
+        guiaController.registrarGuia(guiaDTO, "123", Auth.BASICO);
+
+        // Iniciar sesión del guia
+        guiaController.loginGuia("jose@example.com", "123", Auth.BASICO);
     }
 }
