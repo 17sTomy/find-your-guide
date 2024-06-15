@@ -23,13 +23,13 @@ public class Main {
                 "ruta/a/la/foto.jpg",
                 "BASICO"
         );
-*/
+
         // Modo de registro (por ejemplo, registro básico)
         Auth modoRegistro = Auth.BASICO;
 
         // Modo de inicio de sesión (por ejemplo, autenticación básica)
         Auth modoLogin = Auth.BASICO;
-/*
+
         // Registrar al nuevo turista
         turistaController.registrarTurista(nuevoTuristaDTO, "password123", modoRegistro);
 
@@ -54,7 +54,7 @@ public class Main {
                 "Pérez",
                 "12345678",
                 Sexo.MASCULINO,
-                "juan@example.com",
+                "jose@example.com",
                 "123456789",
                 "ruta/a/la/foto.jpg",
                 "BASICO",
@@ -68,9 +68,10 @@ public class Main {
 
         // Crear instancia de GuiaController
         GuiaController guiaController = new GuiaController();
-        guiaController.registrarGuia(guiaDTO, "123", modoRegistro);
+
+        guiaController.registrarGuia(guiaDTO, "123", Auth.BASICO);
 
         // Iniciar sesión del guia
-        guiaController.loginGuia("jose@example.com", "123", modoLogin);
+        guiaController.loginGuia("jose@example.com", "123", Auth.BASICO);
     }
 }

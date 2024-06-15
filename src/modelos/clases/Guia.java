@@ -5,12 +5,10 @@ import enums.Idioma;
 import enums.Pais;
 import enums.Sexo;
 import modelos.DataBase;
-import modelos.dtos.GuiaDTO;
 import modelos.interfaces.IAuthenticacion;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Guia extends Usuario {
     private Servicio servicio;
@@ -30,7 +28,7 @@ public class Guia extends Usuario {
         this.credencial = credencial;
         this.idiomas = idiomas;
     }
-
+/* REHACER EL METODO PORQUE NO FUNCIONA CON EL NUEVO CONTRUCTOR DE GuiaDTO, ya que necesitaba que le pasen el un Guia como parametro en el contructor
     public List<GuiaDTO> buscarGuias(GuiaDTO guiaDTO) {
         List<Guia> guias = DataBase.getInstance().getGuias();
         return guias.stream()
@@ -46,7 +44,7 @@ public class Guia extends Usuario {
                 .map(GuiaDTO::new)
                 .collect(Collectors.toList());
     }
-
+*/
     public Void contratarGuia(Guia guia, Date fechaInicio, Date fechaFin) { // poner en el diagrama nombre de la variable
         // TODO implement here
         return null;

@@ -6,8 +6,6 @@ import modelos.dtos.GuiaDTO;
 import modelos.dtos.UsuarioDTO;
 import modelos.interfaces.IAuthenticacion;
 
-import java.util.List;
-
 public class GuiaController {
     private Guia guia;
 
@@ -45,11 +43,11 @@ public class GuiaController {
         UsuarioDTO infoGuia =  Usuario.login(email, password, autenticacion);
         System.out.println(infoGuia);
     }
-
+/* ARREGLAR buscarGuias() De la clase Guia
     public List<GuiaDTO> buscarGuias(GuiaDTO guiaDTO) {
         return guia.buscarGuias(guiaDTO);
     }
-
+*/
     public IAuthenticacion convertAuth(Auth modo) {
         return switch (modo) {
             case APPLEID -> new RegistroAppleId();
