@@ -68,4 +68,23 @@ public class GuiaController {
     public void eliminarServicio(Servicio servicio) {
         guia.removeServicio(servicio);
     }
+
+    public void calificarGuia(Turista turista, Guia guia, Double puntuacion, String comentario) {
+        Reseña reseña = new Reseña(
+                guia,
+                turista,
+                puntuacion,
+                comentario
+        );
+
+        TrofeoExito trofeoExito = new TrofeoExito();
+        TrofeoReseña trofeoReseña = new TrofeoReseña();
+
+        reseña.addObservable(trofeoExito);
+        reseña.addObservable(trofeoReseña);
+        reseña.notificarObservadores();
+
+        guia.setReseña(reseña);
+        turista.setReseña(reseña);
+    }
 }

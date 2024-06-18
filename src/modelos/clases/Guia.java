@@ -14,7 +14,6 @@ public class Guia extends Usuario {
     private Pais pais;
     private Ciudad ciudad;
     private Credencial credencial;
-    private boolean trofeoAlExito;
     private List<Reseña> reseñas;
     private List<Idioma> idiomas; //agregar atributo y enum en el diagrama
 
@@ -58,8 +57,8 @@ public class Guia extends Usuario {
         return null;
     }
 
-    public void calificarGuia(Turista turista, Guia guia, Double puntuacion) {
-        // TODO implement here
+    public void setReseña (Reseña reseña) {
+        reseñas.add(reseña);
     }
 
     public Double calcularPuntuacion() {
@@ -104,14 +103,13 @@ public class Guia extends Usuario {
                 .orElse(0.0);
     }
 
-
-    public Credencial getCredencial() {
-        return credencial;
+    public int getCantReseñas() {
+        return reseñas.size();
     }
 
 
-    public boolean isTrofeoAlExito() {
-        return trofeoAlExito;
+    public Credencial getCredencial() {
+        return credencial;
     }
 
     public List<Reseña> getReseñas() {

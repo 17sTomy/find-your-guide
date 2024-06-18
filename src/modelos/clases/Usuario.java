@@ -17,6 +17,7 @@ public abstract class Usuario {
     private String numTelefono;
     private String fotoPerfil;
     private IAuthenticacion auth;
+    private Trofeo trofeo;
 
     public Usuario(String nombre, String apellido, Sexo sexo, String dni, String email, String password, String numTelefono, String fotoPerfil, IAuthenticacion auth) {
         this.nombre = nombre;
@@ -28,6 +29,7 @@ public abstract class Usuario {
         this.numTelefono = numTelefono;
         this.fotoPerfil = fotoPerfil;
         this.auth = auth;
+        this.trofeo = null;
     }
 
     public void setAutenticacion(IAuthenticacion selectedAuth) {
@@ -90,5 +92,7 @@ public abstract class Usuario {
         return auth.toString();
     }
 
-
+    public void setTrofeo(Trofeo trofeo) {
+        this.trofeo = trofeo;
+    }
 }
