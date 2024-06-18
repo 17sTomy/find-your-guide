@@ -41,37 +41,5 @@ public class Main {
         turistaController.loginTurista(email, password, modoLogin);
 
 */
-        //////////////////
-        // PRUEBA GUIA //
-        //////////////////
-
-        // Crear GuiaDTO
-        Servicio servicio = new Servicio("trabajador sexual", "orales", 5.5);
-        Credencial credencial = new Credencial();
-
-        GuiaDTO guiaDTO = new GuiaDTO(
-                "Jose",
-                "Pérez",
-                "12345678",
-                Sexo.MASCULINO,
-                "jose@example.com",
-                "123456789",
-                "ruta/a/la/foto.jpg",
-                "BASICO",
-                servicio,
-                Pais.ARGENTINA,
-                Ciudad.BUENOS_AIRES,
-                credencial,
-                List.of(Idioma.ESPAÑOL),
-                4.5
-        );
-
-        // Crear instancia de GuiaController
-        GuiaController guiaController = new GuiaController();
-
-        guiaController.registrarGuia(guiaDTO, "123", Auth.BASICO);
-
-        // Iniciar sesión del guia
-        guiaController.loginGuia("jose@example.com", "123", Auth.BASICO);
     }
 }
