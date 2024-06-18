@@ -87,7 +87,8 @@ public class GuiaLandingPage {
         servicesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Página de servicios");
+                frame.setVisible(false);
+                new GuiaServicios().setVisible(true);
             }
         });
 
