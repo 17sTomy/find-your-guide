@@ -95,4 +95,8 @@ public abstract class Usuario {
     public void setTrofeo(Trofeo trofeo) {
         this.trofeo = trofeo;
     }
+
+    public boolean tieneTrofeo() {
+        return trofeo != null;
+    }
 }

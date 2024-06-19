@@ -1,14 +1,18 @@
 import controladores.GuiaController;
+import controladores.TuristaController;
 import enums.*;
-import modelos.clases.Credencial;
-import modelos.clases.Servicio;
+import modelos.DataBase;
+import modelos.clases.*;
 import modelos.dtos.GuiaDTO;
+import modelos.dtos.TuristaDTO;
+import modelos.dtos.UsuarioDTO;
+import modelos.interfaces.IAuthenticacion;
 
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-/*
+
         // Crear instancia de TuristaController
         TuristaController turistaController = new TuristaController();
 
@@ -39,7 +43,5 @@ public class Main {
 
         // Iniciar sesión del turista
         turistaController.loginTurista(email, password, modoLogin);
-
-*/
     }
 }

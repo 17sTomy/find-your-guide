@@ -1,10 +1,8 @@
 package modelos.clases;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 
- */
 public class Reseña {
     private Guia guia;
     private Turista turista;
@@ -17,6 +15,7 @@ public class Reseña {
         this.turista = turista;
         this.puntuacion = puntuacion;
         this.comentario = comentario;
+        this.tObservables = new ArrayList<>();
     }
 
 

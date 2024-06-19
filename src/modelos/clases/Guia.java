@@ -14,19 +14,17 @@ public class Guia extends Usuario {
     private Pais pais;
     private Ciudad ciudad;
     private Credencial credencial;
-    private List<Reseña> reseñas;
     private List<Idioma> idiomas; //agregar atributo y enum en el diagrama
 
     public Guia(String nombre, String apellido, Sexo sexo, String dni, String email, String password, String numTelefono, String fotoPerfil, IAuthenticacion auth) {
         super(nombre, apellido, sexo, dni, email, password, numTelefono, fotoPerfil, auth);
     }
 
-    public void setInfoExtra(List<Servicio> servicios, Pais pais, Ciudad ciudad, Credencial credencial, List<Reseña> reseñas, List<Idioma> idiomas) {
+    public void setInfoExtra(List<Servicio> servicios, Pais pais, Ciudad ciudad, Credencial credencial, List<Idioma> idiomas) {
         this.servicios = servicios;
         this.pais = pais;
         this.ciudad = ciudad;
         this.credencial = credencial;
-        this.reseñas = reseñas;
         this.idiomas = idiomas;
     }
 
@@ -53,15 +51,6 @@ public class Guia extends Usuario {
     }
 
     public Void contratarGuia(Guia guia, Date fechaInicio, Date fechaFin) { // poner en el diagrama nombre de la variable
-        // TODO implement here
-        return null;
-    }
-
-    public void setReseña (Reseña reseña) {
-        reseñas.add(reseña);
-    }
-
-    public Double calcularPuntuacion() {
         // TODO implement here
         return null;
     }
@@ -97,22 +86,14 @@ public class Guia extends Usuario {
     }
 
     public Double getPuntuacion() {
+        List<Reseña> reseñas = DataBase.getInstance().getReseñasPorGuia(this);
         return reseñas.stream()
                 .mapToDouble(Reseña::getPuntuacion)
                 .average()
                 .orElse(0.0);
     }
 
-    public int getCantReseñas() {
-        return reseñas.size();
-    }
-
-
     public Credencial getCredencial() {
         return credencial;
-    }
-
-    public List<Reseña> getReseñas() {
-        return reseñas;
     }
 }
