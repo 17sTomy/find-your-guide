@@ -14,6 +14,13 @@ public class ViajeDTO {
     private GuiaDTO guia;
     private TuristaDTO turista;
 
+    public ViajeDTO(Ciudad ciudadDestino, Pais paisDestino, LocalDate fechaInicio, LocalDate fechaFin) {
+        this.ciudadDestino = ciudadDestino;
+        this.paisDestino = paisDestino;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+    }
+
     public Ciudad getCiudadDestino() {
         return ciudadDestino;
     }
