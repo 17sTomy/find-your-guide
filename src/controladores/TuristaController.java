@@ -1,5 +1,6 @@
 package controladores;
 
+import modelos.DataBase;
 import modelos.clases.*;
 import enums.Auth;
 import modelos.dtos.GuiaDTO;
@@ -36,11 +37,6 @@ public class TuristaController {
         System.out.println(infoTurista);
     }
 
-    public void calificarGuia(TuristaDTO turistaDTO, GuiaDTO guiaDTO, double puntuacion, String comentario){
-        // Implementacion
-        return;
-    }
-
     public IAuthenticacion convertAuth(Auth modo) {
         return switch (modo) {
             case APPLEID -> new RegistroAppleId();
@@ -51,5 +47,21 @@ public class TuristaController {
         };
     }
 
+    public void calificarGuia(Turista turista, Guia guia, Double puntuacion, String comentario) {
+        Reseña reseña = new Reseña(
+                guia,
+                turista,
+                puntuacion,
+                comentario
+        );
 
+        TrofeoExito trofeoExito = new TrofeoExito();
+        TrofeoReseña trofeoReseña = new TrofeoReseña();
+
+        reseña.addObservable(trofeoExito);
+        reseña.addObservable(trofeoReseña);
+        reseña.notificarObservadores();
+
+        DataBase.getInstance().setReseñas(reseña);
+    }
 }

@@ -1,6 +1,7 @@
 package controladores;
 
 import enums.Auth;
+import modelos.DataBase;
 import modelos.clases.*;
 import modelos.dtos.GuiaDTO;
 import modelos.dtos.UsuarioDTO;
@@ -9,7 +10,6 @@ import java.util.List;
 
 public class GuiaController {
     private Guia guia;
-
 
     public void registrarGuia(GuiaDTO guiaDTO, String password, Auth modoRegistro){
         IAuthenticacion autenticacion = this.convertAuth(modoRegistro);
@@ -31,7 +31,6 @@ public class GuiaController {
                 guiaDTO.getPais(),
                 guiaDTO.getCiudad(),
                 guiaDTO.getCredencial(),
-                null,
                 guiaDTO.getIdiomas()
         );
 
@@ -67,24 +66,5 @@ public class GuiaController {
 
     public void eliminarServicio(Servicio servicio) {
         guia.removeServicio(servicio);
-    }
-
-    public void calificarGuia(Turista turista, Guia guia, Double puntuacion, String comentario) {
-        Reseña reseña = new Reseña(
-                guia,
-                turista,
-                puntuacion,
-                comentario
-        );
-
-        TrofeoExito trofeoExito = new TrofeoExito();
-        TrofeoReseña trofeoReseña = new TrofeoReseña();
-
-        reseña.addObservable(trofeoExito);
-        reseña.addObservable(trofeoReseña);
-        reseña.notificarObservadores();
-
-        guia.setReseña(reseña);
-        turista.setReseña(reseña);
     }
 }
