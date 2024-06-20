@@ -25,7 +25,7 @@ public class Aceptada implements IEstadoReserva {
      * @param reserva 
      * @return
      */
-    public void cancelarReserva(Reserva reserva) {
+    public void cancelarReserva(Reserva reserva, Turista turista) {
         // TODO implement here
     }
 

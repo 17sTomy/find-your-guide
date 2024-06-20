@@ -38,7 +38,39 @@ public class Viaje {
         fechaInicio = viajeDTO.getFechaInicio();
         fechaFin = viajeDTO.getFechaFin();
         this.setAnticipo();
+        this.notificarReservaRealizada();
     }
+
+    public void notificarReservaRealizada() {
+        Notificacion notificacion = new Notificacion(
+                "Reserva realizada",
+                "Reserva nro: " + reserva.getIdReserva() + "\\n" +
+                "Fecha: " + fechaInicio + " - " + fechaFin + "\\n" +
+                "Destino: " + paisDestino + ", " + ciudadDestino + "\\n" +
+                "Turista: " + turista.getNombre() + " " + turista.getApellido() + "\\n" +
+                "Telefono: " + turista.getNumTelefono(),
+                guia
+        );
+
+        notificador = new Notificador();
+        notificador.cambiarEstrategia(new Push());
+        notificador.enviar(notificacion);
+    }
+
+    public void notificarReseña() {
+        Notificacion notificacion = new Notificacion(
+                "¿Como fue su viaje?",
+                "Cuentenos que le pareció el guía " + guia.getNombre() + " " + guia.getApellido(),
+                turista
+        );
+
+        notificador = new Notificador();
+        notificador.cambiarEstrategia(new Push());
+        notificador.enviar(notificacion);
+        notificador.cambiarEstrategia(new Mail(new JavaMail()));
+        notificador.enviar(notificacion);
+    }
+
 
     public void cobrarAnticipo(Double anticipo, Turista turista) {
         // To Do. Hay que ver si en realidad no va en la clase reserva

@@ -28,6 +28,7 @@ public class ViajeController {
 
     public void cancelarViaje(){
         // Implementacion
+        // notificar()
 
         return;
     }

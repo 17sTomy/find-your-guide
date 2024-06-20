@@ -6,11 +6,22 @@ import modelos.interfaces.IEstadoReserva;
  * 
  */
 public class Cancelada implements IEstadoReserva {
+    private Notificador notificador;
 
-    /**
-     * Default constructor
-     */
-    public Cancelada() {
+    public void cancelarReserva(Reserva reserva, Turista turista) {
+        this.notificar(turista);
+    }
+
+    public void notificar(Turista turista) {
+        Notificacion notificacion = new Notificacion(
+                "Reserva cancelada",
+                "El guia ha cancelado tu reserva",
+                turista
+        );
+
+        notificador = new Notificador();
+        notificador.cambiarEstrategia(new Push());
+        notificador.enviar(notificacion);
     }
 
     /**
@@ -21,12 +32,6 @@ public class Cancelada implements IEstadoReserva {
         // TODO implement here
     }
 
-    /**
-     * @param reserva 
-     * @return
-     */
-    public void cancelarReserva(Reserva reserva) {
-        // TODO implement here
-    }
+
 
 }

@@ -10,15 +10,24 @@ public class Credencial {
     private IAdapterCredencial adapter;
     private Notificador notificador;
 
-    public Credencial() {
-    }
 
     public boolean verificarCredencial(Stream credencial) {
-        // TODO implement here
         return false;
     }
 
     public String getIdCredencial() {
         return idCredencial;
+    }
+
+    public void notificar(Guia guia) {
+        Notificacion notificacion = new Notificacion(
+                "Credencial Validada",
+                "Se ha validado su credencial con satisfacción. Ya puede ofrecer sus servicios!",
+                guia
+        );
+
+        notificador = new Notificador();
+        notificador.cambiarEstrategia(new Push());
+        notificador.enviar(notificacion);
     }
 }

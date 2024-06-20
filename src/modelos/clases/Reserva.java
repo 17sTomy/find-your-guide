@@ -6,22 +6,20 @@ import modelos.interfaces.IEstadoReserva;
  * 
  */
 public class Reserva {
+    private int idReserva;
+    private IEstadoReserva estadoReserva;
+    private Turista turista;
 
-    /**
-     * Default constructor
-     */
-    public Reserva() {
+    public Reserva(int idReserva, IEstadoReserva estadoReserva, Turista turista) {
+        this.idReserva = idReserva;
+        this.estadoReserva = estadoReserva;
+        this.turista = turista;
     }
 
-    /**
-     * 
-     */
-    private IEstadoReserva estadoReserva;
+    public int getIdReserva() {
+        return idReserva;
+    }
 
-    /**
-     * @param estadoReserva
-     * @return
-     */
     public void cambiarEstado(IEstadoReserva estadoReserva) {
         // TODO implement here
     }
