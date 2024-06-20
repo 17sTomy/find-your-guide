@@ -4,70 +4,46 @@ import controladores.FacturaController;
 import modelos.interfaces.IAdapterPago;
 import modelos.interfaces.IEstadoFactura;
 
-/**
- * 
- */
 public class Factura {
-
-    /**
-     * Default constructor
-     */
-    public Factura() {
-    }
-
-    /**
-     * 
-     */
     private Double montoTotal;
-
-    /**
-     * 
-     */
     private Double comision;
-
-    /**
-     * 
-     */
     private boolean pagada;
-
-    /**
-     * 
-     */
     private IAdapterPago adapterPago;
 
-    /**
-     * 
-     */
-    private FacturaController facturaController;
+    public Factura(double montoTotal) {
+        this.montoTotal = montoTotal;
+        comision = this.calcularComision();
+        pagada = false;
+    }
 
-    /**
-     * @return
-     */
     public void abonarFactura() {
-        // TODO implement here
+        pagada = true;
+    }
+    public Double calcularComision() {
+        return montoTotal * 0.1;
     }
 
-    /**
-     * @return
-     */
-    public Double calcularMontoTotal() {
-        // TODO implement here
-        return null;
+    public Double getMontoTotal() {
+        return montoTotal;
     }
 
-    /**
-     * @param estado 
-     * @return
-     */
-    public void cambiarEstadoFactura(IEstadoFactura estado) {
-        // TODO implement here
+    public Double getComision() {
+        return comision;
     }
 
-    /**
-     * @return
-     */
+    public boolean isPagada() {
+        return pagada;
+    }
+
+    public void setPagada(boolean pagada) {
+        this.pagada = pagada;
+    }
+
     public void verDetallesFactura() {
-        // TODO implement here
+        System.out.println("--- DETALLE FACTURA ---" + " \n" +
+                "Monto Total: " + getMontoTotal() + " \n" +
+                "Comision: " + getComision() + "\n" +
+                "Pagada: " + (this.isPagada() ? "Si" : "No")
+        );
     }
-
 }
