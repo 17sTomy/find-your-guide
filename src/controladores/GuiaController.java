@@ -34,6 +34,8 @@ public class GuiaController {
                 guiaDTO.getIdiomas()
         );
 
+        //verificar la credencial. si es valida llamar a la funcion notificar(guia)
+
         boolean registroExitoso = nuevoGuia.register();
         System.out.println(registroExitoso);
     }

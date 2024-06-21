@@ -2,33 +2,14 @@ package modelos.clases;
 
 import modelos.interfaces.IEstrategiaNotif;
 
-/**
- * 
- */
 public class Notificador {
+    private IEstrategiaNotif estrategiaNotificacion;
 
-    /**
-     * Default constructor
-     */
-    public Notificador() {
-    }
-
-    /**
-     * 
-     */
-    private Notificacion notif;
-
-    /**
-     * 
-     */
-    private IEstrategiaNotif estrategiaNotif;
-
-    /**
-     * @param notificacion 
-     * @return
-     */
     public void enviar(Notificacion notificacion) {
-        // TODO implement here
+        estrategiaNotificacion.enviar(notificacion);
     }
 
+    public void cambiarEstrategia(IEstrategiaNotif estrategiaNotificacion) {
+        this.estrategiaNotificacion = estrategiaNotificacion;
+    }
 }

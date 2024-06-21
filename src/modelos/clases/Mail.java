@@ -1,24 +1,22 @@
 package modelos.clases;
 
+import modelos.interfaces.IAdapterMail;
 import modelos.interfaces.IEstrategiaNotif;
 
-/**
- * 
- */
+
 public class Mail implements IEstrategiaNotif {
+    private IAdapterMail adapter;
 
-    /**
-     * Default constructor
-     */
-    public Mail() {
+    public void setAdapter(IAdapterMail adapter) {
+        this.adapter = adapter;
     }
 
-    /**
-     * @param notificacion 
-     * @return
-     */
+    public Mail(IAdapterMail adapter) {
+        super();
+        this.adapter = adapter;
+    }
+
     public void enviar(Notificacion notificacion) {
-        // TODO implement here
+        this.adapter.enviar(notificacion);
     }
-
 }
