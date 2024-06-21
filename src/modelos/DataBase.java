@@ -2,7 +2,6 @@ package modelos;
 
 import modelos.clases.Guia;
 import modelos.clases.Reseña;
-import modelos.clases.Turista;
 import modelos.clases.Usuario;
 
 import java.util.ArrayList;
@@ -12,10 +11,10 @@ import java.util.stream.Collectors;
 public class DataBase {
     private static DataBase instance;
     private List<Usuario> usuarios;
-    private List<Reseña> reseñas;
+    private List<Reseña> resenias;
     private DataBase() {
         usuarios = new ArrayList<>();
-        reseñas = new ArrayList<>();
+        //reseñas = new ArrayList<>();
     }
 
     public static DataBase getInstance() {
@@ -58,10 +57,10 @@ public class DataBase {
         return null;
     }
 
-    public List<Reseña> getReseñas(){
-        return reseñas;
+    public List<Reseña> getResenias(){
+        return resenias;
     }
-
+    /*
     public void setReseñas(Reseña reseña) {
         reseñas.add(reseña);
     }
@@ -83,4 +82,5 @@ public class DataBase {
         }
         return new ArrayList<>();
     }
+     */
 }
