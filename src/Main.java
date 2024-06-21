@@ -25,7 +25,8 @@ public class Main {
                 "juan@example.com",
                 "123456789",
                 "ruta/a/la/foto.jpg",
-                "BASICO"
+                "BASICO",
+                0
         );
 
         // Modo de registro (por ejemplo, registro básico)
