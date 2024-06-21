@@ -2,6 +2,8 @@ package modelos.clases;
 
 import modelos.interfaces.IAdapterCredencial;
 
+import java.util.stream.Stream;
+
 public class Credencial {
     private String idCredencial;
     private String fotoCredencial;
