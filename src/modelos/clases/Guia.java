@@ -29,6 +29,7 @@ public class Guia extends Usuario {
         this.idiomas = idiomas;
     }
 /* REHACER EL METODO PORQUE NO FUNCIONA CON EL NUEVO CONTRUCTOR DE GuiaDTO, ya que necesitaba que le pasen el un Guia como parametro en el contructor
+
     public List<GuiaDTO> buscarGuias(GuiaDTO guiaDTO) {
         List<Guia> guias = DataBase.getInstance().getGuias();
         return guias.stream()
