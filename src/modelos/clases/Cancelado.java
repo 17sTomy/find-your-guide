@@ -20,7 +20,7 @@ public class Cancelado implements IEstadoViaje {
         System.out.println("No se puede iniciar el viaje. El mismo fue cancelado");
     }
     public void finalizarViaje(Viaje viaje) {
-
+        System.out.println("El viaje no puede finalizarse. Fue cancelado");
     }
 
 

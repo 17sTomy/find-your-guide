@@ -9,6 +9,7 @@ import modelos.dtos.ViajeDTO;
 import modelos.interfaces.IEstadoViaje;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 /**
  * 
@@ -32,14 +33,15 @@ public class Viaje {
      * Default constructor
      */
     public Viaje(ViajeDTO viajeDTO) {
-        estadoViaje = new Activo();
-        ciudadDestino = viajeDTO.getCiudadDestino();
-        paisDestino = viajeDTO.getPaisDestino();
         fechaInicio = viajeDTO.getFechaInicio();
         fechaFin = viajeDTO.getFechaFin();
+        ciudadDestino = viajeDTO.getCiudadDestino();
+        paisDestino = viajeDTO.getPaisDestino();
+        estadoViaje = new Activo(this);
         this.setAnticipo();
         this.notificarReservaRealizada();
     }
+
 
     public void notificarReservaRealizada() {
         Notificacion notificacion = new Notificacion(
@@ -72,6 +74,10 @@ public class Viaje {
     }
 
 
+    public Factura getFactura() {
+        return factura;
+    }
+
     public void cobrarAnticipo(Double anticipo, Turista turista) {
         // To Do. Hay que ver si en realidad no va en la clase reserva
     };
@@ -96,11 +102,39 @@ public class Viaje {
         this.estadoViaje = nuevoEstado;
     };
 
+    public void crearFactura(){
+        double montoTotal = this.calcularMontoTotal();
+
+        this.factura = new Factura(montoTotal);
+    }
+
+    private double calcularMontoTotal(){
+        int cantidadDias;
+        double montoTotal;
+
+        // Calcular la diferencia en días
+        cantidadDias = (int)ChronoUnit.DAYS.between(fechaInicio, fechaFin);
+
+        montoTotal = cantidadDias * 100;
+
+        return montoTotal;
+    };
+
     public Double getAnticipo() {
         return anticipo;
     }
 
     public void setAnticipo() {
         // Se debe calcular con el monto total de la factura
+    }
+
+    @Override
+    public String toString() {
+        return "--- DETALLE VIAJE ---" + " \n" +
+                "Fecha Inicio:  " + fechaInicio + " \n" +
+                "Fecha Fin: " + fechaFin + " \n" +
+                "Anticipo: " + anticipo + " \n" +
+                "Pais de Destino: " + paisDestino + " \n" +
+                "Ciudad de Destino: " + ciudadDestino;
     }
 }

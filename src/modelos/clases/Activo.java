@@ -4,6 +4,10 @@ import modelos.interfaces.IEstadoViaje;
 
 public class Activo implements IEstadoViaje {
 
+    public Activo(Viaje viaje) {
+        viaje.crearFactura();
+    }
+
     public void aceptarViaje(Viaje viaje) {
         System.out.println("Viaje aceptado");
     }
