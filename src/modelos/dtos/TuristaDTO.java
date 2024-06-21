@@ -12,4 +12,8 @@ public class TuristaDTO extends UsuarioDTO {
         super(nombre, apellido, dni, sexo, email, numTelefono, fotoPerfil, auth);
         this.cantViajes = cantViajes;
     }
+
+    public int getCantViajes() {
+        return cantViajes;
+    }
 }
