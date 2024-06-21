@@ -96,6 +96,7 @@ public class Viaje {
 
     public void finalizarViaje() {
         this.estadoViaje.finalizarViaje(this);
+        turista.setCantViajes(turista.getCantViajes() + 1);
     };
 
     public void cambiarEstado(IEstadoViaje nuevoEstado) {
