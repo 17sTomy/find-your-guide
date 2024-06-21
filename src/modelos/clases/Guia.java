@@ -52,6 +52,7 @@ public class Guia extends Usuario {
 
     public Void contratarGuia(Guia guia, Date fechaInicio, Date fechaFin) { // poner en el diagrama nombre de la variable
         // TODO implement here
+        //se puede contratar si el guia tiene la credencial hanilitada
         return null;
     }
 

@@ -6,17 +6,30 @@ import java.util.stream.Stream;
 
 public class Credencial {
     private String idCredencial;
-    private Stream fotoCredencial;
+    private String fotoCredencial;
     private IAdapterCredencial adapter;
     private Notificador notificador;
+    private Boolean habilitado;
 
+    public Credencial(String idCredencial, String fotoCredencial, IAdapterCredencial adapter) {
+        this.idCredencial = idCredencial;
+        this.fotoCredencial = fotoCredencial;
+        this.adapter = adapter;
+        this.habilitado = false;
+    }
 
-    public boolean verificarCredencial(Stream credencial) {
-        return false;
+    public void verificarCredencial() {
+        if (adapter.verificarCredencial(this)) {
+            this.habilitado = true;
+        }
     }
 
     public String getIdCredencial() {
         return idCredencial;
+    }
+
+    public String getFotoCredencial() {
+        return fotoCredencial;
     }
 
     public void notificar(Guia guia) {

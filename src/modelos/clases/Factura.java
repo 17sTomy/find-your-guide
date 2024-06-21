@@ -1,8 +1,6 @@
 package modelos.clases;
 
-import controladores.FacturaController;
 import modelos.interfaces.IAdapterPago;
-import modelos.interfaces.IEstadoFactura;
 
 public class Factura {
     private Double montoTotal;
