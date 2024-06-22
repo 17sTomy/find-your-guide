@@ -21,8 +21,8 @@ public class TrofeoExito extends Trofeo {
                 guia
         );
 
-        this.notificador = new Notificador(new Push());
-
+        this.notificador = new Notificador();
+        this.notificador.cambiarEstrategia(new Push());
         this.notificador.enviar(notificacion);
     }
 }
