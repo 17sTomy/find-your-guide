@@ -32,11 +32,9 @@ public class GuiaController {
                 guiaDTO.getIdiomas()
         );
 
-        //verificar la credencial. si es valida llamar a la funcion notificar(guia)
-        //guiaDTO.getCredencial().verificarCredencial();
-
-        boolean registroExitoso = nuevoGuia.register();
-        System.out.println(registroExitoso);
+        nuevoGuia.getCredencial().verificarCredencial();
+        nuevoGuia.getCredencial().notificar(nuevoGuia);
+        nuevoGuia.register();
     }
 
     public void loginGuia(String email, String password, Auth modoLogin){
