@@ -8,10 +8,9 @@ import modelos.interfaces.IEstadoReserva;
 public class Cancelada implements IEstadoReserva {
     private Notificador notificador;
 
-    public void cancelarReserva(Reserva reserva, Turista turista) {
-        this.notificar(turista);
-    }
+    public Cancelada(){
 
+    }
     public void notificar(Turista turista) {
         Notificacion notificacion = new Notificacion(
                 "Reserva cancelada",
@@ -23,15 +22,12 @@ public class Cancelada implements IEstadoReserva {
         notificador.cambiarEstrategia(new Push());
         notificador.enviar(notificacion);
     }
-
-    /**
-     * @param reserva 
-     * @return
-     */
     public void aceptarReserva(Reserva reserva) {
-        // TODO implement here
+        System.out.println("La reserva está cancelada. No puede volver a aceptarse");
     }
 
-
+    public void cancelarReserva(Reserva reserva) {
+        System.out.println("La reserva ya fue cancelada");
+    }
 
 }

@@ -1,9 +1,6 @@
 package modelos;
 
-import modelos.clases.Guia;
-import modelos.clases.Reseña;
-import modelos.clases.Turista;
-import modelos.clases.Usuario;
+import modelos.clases.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +10,8 @@ public class DataBase {
     private static DataBase instance;
     private List<Usuario> usuarios;
     private List<Reseña> reseñas;
+    private List<Viaje> viajes;
+
     private DataBase() {
         usuarios = new ArrayList<>();
         reseñas = new ArrayList<>();
@@ -79,6 +78,32 @@ public class DataBase {
         if (reseñas != null) {
             return reseñas.stream()
                     .filter(reseña -> reseña.getTurista().equals(turista))
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<>();
+    }
+
+    public void addViaje(Viaje viaje) {
+        viajes.add(viaje);
+    }
+
+    public List<Viaje> getViajes() {
+        return viajes;
+    }
+
+    public List<Viaje> getViajesPorTurista(Turista turista){
+        if (viajes != null) {
+            return viajes.stream()
+                    .filter(viaje -> viaje.getTurista().equals(turista))
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<>();
+
+    }
+    public List<Viaje> getViajesPorGuia(Guia guia){
+        if (viajes != null) {
+            return viajes.stream()
+                    .filter(viaje -> viaje.getGuia().equals(guia))
                     .collect(Collectors.toList());
         }
         return new ArrayList<>();

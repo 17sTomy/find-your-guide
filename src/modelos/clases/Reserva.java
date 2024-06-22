@@ -1,41 +1,34 @@
 package modelos.clases;
-
 import modelos.interfaces.IEstadoReserva;
+import java.util.Random;
 
-/**
- * 
- */
+
 public class Reserva {
     private int idReserva;
     private IEstadoReserva estadoReserva;
-    private Turista turista;
 
-    public Reserva(int idReserva, IEstadoReserva estadoReserva, Turista turista) {
-        this.idReserva = idReserva;
-        this.estadoReserva = estadoReserva;
-        this.turista = turista;
+
+    public Reserva() {
+        Random random = new Random();
+        idReserva = random.nextInt();
+
+        this.estadoReserva = new Aceptada();
     }
 
     public int getIdReserva() {
         return idReserva;
     }
 
-    public void cambiarEstado(IEstadoReserva estadoReserva) {
-        // TODO implement here
+    public void cambiarEstado(IEstadoReserva nuevoEstado) {
+        this.estadoReserva = nuevoEstado;
     }
 
-    /**
-     * @return
-     */
     public void aceptarReserva() {
-        // TODO implement here
+        this.estadoReserva.aceptarReserva(this);
     }
 
-    /**
-     * @return
-     */
     public void cancelarReserva() {
-        // TODO implement here
+        this.estadoReserva.cancelarReserva(this);
     }
 
 }
