@@ -2,8 +2,6 @@ package modelos.clases;
 
 import modelos.interfaces.IAdapterCredencial;
 
-import java.util.stream.Stream;
-
 public class Credencial {
     private String idCredencial;
     private String fotoCredencial;
@@ -19,8 +17,11 @@ public class Credencial {
     }
 
     public void verificarCredencial() {
-        if (adapter.verificarCredencial(this)) {
-            this.habilitado = true;
+        if (adapter.verificarCredencial(this)){
+            setHabilitado(true);
+        }
+        else{
+            setHabilitado(false);
         }
     }
 
@@ -33,14 +34,33 @@ public class Credencial {
     }
 
     public void notificar(Guia guia) {
-        Notificacion notificacion = new Notificacion(
-                "Credencial Validada",
-                "Se ha validado su credencial con satisfacción. Ya puede ofrecer sus servicios!",
-                guia
-        );
+        if (getHabilitado() == true){
+            Notificacion notificacion = new Notificacion(
+                    "Credencial Validada",
+                    "Se ha validado su credencial con satisfacción. Ya puede ofrecer sus servicios!",
+                    guia
+            );
+            notificador = new Notificador();
+            notificador.cambiarEstrategia(new Push());
+            notificador.enviar(notificacion);
+        }
+        else{
+            Notificacion notificacion = new Notificacion(
+                    "Credencial Invalidada",
+                    "Se ha invalidado su credencial.",
+                    guia
+            );
+            notificador = new Notificador();
+            notificador.cambiarEstrategia(new Push());
+            notificador.enviar(notificacion);
+        }
+    }
 
-        notificador = new Notificador();
-        notificador.cambiarEstrategia(new Push());
-        notificador.enviar(notificacion);
+    public Boolean getHabilitado() {
+        return habilitado;
+    }
+
+    public void setHabilitado(Boolean habilitado) {
+        this.habilitado = habilitado;
     }
 }

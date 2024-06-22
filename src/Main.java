@@ -1,22 +1,17 @@
 import controladores.GuiaController;
-import controladores.TuristaController;
 import enums.*;
 import modelos.clases.*;
 import modelos.dtos.GuiaDTO;
-import modelos.dtos.TuristaDTO;
-import modelos.dtos.UsuarioDTO;
-import modelos.dtos.ViajeDTO;
 import modelos.interfaces.IAdapterCredencial;
-import modelos.interfaces.IAuthenticacion;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
-
+        /*
         // Datos del nuevo turista
+        RegistroBasico autenticacion = new RegistroBasico();
         Turista turista = new Turista(
                 "Juan",
                 "Pérez",
@@ -26,19 +21,9 @@ public class Main {
                 "password123",
                 "123456789",
                 "ruta/a/la/foto.jpg",
-                new IAuthenticacion() {
-                    @Override
-                    public boolean register(Usuario usuario) {
-                        return false;
-                    }
-
-                    @Override
-                    public UsuarioDTO login(String email, String password) {
-                        return null;
-                    }
-                }
+                autenticacion
         );
-        /*
+
         TuristaDTO nuevoTuristaDTO = new TuristaDTO(turista);
 
         // Modo de registro (por ejemplo, registro básico)
@@ -55,7 +40,8 @@ public class Main {
         String password = "password123";
 
         // Iniciar sesión del turista
-        turistaController.loginTurista(email, password, modoLogin);*/
+        turistaController.loginTurista(email, password, modoLogin);
+        */
 
         //////////////////
         // PRUEBA GUIA //
@@ -65,6 +51,7 @@ public class Main {
         IAdapterCredencial adapCreden = new SistemaVerificacionIA();
         Servicio servicios = new Servicio("trabajador", "pala", 5.5);
         Credencial credencial = new Credencial("a", "a", adapCreden);
+        RegistroBasico autenticacion = new RegistroBasico();
         Guia guia = new Guia(
                 "Jose",
                 "Pérez",
@@ -74,34 +61,23 @@ public class Main {
                 "123",
                 "123456789",
                 "ruta/a/la/foto.jpg",
-                new IAuthenticacion() {
-                    @Override
-                    public boolean register(Usuario usuario) {
-                        return false;
-                    }
-
-                    @Override
-                    public UsuarioDTO login(String email, String password) {
-                        return null;
-                    }
-                },
+                autenticacion,
                 List.of(servicios),
                 Pais.ARGENTINA,
                 Ciudad.BUENOS_AIRES,
                 credencial,
                 List.of(Idioma.ESPAÑOL)
-        );/*
-
+        );
         GuiaDTO guiaDTO = new GuiaDTO(guia);
 
         // Crear instancia de GuiaController
         GuiaController guiaController = new GuiaController();
 
+        //Acciones
         guiaController.registrarGuia(guiaDTO, "123", Auth.BASICO);
+        guiaController.loginGuia("jose@example.com", "123", Auth.BASICO);
 
-        // Iniciar sesión del guia
-        guiaController.loginGuia("jose@example.com", "123", Auth.BASICO);*/
-
+        /*
         //////////////////
         // PRUEBA VIAJE //
         //////////////////
@@ -116,7 +92,7 @@ public class Main {
                 guia
         );
         System.out.println(viaje.toString());
-
+        */
     }
 
 }
