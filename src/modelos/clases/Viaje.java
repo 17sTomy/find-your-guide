@@ -32,12 +32,15 @@ public class Viaje {
     /**
      * Default constructor
      */
-    public Viaje(ViajeDTO viajeDTO) {
+    public Viaje(ViajeDTO viajeDTO, Turista turista, Guia guia) {
         fechaInicio = viajeDTO.getFechaInicio();
         fechaFin = viajeDTO.getFechaFin();
         ciudadDestino = viajeDTO.getCiudadDestino();
         paisDestino = viajeDTO.getPaisDestino();
         estadoViaje = new Activo(this);
+        reserva = new Reserva();
+        this.turista = turista;
+        this.guia = guia;
         this.setAnticipo();
         this.notificarReservaRealizada();
     }
@@ -92,6 +95,7 @@ public class Viaje {
 
     public void cancelarViaje() {
         this.estadoViaje.cancelarViaje(this);
+        this.reserva.cancelarReserva();
     };
 
     public void finalizarViaje() {
@@ -121,15 +125,22 @@ public class Viaje {
         return montoTotal;
     };
 
+    public Turista getTurista() {
+        return turista;
+    }
+
+    public Guia getGuia() {
+        return guia;
+    }
+
     public Double getAnticipo() {
         return anticipo;
     }
 
     public void setAnticipo() {
-        // Se debe calcular con el monto total de la factura
+        this.anticipo = 50.00;
     }
 
-    @Override
     public String toString() {
         return "--- DETALLE VIAJE ---" + " \n" +
                 "Fecha Inicio:  " + fechaInicio + " \n" +
@@ -138,4 +149,6 @@ public class Viaje {
                 "Pais de Destino: " + paisDestino + " \n" +
                 "Ciudad de Destino: " + ciudadDestino;
     }
+
+
 }
