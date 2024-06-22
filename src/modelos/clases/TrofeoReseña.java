@@ -22,8 +22,8 @@ public class TrofeoReseña extends Trofeo {
                 turista
         );
 
-        this.notificador = new Notificador(new Push());
-
+        this.notificador = new Notificador();
+        this.notificador.cambiarEstrategia(new Push());
         this.notificador.enviar(notificacion);
     }
 }
