@@ -10,17 +10,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Guia extends Usuario {
-    private List<Servicio> servicios; //cambiar a lista en el diagrama
+    private List<Servicio> servicios;
     private Pais pais;
     private Ciudad ciudad;
     private Credencial credencial;
-    private List<Idioma> idiomas; //agregar atributo y enum en el diagrama
+    private List<Idioma> idiomas;
 
-    public Guia(String nombre, String apellido, Sexo sexo, String dni, String email, String password, String numTelefono, String fotoPerfil, IAuthenticacion auth) {
+    public Guia(String nombre, String apellido, Sexo sexo, String dni, String email, String password, String numTelefono, String fotoPerfil, IAuthenticacion auth, List<Servicio> servicios, Pais pais, Ciudad ciudad, Credencial credencial, List<Idioma> idiomas) {
         super(nombre, apellido, sexo, dni, email, password, numTelefono, fotoPerfil, auth);
-    }
-
-    public void setInfoExtra(List<Servicio> servicios, Pais pais, Ciudad ciudad, Credencial credencial, List<Idioma> idiomas) {
         this.servicios = servicios;
         this.pais = pais;
         this.ciudad = ciudad;
@@ -55,6 +52,9 @@ public class Guia extends Usuario {
         //se puede contratar si el guia tiene la credencial hanilitada
         return null;
     }
+    public void calificarGuia(Turista turista, Guia guia, Double puntuacion) {
+        // TODO implement here
+    }
 
     public boolean verificarDisponibilidad(Date fechaInicio, Date fechaFin) {
         // TODO implement here
@@ -87,8 +87,8 @@ public class Guia extends Usuario {
     }
 
     public Double getPuntuacion() {
-        List<Reseña> reseñas = DataBase.getInstance().getReseñasPorGuia(this);
-        return reseñas.stream()
+        List<Reseña> resenias = DataBase.getInstance().getReseñasPorGuia(this);
+        return resenias.stream()
                 .mapToDouble(Reseña::getPuntuacion)
                 .average()
                 .orElse(0.0);

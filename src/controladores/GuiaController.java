@@ -1,17 +1,18 @@
 package controladores;
 
 import enums.Auth;
-import modelos.DataBase;
 import modelos.clases.*;
 import modelos.dtos.GuiaDTO;
 import modelos.dtos.UsuarioDTO;
 import modelos.interfaces.IAuthenticacion;
+
 import java.util.List;
 
 public class GuiaController {
     private Guia guia;
 
     public void registrarGuia(GuiaDTO guiaDTO, String password, Auth modoRegistro){
+        
         IAuthenticacion autenticacion = this.convertAuth(modoRegistro);
 
         Guia nuevoGuia = new Guia(
@@ -23,10 +24,7 @@ public class GuiaController {
                 password,
                 guiaDTO.getNumTelefono(),
                 guiaDTO.getFotoPerfil(),
-                autenticacion
-        );
-
-        nuevoGuia.setInfoExtra(
+                autenticacion,
                 guiaDTO.getServicios(),
                 guiaDTO.getPais(),
                 guiaDTO.getCiudad(),
@@ -35,6 +33,7 @@ public class GuiaController {
         );
 
         //verificar la credencial. si es valida llamar a la funcion notificar(guia)
+        //guiaDTO.getCredencial().verificarCredencial();
 
         boolean registroExitoso = nuevoGuia.register();
         System.out.println(registroExitoso);
