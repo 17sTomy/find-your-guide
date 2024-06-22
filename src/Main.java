@@ -1,7 +1,9 @@
 import controladores.GuiaController;
+import controladores.TuristaController;
 import enums.*;
 import modelos.clases.*;
 import modelos.dtos.GuiaDTO;
+import modelos.dtos.TuristaDTO;
 import modelos.dtos.UsuarioDTO;
 import modelos.interfaces.IAdapterCredencial;
 import modelos.interfaces.IAuthenticacion;
@@ -10,22 +12,33 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-/*
+
         // Crear instancia de TuristaController
         TuristaController turistaController = new TuristaController();
 
         // Datos del nuevo turista
-        TuristaDTO nuevoTuristaDTO = new TuristaDTO(
+        Turista turista = new Turista(
                 "Juan",
                 "Pérez",
-                "12345678",
                 Sexo.MASCULINO,
+                "12345678",
                 "juan@example.com",
+                "password123",
                 "123456789",
                 "ruta/a/la/foto.jpg",
-                "BASICO",
-                0
+                new IAuthenticacion() {
+                    @Override
+                    public boolean register(Usuario usuario) {
+                        return false;
+                    }
+
+                    @Override
+                    public UsuarioDTO login(String email, String password) {
+                        return null;
+                    }
+                }
         );
+        TuristaDTO nuevoTuristaDTO = new TuristaDTO(turista);
 
         // Modo de registro (por ejemplo, registro básico)
         Auth modoRegistro = Auth.BASICO;
@@ -43,7 +56,6 @@ public class Main {
         // Iniciar sesión del turista
         turistaController.loginTurista(email, password, modoLogin);
 
-*/
         //////////////////
         // PRUEBA GUIA //
         //////////////////
