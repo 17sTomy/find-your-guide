@@ -5,16 +5,16 @@ import modelos.clases.*;
 import modelos.dtos.GuiaDTO;
 import modelos.dtos.TuristaDTO;
 import modelos.dtos.UsuarioDTO;
+import modelos.dtos.ViajeDTO;
 import modelos.interfaces.IAdapterCredencial;
 import modelos.interfaces.IAuthenticacion;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
-        // Crear instancia de TuristaController
-        TuristaController turistaController = new TuristaController();
 
         // Datos del nuevo turista
         Turista turista = new Turista(
@@ -38,6 +38,7 @@ public class Main {
                     }
                 }
         );
+        /*
         TuristaDTO nuevoTuristaDTO = new TuristaDTO(turista);
 
         // Modo de registro (por ejemplo, registro básico)
@@ -54,7 +55,7 @@ public class Main {
         String password = "password123";
 
         // Iniciar sesión del turista
-        turistaController.loginTurista(email, password, modoLogin);
+        turistaController.loginTurista(email, password, modoLogin);*/
 
         //////////////////
         // PRUEBA GUIA //
@@ -89,7 +90,7 @@ public class Main {
                 Ciudad.BUENOS_AIRES,
                 credencial,
                 List.of(Idioma.ESPAÑOL)
-        );
+        );/*
 
         GuiaDTO guiaDTO = new GuiaDTO(guia);
 
@@ -99,6 +100,23 @@ public class Main {
         guiaController.registrarGuia(guiaDTO, "123", Auth.BASICO);
 
         // Iniciar sesión del guia
-        guiaController.loginGuia("jose@example.com", "123", Auth.BASICO);
+        guiaController.loginGuia("jose@example.com", "123", Auth.BASICO);*/
+
+        //////////////////
+        // PRUEBA VIAJE //
+        //////////////////
+        ViajeDTO viajeDTO = new ViajeDTO(
+                Ciudad.ABU_DABI, Pais.ALBANIA,
+                LocalDate.of(2024, 6, 20),
+                LocalDate.of(2024, 7, 5)
+        );
+
+        Viaje viaje = new Viaje(viajeDTO,
+                turista,
+                guia
+        );
+        System.out.println(viaje.toString());
+
     }
+
 }
