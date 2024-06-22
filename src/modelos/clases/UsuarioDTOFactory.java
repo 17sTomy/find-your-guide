@@ -11,7 +11,7 @@ public class UsuarioDTOFactory {
             return new GuiaDTO(guia);
         } else if (usuario instanceof Turista) {
             Turista turista = (Turista) usuario;
-            return new TuristaDTO(turista.getNombre(), turista.getApellido(), turista.getDni(), turista.getSexo(), turista.getEmail(), turista.getNumTelefono(), turista.getFotoPerfil(), turista.getAuth(), turista.getCantViajes());
+            return new TuristaDTO(turista);
         } else {
             throw new IllegalArgumentException("Tipo de usuario no soportado para crear DTO.");
         }
