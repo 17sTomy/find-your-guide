@@ -10,7 +10,7 @@ public class RegistroGuia {
 
     public RegistroGuia() {
         // Crear el frame principal
-        frame = new JFrame("Registro de Guía Turístico");
+        frame = new JFrame("Registro de Guía");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
         frame.setLayout(new BorderLayout());
@@ -20,7 +20,7 @@ public class RegistroGuia {
         topPanel.setBackground(new Color(0, 102, 204));
         topPanel.setPreferredSize(new Dimension(frame.getWidth(), 60));
 
-        JLabel titleLabel = new JLabel("Registro de Guía Turístico", JLabel.CENTER);
+        JLabel titleLabel = new JLabel("Registro de Guía", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
@@ -139,7 +139,6 @@ public class RegistroGuia {
                 JFileChooser fileChooser = new JFileChooser();
                 int returnValue = fileChooser.showOpenDialog(null);
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    // Aquí se puede manejar el archivo seleccionado
                     System.out.println("Archivo seleccionado: " + fileChooser.getSelectedFile().getAbsolutePath());
                 }
             }
@@ -158,7 +157,6 @@ public class RegistroGuia {
                 } else if (!password.equals(confirmPassword)) {
                     JOptionPane.showMessageDialog(frame, "Las contraseñas no coinciden.", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    // Acción para el botón de registrarse (puedes agregar lógica adicional aquí)
                     JOptionPane.showMessageDialog(frame, "Registro de guía exitoso.");
                 }
             }
@@ -167,7 +165,6 @@ public class RegistroGuia {
         googleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para iniciar sesión con Google
                 JOptionPane.showMessageDialog(frame, "Registro con Google exitoso.");
             }
         });
@@ -175,7 +172,6 @@ public class RegistroGuia {
         appleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para iniciar sesión con Apple
                 JOptionPane.showMessageDialog(frame, "Registro con Apple exitoso.");
             }
         });
@@ -183,7 +179,6 @@ public class RegistroGuia {
         facebookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para iniciar sesión con Facebook
                 JOptionPane.showMessageDialog(frame, "Registro con Facebook exitoso.");
             }
         });
@@ -202,15 +197,15 @@ public class RegistroGuia {
     private JButton createThirdPartyButton(String provider) {
         JButton button = new JButton(provider);
         button.setFont(new Font("Arial", Font.BOLD, 14));
-        button.setBackground(new Color(66, 133, 244)); // Azul de Google por defecto
+        button.setBackground(new Color(66, 133, 244));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
         if (provider.equals("Apple")) {
-            button.setBackground(new Color(0, 0, 0)); // Negro de Apple por defecto
+            button.setBackground(new Color(0, 0, 0));
         } else if (provider.equals("Facebook")) {
-            button.setBackground(new Color(59, 89, 152)); // Azul de Facebook por defecto
+            button.setBackground(new Color(59, 89, 152));
         }
 
         return button;
