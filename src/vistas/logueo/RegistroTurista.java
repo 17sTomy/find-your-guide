@@ -119,7 +119,6 @@ public class RegistroTurista {
         googleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí deberías implementar la lógica para el registro con Google
                 JOptionPane.showMessageDialog(frame, "Registro con Google exitoso.");
             }
         });
@@ -127,7 +126,6 @@ public class RegistroTurista {
         appleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí deberías implementar la lógica para el registro con Apple
                 JOptionPane.showMessageDialog(frame, "Registro con Apple exitoso.");
             }
         });
@@ -135,7 +133,6 @@ public class RegistroTurista {
         facebookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí deberías implementar la lógica para el registro con Facebook
                 JOptionPane.showMessageDialog(frame, "Registro con Facebook exitoso.");
             }
         });
@@ -154,15 +151,15 @@ public class RegistroTurista {
     private JButton createThirdPartyButton(String provider) {
         JButton button = new JButton(provider);
         button.setFont(new Font("Arial", Font.BOLD, 14));
-        button.setBackground(new Color(66, 133, 244)); // Azul de Google por defecto
+        button.setBackground(new Color(66, 133, 244));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
         if (provider.equals("Apple")) {
-            button.setBackground(new Color(0, 0, 0)); // Negro de Apple por defecto
+            button.setBackground(new Color(0, 0, 0));
         } else if (provider.equals("Facebook")) {
-            button.setBackground(new Color(59, 89, 152)); // Azul de Facebook por defecto
+            button.setBackground(new Color(59, 89, 152));
         }
 
         return button;
