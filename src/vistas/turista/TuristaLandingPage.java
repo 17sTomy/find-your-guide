@@ -51,13 +51,15 @@ public class TuristaLandingPage {
         navPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JButton homeButton = createNavButton("Inicio");
-        JButton profileButton = createNavButton("Perfil");
-        JButton searchGuidesButton = createNavButton("Buscar Guías");
+        JButton buscarGuiasButton = createNavButton("Buscar Guías");
+        JButton historialViajesButton = createNavButton("Historial de Viajes");
+        JButton perfilButton = createNavButton("Perfil");
         JButton logoutButton = createNavButton("Cerrar Sesión");
 
         navPanel.add(homeButton);
-        navPanel.add(profileButton);
-        navPanel.add(searchGuidesButton);
+        navPanel.add(buscarGuiasButton);
+        navPanel.add(historialViajesButton);
+        navPanel.add(perfilButton);
         navPanel.add(logoutButton);
 
         // Añadir paneles al frame
@@ -76,17 +78,25 @@ public class TuristaLandingPage {
             }
         });
 
-        profileButton.addActionListener(new ActionListener() {
+        buscarGuiasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Página de perfil");
+                frame.setVisible(false);
+                new BuscarGuiasPage().setVisible(true);
             }
         });
 
-        searchGuidesButton.addActionListener(new ActionListener() {
+        historialViajesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Página de búsqueda de guías");
+                JOptionPane.showMessageDialog(frame, "Historial de viajes");
+            }
+        });
+
+        perfilButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame, "Página de perfil");
             }
         });
 
@@ -117,4 +127,3 @@ public class TuristaLandingPage {
         });
     }
 }
-
