@@ -1,6 +1,7 @@
 package controladores;
 
 import enums.Auth;
+import modelos.DataBase;
 import modelos.clases.*;
 import modelos.dtos.GuiaDTO;
 import modelos.dtos.UsuarioDTO;
@@ -41,6 +42,11 @@ public class GuiaController {
         IAuthenticacion autenticacion = this.convertAuth(modoLogin);
 
         UsuarioDTO infoGuia =  Usuario.login(email, password, autenticacion);
+        if (infoGuia != null) {
+            DataBase db = DataBase.getInstance();
+            Usuario guia = db.getUsuarioByEmail(email);
+            this.guia = (Guia)guia;
+        };
         System.out.println(infoGuia);
     }
 

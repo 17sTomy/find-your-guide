@@ -39,6 +39,11 @@ public class TuristaController {
         IAuthenticacion autenticacion = this.convertAuth(modoLogin);
 
         UsuarioDTO infoTurista =  Usuario.login(email, password, autenticacion);
+        if (infoTurista != null) {
+            DataBase db = DataBase.getInstance();
+            Usuario turista = db.getUsuarioByEmail(email);
+            this.turista = (Turista)turista;
+        };
         System.out.println(infoTurista);
     }
 
