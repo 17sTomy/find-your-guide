@@ -1,11 +1,13 @@
 package modelos.clases;
 
-import enums.*;
+import enums.Ciudad;
+import enums.Idioma;
+import enums.Pais;
+import enums.Sexo;
 import modelos.DataBase;
-import modelos.dtos.*;
+import modelos.dtos.GuiaDTO;
 import modelos.interfaces.IAuthenticacion;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,20 +49,13 @@ public class Guia extends Usuario {
                 .collect(Collectors.toList());
     }
 
-    public Void contratarGuia(Guia guia, Date fechaInicio, Date fechaFin) { // poner en el diagrama nombre de la variable
-        // TODO implement here
-        //se puede contratar si el guia tiene la credencial hanilitada
-        return null;
+    public Double getPuntuacion() {
+        List<Reseña> resenias = DataBase.getInstance().getReseñasPorGuia(this);
+        return resenias.stream()
+                .mapToDouble(Reseña::getPuntuacion)
+                .average()
+                .orElse(0.0);
     }
-    public void calificarGuia(Turista turista, Guia guia, Double puntuacion) {
-        // TODO implement here
-    }
-
-    public boolean verificarDisponibilidad(Date fechaInicio, Date fechaFin) {
-        // TODO implement here
-        return false;
-    }
-
 
     public Pais getPais() {
         return pais;
@@ -84,14 +79,6 @@ public class Guia extends Usuario {
 
     public void removeServicio(Servicio servicio) {
         this.servicios.remove(servicio);
-    }
-
-    public Double getPuntuacion() {
-        List<Reseña> resenias = DataBase.getInstance().getReseñasPorGuia(this);
-        return resenias.stream()
-                .mapToDouble(Reseña::getPuntuacion)
-                .average()
-                .orElse(0.0);
     }
 
     public Credencial getCredencial() {

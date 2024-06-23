@@ -6,13 +6,13 @@ import enums.Pais;
 import java.time.LocalDate;
 
 public class ViajeDTO {
-
+// TODO quiza hay que eliminar guiaDTO y turistaDTO
     private Ciudad ciudadDestino;
     private Pais paisDestino;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
-    private GuiaDTO guia;
-    private TuristaDTO turista;
+    private GuiaDTO guiaDTO;
+    private TuristaDTO turistaDTO;
 
     public ViajeDTO(Ciudad ciudadDestino, Pais paisDestino, LocalDate fechaInicio, LocalDate fechaFin) {
         this.ciudadDestino = ciudadDestino;
@@ -53,19 +53,19 @@ public class ViajeDTO {
         this.fechaFin = fechaFin;
     }
 
-    public GuiaDTO getGuia() {
-        return guia;
+    public GuiaDTO getGuiaDTO() {
+        return guiaDTO;
     }
 
-    public void setGuia(GuiaDTO guia) {
-        this.guia = guia;
+    public void setGuiaDTO(GuiaDTO guiaDTO) {
+        this.guiaDTO = guiaDTO;
     }
 
-    public TuristaDTO getTurista() {
-        return turista;
+    public TuristaDTO getTuristaDTO() {
+        return turistaDTO;
     }
 
-    public void setTurista(TuristaDTO turista) {
-        this.turista = turista;
+    public void setTuristaDTO(TuristaDTO turistaDTO) {
+        this.turistaDTO = turistaDTO;
     }
 }
