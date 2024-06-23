@@ -1,0 +1,2 @@
+Juan,Pérez,Buenos Aires,Español,Inglés,Tours individuales,4.8
+Maria,Gomez,Madrid,Español,Francés,Tours grupales,4.5
