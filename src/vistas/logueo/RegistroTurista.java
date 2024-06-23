@@ -1,18 +1,18 @@
-package vistas.logueo;
+package vistas;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Registro {
+public class RegistroTurista {
     private JFrame frame;
 
-    public Registro() {
+    public RegistroTurista() {
         // Crear el frame principal
         frame = new JFrame("Registrarse");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cerrar la aplicación al salir
-        frame.setSize(400, 350);
+        frame.setSize(400, 450); // Aumentar el tamaño para acomodar los nuevos elementos
         frame.setLayout(new BorderLayout());
 
         // Crear el panel superior con el título
@@ -52,16 +52,45 @@ public class Registro {
         centerPanel.add(confirmPasswordLabel);
         centerPanel.add(confirmPasswordField);
 
-        // Crear el panel inferior con los botones de registro y volver
+        // Crear el panel inferior con el botón de registro y el mensaje de terceros
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(new Color(255, 255, 255));
-        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+
+        // Panel para el botón de registrarse
+        JPanel registerPanel = new JPanel();
+        registerPanel.setBackground(new Color(255, 255, 255));
+        registerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
         JButton registerButton = createNavButton("Registrarse");
-        JButton backButton = createNavButton("Volver");
 
-        bottomPanel.add(registerButton);
-        bottomPanel.add(backButton);
+        registerPanel.add(registerButton);
+
+        // Panel para el mensaje y botones de terceros
+        JPanel thirdPartyPanel = new JPanel();
+        thirdPartyPanel.setBackground(new Color(255, 255, 255));
+        thirdPartyPanel.setLayout(new BoxLayout(thirdPartyPanel, BoxLayout.Y_AXIS));
+
+        JLabel thirdPartyLabel = new JLabel("También puede registrarse con:");
+        thirdPartyLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        thirdPartyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        thirdPartyPanel.add(thirdPartyLabel);
+
+        // Añadir botones de terceros
+        JButton googleButton = createThirdPartyButton("Google");
+        JButton appleButton = createThirdPartyButton("Apple");
+        JButton facebookButton = createThirdPartyButton("Facebook");
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        buttonPanel.add(googleButton);
+        buttonPanel.add(appleButton);
+        buttonPanel.add(facebookButton);
+
+        thirdPartyPanel.add(buttonPanel);
+
+        // Añadir paneles al bottomPanel
+        bottomPanel.add(registerPanel);
+        bottomPanel.add(thirdPartyPanel);
 
         // Añadir paneles al frame
         frame.add(topPanel, BorderLayout.NORTH);
@@ -87,12 +116,27 @@ public class Registro {
             }
         });
 
-        backButton.addActionListener(new ActionListener() {
+        googleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Volver a la vista anterior (SeleccionRol)
-                frame.dispose(); // Cerrar la ventana actual
-                new SeleccionRol(); // Mostrar la vista de SeleccionRol
+                // Aquí deberías implementar la lógica para el registro con Google
+                JOptionPane.showMessageDialog(frame, "Registro con Google exitoso.");
+            }
+        });
+
+        appleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Aquí deberías implementar la lógica para el registro con Apple
+                JOptionPane.showMessageDialog(frame, "Registro con Apple exitoso.");
+            }
+        });
+
+        facebookButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Aquí deberías implementar la lógica para el registro con Facebook
+                JOptionPane.showMessageDialog(frame, "Registro con Facebook exitoso.");
             }
         });
     }
@@ -105,5 +149,26 @@ public class Registro {
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         return button;
+    }
+
+    private JButton createThirdPartyButton(String provider) {
+        JButton button = new JButton(provider);
+        button.setFont(new Font("Arial", Font.BOLD, 14));
+        button.setBackground(new Color(66, 133, 244)); // Azul de Google por defecto
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
+        if (provider.equals("Apple")) {
+            button.setBackground(new Color(0, 0, 0)); // Negro de Apple por defecto
+        } else if (provider.equals("Facebook")) {
+            button.setBackground(new Color(59, 89, 152)); // Azul de Facebook por defecto
+        }
+
+        return button;
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(RegistroTurista::new);
     }
 }

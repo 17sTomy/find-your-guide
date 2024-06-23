@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import vistas.RegistroGuia;
+import vistas.RegistroTurista;
 import vistas.guia.GuiaLandingPage;
 import vistas.turista.TuristaLandingPage;
 
@@ -82,16 +84,19 @@ public class Login {
                 } else if (role.equals("Turista")) {
                     new TuristaLandingPage(role); // Abrir la landing page con el rol turista
                 }
-
             }
         });
 
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Abrir la ventana de registro
+                // Abrir la ventana de registro específica según el rol
                 frame.dispose(); // Cerrar la ventana actual
-                new Registro(); // Abrir la ventana de registro
+                if (role.equals("Guia")) {
+                    new RegistroGuia(); // Abrir la ventana de registro para guías
+                } else {
+                    new RegistroTurista(); // Abrir la ventana de registro general
+                }
             }
         });
     }
@@ -105,5 +110,4 @@ public class Login {
         button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         return button;
     }
-
 }
