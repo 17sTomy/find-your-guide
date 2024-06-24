@@ -1,25 +1,18 @@
-package vistas.logueo;
+package vistas;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import vistas.guia.GuiaLandingPage;
-import vistas.turista.TuristaLandingPage;
-import vistas.RegistroGuia;
-import vistas.RegistroTurista;
 
-public class Login {
+public class RegistroGuia {
     private JFrame frame;
-    private String role;
 
-    public Login(String role) {
-        this.role = role;
-
+    public RegistroGuia() {
         // Crear el frame principal
-        frame = new JFrame("Iniciar Sesión - " + role);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cerrar la aplicación al salir
-        frame.setSize(400, 400); // Ajustar el tamaño de la ventana
+        frame = new JFrame("Registro de Guía");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 400);
         frame.setLayout(new BorderLayout());
 
         // Crear el panel superior con el título
@@ -27,7 +20,7 @@ public class Login {
         topPanel.setBackground(new Color(0, 102, 204));
         topPanel.setPreferredSize(new Dimension(frame.getWidth(), 60));
 
-        JLabel titleLabel = new JLabel("Iniciar Sesión como " + role, JLabel.CENTER);
+        JLabel titleLabel = new JLabel("Registro de Guía", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
@@ -40,12 +33,14 @@ public class Login {
         centerPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        // Añadir los componentes con restricciones específicas
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.LINE_END;
+        gbc.weightx = 0.1;
+        gbc.gridwidth = 1;
         centerPanel.add(new JLabel("Correo Electrónico:"), gbc);
 
         gbc.gridx = 1;
@@ -63,30 +58,52 @@ public class Login {
         JPasswordField passwordField = new JPasswordField(20);
         centerPanel.add(passwordField, gbc);
 
-        // Crear el panel inferior con los botones
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        centerPanel.add(new JLabel("Confirmar Contraseña:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        JPasswordField confirmPasswordField = new JPasswordField(20);
+        centerPanel.add(confirmPasswordField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        centerPanel.add(new JLabel("ID de Credencial:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        JTextField credentialIdField = new JTextField(20);
+        centerPanel.add(credentialIdField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        centerPanel.add(new JLabel("Cargar Credencial:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.gridwidth = 1;
+        JButton uploadCredentialButton = new JButton("Cargar Archivo");
+        centerPanel.add(uploadCredentialButton, gbc);
+
+        // Crear el panel inferior con el botón de registro y botones de terceros
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(new Color(255, 255, 255));
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
 
-        // Panel de botones de inicio de sesión y registro
-        JPanel loginPanel = new JPanel();
-        loginPanel.setBackground(new Color(255, 255, 255));
-        loginPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
-
-        JButton loginButton = createNavButton("Iniciar Sesión");
+        // Botón de registro
+        JPanel registerPanel = new JPanel();
+        registerPanel.setBackground(new Color(255, 255, 255));
+        registerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
         JButton registerButton = createNavButton("Registrarse");
-
-        loginPanel.add(loginButton);
-        loginPanel.add(registerButton);
-
-        bottomPanel.add(loginPanel);
+        registerPanel.add(registerButton);
 
         // Panel de terceros
         JPanel thirdPartyPanel = new JPanel();
         thirdPartyPanel.setBackground(new Color(255, 255, 255));
         thirdPartyPanel.setLayout(new BoxLayout(thirdPartyPanel, BoxLayout.Y_AXIS));
 
-        JLabel thirdPartyLabel = new JLabel("También puede loguearse con:");
+        JLabel thirdPartyLabel = new JLabel("También puede registrarse con:");
         thirdPartyLabel.setFont(new Font("Arial", Font.BOLD, 14));
         thirdPartyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         thirdPartyPanel.add(thirdPartyLabel);
@@ -103,6 +120,8 @@ public class Login {
 
         thirdPartyPanel.add(buttonPanel);
 
+        // Añadir paneles al bottomPanel
+        bottomPanel.add(registerPanel);
         bottomPanel.add(thirdPartyPanel);
 
         // Añadir paneles al frame
@@ -114,15 +133,13 @@ public class Login {
         frame.setVisible(true);
 
         // Añadir listeners a los botones (acciones a realizar)
-        loginButton.addActionListener(new ActionListener() {
+        uploadCredentialButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Cerrar la ventana actual e iniciar la landing page
-                frame.dispose(); // Cerrar la ventana de login
-                if (role.equals("Guia")) {
-                    new GuiaLandingPage(role); // Abrir la landing page con el rol guia
-                } else if (role.equals("Turista")) {
-                    new TuristaLandingPage(role); // Abrir la landing page con el rol turista
+                JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    System.out.println("Archivo seleccionado: " + fileChooser.getSelectedFile().getAbsolutePath());
                 }
             }
         });
@@ -130,40 +147,41 @@ public class Login {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Verificar el rol y abrir la ventana de registro correspondiente
-                frame.dispose(); // Cerrar la ventana actual
-                if (role.equals("Guia")) {
-                    new RegistroGuia(); // Abrir la ventana de registro para guía
-                } else if (role.equals("Turista")) {
-                    new RegistroTurista(); // Abrir la ventana de registro para turista
+                // Validar que las contraseñas coincidan y la ID de credencial sea válida
+                String password = new String(passwordField.getPassword());
+                String confirmPassword = new String(confirmPasswordField.getPassword());
+                String credentialId = credentialIdField.getText();
+
+                if (credentialId.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Ingrese el ID de credencial.", "Error", JOptionPane.ERROR_MESSAGE);
+                } else if (!password.equals(confirmPassword)) {
+                    JOptionPane.showMessageDialog(frame, "Las contraseñas no coinciden.", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Registro de guía exitoso.");
                 }
             }
         });
 
-        // Añadir listeners para los botones de terceros
         googleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Logueo con Google exitoso.");
+                JOptionPane.showMessageDialog(frame, "Registro con Google exitoso.");
             }
         });
 
         appleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Logueo con Apple exitoso.");
+                JOptionPane.showMessageDialog(frame, "Registro con Apple exitoso.");
             }
         });
 
         facebookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Logueo con Facebook exitoso.");
+                JOptionPane.showMessageDialog(frame, "Registro con Facebook exitoso.");
             }
         });
-
-        // Centrar el frame en la pantalla
-        frame.setLocationRelativeTo(null);
     }
 
     private JButton createNavButton(String text) {
@@ -197,7 +215,7 @@ public class Login {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Login("Turista");
+                new RegistroGuia();
             }
         });
     }
