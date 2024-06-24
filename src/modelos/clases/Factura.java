@@ -14,27 +14,20 @@ public class Factura {
         pagada = false;
     }
 
-    public void abonarFactura() {
-        pagada = true;
-    }
     public Double calcularComision() {
         return montoTotal * 0.1;
     }
-
     public Double getMontoTotal() {
         return montoTotal;
     }
-
     public Double getComision() {
         return comision;
     }
-
     public boolean isPagada() {
         return pagada;
     }
-
-    public void setPagada(boolean pagada) {
-        this.pagada = pagada;
+    public void pagarFactura() {
+        this.pagada = true;
     }
 
     public void verDetallesFactura() {

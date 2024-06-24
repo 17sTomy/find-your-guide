@@ -46,10 +46,10 @@ public class Viaje {
     public void notificarReservaRealizada() {
         Notificacion notificacion = new Notificacion(
                 "Reserva realizada",
-                "Reserva nro: " + reserva.getIdReserva() + "\\n" +
-                "Fecha: " + fechaInicio + " - " + fechaFin + "\\n" +
-                "Destino: " + paisDestino + ", " + ciudadDestino + "\\n" +
-                "Turista: " + turista.getNombre() + " " + turista.getApellido() + "\\n" +
+                "\n" + "Reserva nro: " + reserva.hashCode() + "\n" +
+                "Fecha: " + fechaInicio + " - " + fechaFin + "\n" +
+                "Destino: " + paisDestino + ", " + ciudadDestino + "\n" +
+                "Turista: " + turista.getNombre() + " " + turista.getApellido() + "\n" +
                 "Telefono: " + turista.getNumTelefono(),
                 guia
         );
@@ -78,6 +78,10 @@ public class Viaje {
         return factura;
     }
 
+    public Reserva getReserva() {
+        return reserva;
+    }
+
     public void cobrarAnticipo(Double anticipo, Turista turista) {
         // To Do. Hay que ver si en realidad no va en la clase reserva
     }
@@ -87,7 +91,12 @@ public class Viaje {
     }
 
     public void iniciarViaje() {
-        this.estadoViaje.iniciarViaje(this);
+
+        if(this.reserva.estaAceptada()){
+            this.estadoViaje.iniciarViaje(this);
+        }else {
+            System.out.println("No se puede inicar el viaje, la reserva no fue confirmada por el guía.");
+        }
     }
 
     public void cancelarViaje() {
