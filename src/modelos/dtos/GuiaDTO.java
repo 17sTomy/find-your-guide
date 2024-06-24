@@ -29,6 +29,16 @@ public class GuiaDTO extends UsuarioDTO {
         this.puntuacion = guia.getPuntuacion();
     }
 
+    public GuiaDTO(String nombre, String apellido, String dni, Sexo sexo, String email, String numTelefono, String fotoPerfil, String auth, List<Servicio> servicios, Pais pais, Ciudad ciudad, Credencial credencial, List<Idioma> idiomas, Double puntuacion) {
+        super(nombre, apellido, dni, sexo, email, numTelefono, fotoPerfil, auth);
+        this.servicios = servicios;
+        this.pais = pais;
+        this.ciudad = ciudad;
+        this.credencial = credencial;
+        this.idiomas = idiomas;
+        this.puntuacion = puntuacion;
+    }
+
 
 
     public Pais getPais() {
