@@ -1,15 +1,18 @@
 import controladores.GuiaController;
+import controladores.ViajeController;
 import enums.*;
 import modelos.clases.*;
 import modelos.dtos.GuiaDTO;
+import modelos.dtos.ViajeDTO;
 import modelos.interfaces.IAdapterCredencial;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
-        /*
+
         // Datos del nuevo turista
         RegistroBasico autenticacion = new RegistroBasico();
         Turista turista = new Turista(
@@ -22,7 +25,7 @@ public class Main {
                 "123456789",
                 "ruta/a/la/foto.jpg",
                 autenticacion
-        );
+        );/*
 
         TuristaDTO nuevoTuristaDTO = new TuristaDTO(turista);
 
@@ -40,8 +43,8 @@ public class Main {
         String password = "password123";
 
         // Iniciar sesión del turista
-        turistaController.loginTurista(email, password, modoLogin);
-        */
+        turistaController.loginTurista(email, password, modoLogin);*/
+
 
         //////////////////
         // PRUEBA GUIA //
@@ -51,7 +54,7 @@ public class Main {
         IAdapterCredencial adapCreden = new SistemaVerificacionIA();
         Servicio servicios = new Servicio("trabajador", "pala", 5.5);
         Credencial credencial = new Credencial("a", "a", adapCreden);
-        RegistroBasico autenticacion = new RegistroBasico();
+        RegistroBasico autenticacionGuia = new RegistroBasico();
         Guia guia = new Guia(
                 "Jose",
                 "Pérez",
@@ -61,7 +64,7 @@ public class Main {
                 "123",
                 "123456789",
                 "ruta/a/la/foto.jpg",
-                autenticacion,
+                autenticacionGuia,
                 List.of(servicios),
                 Pais.ARGENTINA,
                 Ciudad.BUENOS_AIRES,
@@ -70,6 +73,7 @@ public class Main {
         );
         GuiaDTO guiaDTO = new GuiaDTO(guia);
 
+
         // Crear instancia de GuiaController
         GuiaController guiaController = new GuiaController();
 
@@ -77,22 +81,25 @@ public class Main {
         guiaController.registrarGuia(guiaDTO, "123", Auth.BASICO);
         guiaController.loginGuia("jose@example.com", "123", Auth.BASICO);
 
-        /*
+
         //////////////////
         // PRUEBA VIAJE //
         //////////////////
+        ViajeController viajeController = new ViajeController();
+
         ViajeDTO viajeDTO = new ViajeDTO(
                 Ciudad.ABU_DABI, Pais.ALBANIA,
                 LocalDate.of(2024, 6, 20),
                 LocalDate.of(2024, 7, 5)
         );
 
-        Viaje viaje = new Viaje(viajeDTO,
-                turista,
-                guia
-        );
-        System.out.println(viaje.toString());
-        */
+        viajeController.crearViaje(viajeDTO, "juan@example.com", "jose@example.com");
+
+
+
+
+
+
     }
 
 }

@@ -4,19 +4,15 @@ import java.util.Random;
 
 
 public class Reserva {
-    private int idReserva;
     private IEstadoReserva estadoReserva;
 
 
     public Reserva() {
-        Random random = new Random();
-        idReserva = random.nextInt();
-
-        this.estadoReserva = new Aceptada();
+        this.estadoReserva = new Pendiente();
     }
 
-    public int getIdReserva() {
-        return idReserva;
+    public boolean estaAceptada(){
+        return (estadoReserva instanceof Aceptada);
     }
 
     public void cambiarEstado(IEstadoReserva nuevoEstado) {
