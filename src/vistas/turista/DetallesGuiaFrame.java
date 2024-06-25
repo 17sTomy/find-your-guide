@@ -2,11 +2,12 @@ package vistas.turista;
 
 import javax.swing.*;
 import java.awt.*;
+import modelos.dtos.GuiaDTO;
 
 public class DetallesGuiaFrame extends JFrame {
-    private BuscarGuiasPage.Guia guia;
+    private GuiaDTO guia;
 
-    public DetallesGuiaFrame(BuscarGuiasPage.Guia guia) {
+    public DetallesGuiaFrame(GuiaDTO guia) {
         this.guia = guia;
 
         setTitle("Detalles del Guía");
@@ -18,16 +19,16 @@ public class DetallesGuiaFrame extends JFrame {
         detailsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         detailsPanel.add(new JLabel("Nombre:"));
-        detailsPanel.add(new JLabel(guia.getNombreCompleto()));
+        detailsPanel.add(new JLabel(guia.getNombre() + " " + guia.getApellido()));
 
         detailsPanel.add(new JLabel("Ciudad:"));
-        detailsPanel.add(new JLabel(guia.getCiudad()));
+        detailsPanel.add(new JLabel(guia.getCiudad() != null ? guia.getCiudad().name() : ""));
 
         detailsPanel.add(new JLabel("Idiomas:"));
-        detailsPanel.add(new JLabel(guia.getIdiomas()));
+        detailsPanel.add(new JLabel(guia.getIdiomas() != null ? guia.getIdiomas().toString() : ""));
 
         detailsPanel.add(new JLabel("Servicios:"));
-        detailsPanel.add(new JLabel(guia.getServicios()));
+        detailsPanel.add(new JLabel(guia.getServicios() != null ? guia.getServicios().toString() : ""));
 
         detailsPanel.add(new JLabel("Puntuación:"));
         detailsPanel.add(new JLabel(String.valueOf(guia.getPuntuacion())));

@@ -5,11 +5,16 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
+import controladores.GuiaController;
+import modelos.dtos.GuiaDTO;
+import enums.Ciudad;
+import enums.Pais;
+import enums.Sexo;
+import enums.Idioma;
+import modelos.clases.Credencial;
+import modelos.clases.Servicio;
 
 public class BuscarGuiasPage extends JFrame {
     private JTextField ciudadField;
@@ -24,9 +29,12 @@ public class BuscarGuiasPage extends JFrame {
     private JButton contratarButton;
     private JButton volverButton;
 
-    private List<Guia> guias;
+    private List<GuiaDTO> guias;
+    private GuiaController guiaController;
 
     public BuscarGuiasPage() {
+        guiaController = new GuiaController();
+
         setTitle("Buscar Guías");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,7 +70,7 @@ public class BuscarGuiasPage extends JFrame {
         add(filtrosPanel, BorderLayout.NORTH);
 
         // Tabla de guías
-        guiasTableModel = new DefaultTableModel(new String[]{"Nombre", "Ciudad", "Idiomas", "Servicios", "Puntuación"}, 0);
+        guiasTableModel = new DefaultTableModel(new String[]{"Nombre", "Apellido", "Ciudad", "Idiomas", "Servicios", "Puntuación"}, 0);
         guiasTable = new JTable(guiasTableModel);
         JScrollPane tableScrollPane = new JScrollPane(guiasTable);
         add(tableScrollPane, BorderLayout.CENTER);
@@ -76,9 +84,6 @@ public class BuscarGuiasPage extends JFrame {
         botonesPanel.add(contratarButton);
         botonesPanel.add(volverButton);
         add(botonesPanel, BorderLayout.SOUTH);
-
-        // Cargar datos de los guías desde un archivo
-        guias = cargarGuiasDesdeArchivo("src/vistas/turista/guias.txt");
 
         // Añadir listeners a los botones
         buscarButton.addActionListener(new ActionListener() {
@@ -111,46 +116,56 @@ public class BuscarGuiasPage extends JFrame {
         });
 
         // Mostrar todos los guías al iniciar
-        mostrarGuias(guias);
+        buscarGuias();
     }
 
     private void buscarGuias() {
-        String ciudad = ciudadField.getText().toLowerCase().trim();
-        String nombre = nombreField.getText().toLowerCase().trim();
-        String idiomas = idiomasField.getText().toLowerCase().trim();
-        String servicios = serviciosField.getText().toLowerCase().trim();
-        String puntuacionStr = puntuacionField.getText().trim();
+        String ciudad = ciudadField.getText().isEmpty() ? null : ciudadField.getText().toLowerCase().trim();
+        String nombre = nombreField.getText().isEmpty() ? null : nombreField.getText().toLowerCase().trim();
+        String idiomas = idiomasField.getText().isEmpty() ? null : idiomasField.getText().toLowerCase().trim();
+        String servicios = serviciosField.getText().isEmpty() ? null : serviciosField.getText().toLowerCase().trim();
+        Double puntuacionMin = puntuacionField.getText().isEmpty() ? null : Double.parseDouble(puntuacionField.getText().trim());
 
-        double puntuacionMin = puntuacionStr.isEmpty() ? 0 : Double.parseDouble(puntuacionStr);
+        // Crear el GuiaDTO con el constructor proporcionado
+        GuiaDTO filtro = new GuiaDTO(
+                nombre,                       // nombre
+                null,                         // apellido
+                null,                         // dni
+                null,                         // sexo
+                null,                         // email
+                null,                         // numTelefono
+                null,                         // fotoPerfil
+                null,                         // auth
+                servicios != null ? Collections.singletonList(new Servicio(servicios, null, null)) : null, // servicios
+                null,                         // pais
+                ciudad != null ? Ciudad.valueOf(ciudad.toUpperCase()) : null, // ciudad
+                null,                         // credencial
+                idiomas != null ? Collections.singletonList(Idioma.valueOf(idiomas.toUpperCase())) : null, // idiomas
+                puntuacionMin                 // puntuacion
+        );
 
-        List<Guia> guiasFiltrados = new ArrayList<>();
-        for (Guia guia : guias) {
-            boolean coincideCiudad = ciudad.isEmpty() || guia.getCiudad().toLowerCase().contains(ciudad);
-            boolean coincideNombre = nombre.isEmpty() || guia.getNombreCompleto().toLowerCase().contains(nombre);
-            boolean coincideIdiomas = idiomas.isEmpty() || guia.getIdiomas().toLowerCase().contains(idiomas);
-            boolean coincideServicios = servicios.isEmpty() || guia.getServicios().toLowerCase().contains(servicios);
-            boolean coincidePuntuacion = guia.getPuntuacion() >= puntuacionMin;
+        guias = guiaController.buscarGuias(filtro);
 
-            if (coincideCiudad && coincideNombre && coincideIdiomas && coincideServicios && coincidePuntuacion) {
-                guiasFiltrados.add(guia);
-            }
+        if (guias.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron guías con los filtros especificados.");
+        } else {
+            mostrarGuias(guias);
         }
-
-        mostrarGuias(guiasFiltrados);
     }
 
-    private void mostrarGuias(List<Guia> guias) {
+    private void mostrarGuias(List<GuiaDTO> guias) {
         guiasTableModel.setRowCount(0);
-        for (Guia guia : guias) {
-            guiasTableModel.addRow(new Object[]{guia.getNombreCompleto(), guia.getCiudad(), guia.getIdiomas(), guia.getServicios(), guia.getPuntuacion()});
+        for (GuiaDTO guia : guias) {
+            guiasTableModel.addRow(new Object[]{guia.getNombre(), guia.getApellido(), guia.getCiudad(), guia.getIdiomas(), guia.getServicios(), guia.getPuntuacion()});
         }
     }
 
     private void verDetallesGuia() {
         int selectedRow = guiasTable.getSelectedRow();
         if (selectedRow != -1) {
-            String nombreCompleto = (String) guiasTableModel.getValueAt(selectedRow, 0);
-            Guia guiaSeleccionado = buscarGuiaPorNombre(nombreCompleto);
+            String nombre = (String) guiasTableModel.getValueAt(selectedRow, 0);
+            String apellido = (String) guiasTableModel.getValueAt(selectedRow, 1);
+            GuiaDTO guiaSeleccionado = buscarGuiaPorNombreYApellido(nombre, apellido);
             if (guiaSeleccionado != null) {
                 new DetallesGuiaFrame(guiaSeleccionado).setVisible(true);
             }
@@ -159,9 +174,9 @@ public class BuscarGuiasPage extends JFrame {
         }
     }
 
-    private Guia buscarGuiaPorNombre(String nombreCompleto) {
-        for (Guia guia : guias) {
-            if (guia.getNombreCompleto().equals(nombreCompleto)) {
+    private GuiaDTO buscarGuiaPorNombreYApellido(String nombre, String apellido) {
+        for (GuiaDTO guia : guias) {
+            if (guia.getNombre().equals(nombre) && guia.getApellido().equals(apellido)) {
                 return guia;
             }
         }
@@ -171,82 +186,15 @@ public class BuscarGuiasPage extends JFrame {
     private void contratarGuia() {
         int selectedRow = guiasTable.getSelectedRow();
         if (selectedRow != -1) {
-            String nombreCompleto = (String) guiasTableModel.getValueAt(selectedRow, 0);
-            Guia guiaSeleccionado = buscarGuiaPorNombre(nombreCompleto);
+            String nombre = (String) guiasTableModel.getValueAt(selectedRow, 0);
+            String apellido = (String) guiasTableModel.getValueAt(selectedRow, 1);
+            GuiaDTO guiaSeleccionado = buscarGuiaPorNombreYApellido(nombre, apellido);
             if (guiaSeleccionado != null) {
                 // Implementar la lógica de contratación
                 JOptionPane.showMessageDialog(this, "Contratación de guía realizada con éxito.");
             }
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un guía para contratar.");
-        }
-    }
-
-    private List<Guia> cargarGuiasDesdeArchivo(String archivo) {
-        List<Guia> guias = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                String[] datos = linea.split(",");
-                if (datos.length == 6) {
-                    String nombre = datos[0];
-                    String apellido = datos[1];
-                    String ciudad = datos[2];
-                    String idiomas = datos[3];
-                    String servicios = datos[4];
-                    double puntuacion = Double.parseDouble(datos[5]);
-                    guias.add(new Guia(nombre, apellido, ciudad, idiomas, servicios, puntuacion));
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return guias;
-    }
-
-    class Guia {
-        private String nombre;
-        private String apellido;
-        private String ciudad;
-        private String idiomas;
-        private String servicios;
-        private double puntuacion;
-
-        public Guia(String nombre, String apellido, String ciudad, String idiomas, String servicios, double puntuacion) {
-            this.nombre = nombre;
-            this.apellido = apellido;
-            this.ciudad = ciudad;
-            this.idiomas = idiomas;
-            this.servicios = servicios;
-            this.puntuacion = puntuacion;
-        }
-
-        public String getNombre() {
-            return nombre;
-        }
-
-        public String getApellido() {
-            return apellido;
-        }
-
-        public String getCiudad() {
-            return ciudad;
-        }
-
-        public String getIdiomas() {
-            return idiomas;
-        }
-
-        public String getServicios() {
-            return servicios;
-        }
-
-        public double getPuntuacion() {
-            return puntuacion;
-        }
-
-        public String getNombreCompleto() {
-            return nombre + " " + apellido;
         }
     }
 
