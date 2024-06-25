@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class TuristaController {
-    private Turista turista;
+    private static Turista turista;
 
     public void registrarTurista(TuristaDTO turistaDTO, String password, Auth modoRegistro){
         IAuthenticacion autenticacion = this.convertAuth(modoRegistro);
@@ -58,8 +58,8 @@ public class TuristaController {
         };
     }
 
-    public List<GuiaDTO> buscarGuias(GuiaDTO guiaDTO) {
-        return Guia.buscarGuias(guiaDTO);
+    public List<GuiaDTO> buscarGuias(String nombre, String apellido, String idioma, String servicio, Double puntuacion, Pais pais) {
+        return Guia.buscarGuias(nombre, apellido, idioma, servicio, puntuacion, pais);
     }
 
     public void calificarGuia(Guia guia, Double puntuacion, String comentario) {

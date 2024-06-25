@@ -10,7 +10,7 @@ import modelos.interfaces.IAuthenticacion;
 import java.util.List;
 
 public class GuiaController {
-    private Guia guia;
+    private static Guia guia;
 
     public void registrarGuia(GuiaDTO guiaDTO, String password, Auth modoRegistro){
         

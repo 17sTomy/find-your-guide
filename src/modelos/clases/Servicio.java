@@ -23,6 +23,10 @@ public class Servicio {
     }
 
 
+    public String toString() {
+        return this.nombre;
+    }
+
     public Double getPrecio() {
         // TODO implement here
         return null;

@@ -1,11 +1,15 @@
 import controladores.GuiaController;
+import controladores.TuristaController;
 import controladores.ViajeController;
 import enums.*;
 import modelos.clases.*;
 import modelos.dtos.GuiaDTO;
+import modelos.dtos.TuristaDTO;
 import modelos.dtos.ViajeDTO;
 import modelos.interfaces.IAdapterCredencial;
+import vistas.turistatest.BuscarGuiasView;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,7 +29,7 @@ public class Main {
                 "123456789",
                 "ruta/a/la/foto.jpg",
                 autenticacion
-        );/*
+        );
 
         TuristaDTO nuevoTuristaDTO = new TuristaDTO(turista);
 
@@ -35,7 +39,11 @@ public class Main {
         // Modo de inicio de sesión (por ejemplo, autenticación básica)
         Auth modoLogin = Auth.BASICO;
 
-        // Registrar al nuevo turista
+        // Crear instancia de turistaController
+        TuristaController turistaController = new TuristaController();
+
+
+        //Registrar al nuevo turista
         turistaController.registrarTurista(nuevoTuristaDTO, "password123", modoRegistro);
 
         // Datos de inicio de sesión
@@ -43,7 +51,7 @@ public class Main {
         String password = "password123";
 
         // Iniciar sesión del turista
-        turistaController.loginTurista(email, password, modoLogin);*/
+        turistaController.loginTurista(email, password, modoLogin);
 
 
         //////////////////
@@ -81,19 +89,22 @@ public class Main {
         guiaController.registrarGuia(guiaDTO, "123", Auth.BASICO);
         guiaController.loginGuia("jose@example.com", "123", Auth.BASICO);
 
+        SwingUtilities.invokeLater(() -> {
+            new BuscarGuiasView(turistaController).setVisible(true);
+        });
 
         //////////////////
         // PRUEBA VIAJE //
         //////////////////
-        ViajeController viajeController = new ViajeController();
+        //ViajeController viajeController = new ViajeController();
 
-        ViajeDTO viajeDTO = new ViajeDTO(
-                Ciudad.ABU_DABI, Pais.ALBANIA,
-                LocalDate.of(2024, 6, 20),
-                LocalDate.of(2024, 7, 5)
-        );
+        //ViajeDTO viajeDTO = new ViajeDTO(
+        //        Ciudad.ABU_DABI, Pais.ALBANIA,
+        //        LocalDate.of(2024, 6, 20),
+        //        LocalDate.of(2024, 7, 5)
+        //);
 
-        viajeController.crearViaje(viajeDTO, "juan@example.com", "jose@example.com");
+        //viajeController.crearViaje(viajeDTO, "juan@example.com", "jose@example.com");
 
 
 

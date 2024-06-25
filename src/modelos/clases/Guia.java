@@ -27,27 +27,21 @@ public class Guia extends Usuario {
         this.idiomas = idiomas;
     }
 
-    public static List<GuiaDTO> buscarGuias(GuiaDTO guiaDTO) {
+    public static List<GuiaDTO> buscarGuias(String nombre, String apellido, String idioma, String servicio, Double puntuacion, Pais pais) {
         List<Guia> guias = DataBase.getInstance().getGuias();
         return guias.stream()
                 .filter(guia ->
-                        (guiaDTO.getNombre() == null || guia.getNombre().equalsIgnoreCase(guiaDTO.getNombre())) &&
-                        (guiaDTO.getApellido() == null || guia.getApellido().equalsIgnoreCase(guiaDTO.getApellido())) &&
-                        (guiaDTO.getIdiomas() == null || guiaDTO.getIdiomas().stream().anyMatch(idioma -> guia.getIdiomas().contains(idioma))) &&
-                        (guiaDTO.getServicios() == null || guiaDTO.getServicios().stream().anyMatch(servicioDTO ->
-                                guia.getServicios().stream().anyMatch(servicio ->
-                                        (servicioDTO.getNombre() == null || servicio.getNombre().equalsIgnoreCase(servicioDTO.getNombre())) &&
-                                        (servicioDTO.getDescripcion() == null || servicio.getDescripcion().equalsIgnoreCase(servicioDTO.getDescripcion())) &&
-                                        (servicioDTO.getPrecio() == null || servicio.getPrecio().equals(servicioDTO.getPrecio()))
-                                )
-                        )) &&
-                        (guiaDTO.getPuntuacion() == 0.0 || guia.getPuntuacion() >= guiaDTO.getPuntuacion()) &&
-                        (guiaDTO.getPais() == null || guia.getPais() == guiaDTO.getPais()) &&
-                        (guiaDTO.getCiudad() == null || guia.getCiudad() == guiaDTO.getCiudad())
+                        (nombre == null || guia.getNombre().equalsIgnoreCase(nombre)) &&
+                                (apellido == null || guia.getApellido().equalsIgnoreCase(apellido)) &&
+                                (idioma == null || guia.getIdiomas().stream().anyMatch(i -> i.name().equalsIgnoreCase(idioma))) &&
+                                (servicio == null || guia.getServicios().stream().anyMatch(s -> s.getNombre().equalsIgnoreCase(servicio))) &&
+                                (puntuacion == null || guia.getPuntuacion() >= puntuacion) &&
+                                (pais == null || guia.getPais() == pais)
                 )
                 .map(GuiaDTO::new)
                 .collect(Collectors.toList());
     }
+
 
     public Double getPuntuacion() {
         List<Reseña> resenias = DataBase.getInstance().getReseñasPorGuia(this);
@@ -89,7 +83,7 @@ public class Guia extends Usuario {
     }
 
     public List<Reseña> getReseñas(String email) {
-        List<Reseña> reseñas = DataBase.getInstance().getViajesPorTurista();
+        List<Reseña> reseñas = DataBase.getInstance().getReseñasPorEmail(email);
         return reseñas;
     }
 }
