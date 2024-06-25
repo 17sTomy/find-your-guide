@@ -27,7 +27,7 @@ public class Guia extends Usuario {
         this.idiomas = idiomas;
     }
 
-    public static List<GuiaDTO> buscarGuias(String nombre, String apellido, String idioma, String servicio, Double puntuacion, Pais pais) {
+    public static List<GuiaDTO> buscarGuias(String nombre, String apellido, String idioma, String servicio, Double puntuacion, Pais pais, Ciudad ciudad) {
         List<Guia> guias = DataBase.getInstance().getGuias();
         return guias.stream()
                 .filter(guia ->
@@ -36,11 +36,13 @@ public class Guia extends Usuario {
                                 (idioma == null || guia.getIdiomas().stream().anyMatch(i -> i.name().equalsIgnoreCase(idioma))) &&
                                 (servicio == null || guia.getServicios().stream().anyMatch(s -> s.getNombre().equalsIgnoreCase(servicio))) &&
                                 (puntuacion == null || guia.getPuntuacion() >= puntuacion) &&
-                                (pais == null || guia.getPais() == pais)
+                                (pais == null || guia.getPais() == pais) &&
+                                (ciudad == null || guia.getCiudad() == ciudad)
                 )
                 .map(GuiaDTO::new)
                 .collect(Collectors.toList());
     }
+
 
 
     public Double getPuntuacion() {

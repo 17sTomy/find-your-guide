@@ -58,8 +58,8 @@ public class TuristaController {
         };
     }
 
-    public List<GuiaDTO> buscarGuias(String nombre, String apellido, String idioma, String servicio, Double puntuacion, Pais pais) {
-        return Guia.buscarGuias(nombre, apellido, idioma, servicio, puntuacion, pais);
+    public List<GuiaDTO> buscarGuias(String nombre, String apellido, String idioma, String servicio, Double puntuacion, Pais pais, Ciudad ciudad) {
+        return Guia.buscarGuias(nombre, apellido, idioma, servicio, puntuacion, pais, ciudad);
     }
 
     public void calificarGuia(Guia guia, Double puntuacion, String comentario) {

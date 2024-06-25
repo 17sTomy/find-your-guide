@@ -45,10 +45,14 @@ public class BuscarGuiasView extends JFrame {
 
         panelBusqueda.add(new JLabel("País:"));
         paisComboBox = new JComboBox<>(Pais.values());
+        paisComboBox.insertItemAt(null, 0); // Permitir selección nula
+        paisComboBox.setSelectedIndex(0); // Seleccionar por defecto
         panelBusqueda.add(paisComboBox);
 
         panelBusqueda.add(new JLabel("Ciudad:"));
         ciudadComboBox = new JComboBox<>(Ciudad.values());
+        ciudadComboBox.insertItemAt(null, 0); // Permitir selección nula
+        ciudadComboBox.setSelectedIndex(0); // Seleccionar por defecto
         panelBusqueda.add(ciudadComboBox);
 
         panelBusqueda.add(new JLabel("Idiomas (separados por coma):"));
@@ -89,9 +93,10 @@ public class BuscarGuiasView extends JFrame {
         String servicio = serviciosField.getText().isEmpty() ? null : serviciosField.getText();
         Double puntuacion = puntuacionField.getText().isEmpty() ? null : Double.parseDouble(puntuacionField.getText());
         Pais pais = (Pais) paisComboBox.getSelectedItem();
+        Ciudad ciudad = (Ciudad) ciudadComboBox.getSelectedItem();
 
         // Llamar al método del controlador para buscar guías
-        List<GuiaDTO> resultados = turistaController.buscarGuias(nombre, apellido, idioma, servicio, puntuacion, pais);
+        List<GuiaDTO> resultados = turistaController.buscarGuias(nombre, apellido, idioma, servicio, puntuacion, pais, ciudad);
 
         // Verificar si se obtuvieron resultados
         if (resultados.isEmpty()) {
@@ -118,3 +123,4 @@ public class BuscarGuiasView extends JFrame {
     }
 
 }
+
