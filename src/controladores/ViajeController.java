@@ -26,8 +26,12 @@ public class ViajeController {
         db.addViaje(nuevoViaje);
     }
 
-    public void pagarFactura(Viaje viaje){
-        viaje.getFactura().pagarFactura();
+    public void pagarTotalFactura(Viaje viaje){
+        viaje.getFactura().pagarTotalFactura();
+    }
+
+    public void pagarAnticipoFactura(Viaje viaje){
+        viaje.getFactura().pagarAnticipoFactura();
     }
 
     public void aceptarReserva(Viaje viaje){

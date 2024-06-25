@@ -39,6 +39,7 @@ public class Viaje {
         reserva = new Reserva();
         this.turista = turista;
         this.guia = guia;
+        this.crearFactura();
         this.setAnticipo();
         this.notificarReservaRealizada();
     }
@@ -142,6 +143,7 @@ public class Viaje {
     public Double getAnticipo() {
         return anticipo;
     }
+
 
     public void setAnticipo() {
         this.anticipo = 50.00;
