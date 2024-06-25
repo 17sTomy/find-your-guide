@@ -64,5 +64,7 @@ public class GuiaDTO extends UsuarioDTO {
     public List<Idioma> getIdiomas() {
         return idiomas;
     }
+
+
 }
 

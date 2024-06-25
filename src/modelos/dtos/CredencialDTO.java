@@ -3,23 +3,37 @@ package modelos.dtos;
 import java.util.stream.Stream;
 
 public class CredencialDTO {
+    private String idCredencial;
+    private String fotoCredencial;
+    private Boolean habilitado;
 
-    private Stream fotoCredencial;
-    private String acreditacion;
+    public CredencialDTO(String idCredencial, String fotoCredencial, Boolean habilitado) {
+        this.idCredencial = idCredencial;
+        this.fotoCredencial = fotoCredencial;
+        this.habilitado = habilitado;
+    }
 
-    public Stream getFotoCredencial() {
+    public String getIdCredencial() {
+        return idCredencial;
+    }
+
+    public void setIdCredencial(String idCredencial) {
+        this.idCredencial = idCredencial;
+    }
+
+    public String getFotoCredencial() {
         return fotoCredencial;
     }
 
-    public void setFotoCredencial(Stream fotoCredencial) {
+    public void setFotoCredencial(String fotoCredencial) {
         this.fotoCredencial = fotoCredencial;
     }
 
-    public String getAcreditacion() {
-        return acreditacion;
+    public Boolean getHabilitado() {
+        return habilitado;
     }
 
-    public void setAcreditacion(String acreditacion) {
-        this.acreditacion = acreditacion;
+    public void setHabilitado(Boolean habilitado) {
+        this.habilitado = habilitado;
     }
 }

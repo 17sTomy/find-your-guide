@@ -51,9 +51,7 @@ public class GuiaController {
     }
 
 
-    public List<GuiaDTO> buscarGuias(GuiaDTO guiaDTO) {
-        return guia.buscarGuias(guiaDTO);
-    }
+
 
     public IAuthenticacion convertAuth(Auth modo) {
         return switch (modo) {
@@ -65,11 +63,15 @@ public class GuiaController {
         };
     }
 
-    public void agregarServicio(Servicio servicio) {
-        guia.setServicio(servicio);
+    public void agregarServicio(String nombre, String descripcion, Double precio) {
+        guia.setServicio(nombre, descripcion, precio);
     }
 
-    public void eliminarServicio(Servicio servicio) {
-        guia.removeServicio(servicio);
+    public void eliminarServicio(String nombre) {
+        guia.removeServicio(nombre);
+    }
+
+    public List<Reseña> getReseñas(String email) {
+        return guia.getReseñas(email);
     }
 }
