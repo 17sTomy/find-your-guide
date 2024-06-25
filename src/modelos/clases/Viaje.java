@@ -3,11 +3,13 @@ package modelos.clases;
 import controladores.ViajeController;
 import enums.Ciudad;
 import enums.Pais;
+import modelos.DataBase;
 import modelos.dtos.ViajeDTO;
 import modelos.interfaces.IEstadoViaje;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 /**
  * 
@@ -172,5 +174,10 @@ public class Viaje {
 
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public static List<Viaje> getViajes(String email) {
+        List<Viaje> viajes = DataBase.getInstance().getViajesPorEmail(email);
+        return viajes;
     }
 }

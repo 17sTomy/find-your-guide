@@ -61,7 +61,9 @@ public class ViajeController {
         }
     }
 
-
+    public List<Viaje> getViajes(String email) {
+        return Viaje.getViajes(email);
+    }
 
 
 }

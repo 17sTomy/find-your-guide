@@ -74,6 +74,15 @@ public class DataBase {
         return new ArrayList<>();
     }
 
+    public List<Reseña> getReseñasPorEmail(String email) {
+        if (reseñas != null) {
+            return reseñas.stream()
+                    .filter(reseña -> reseña.getGuia().getEmail().equals(email))
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<>();
+    }
+
     public List<Reseña> getReseñasPorTurista(Turista turista) {
         if (reseñas != null) {
             return reseñas.stream()
@@ -100,6 +109,17 @@ public class DataBase {
         return new ArrayList<>();
 
     }
+
+    public List<Viaje> getViajesPorEmail(String email){
+        if (viajes != null) {
+            return viajes.stream()
+                    .filter(viaje -> viaje.getTurista().getEmail().equals(email))
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<>();
+
+    }
+
     public List<Viaje> getViajesPorGuia(Guia guia){
         if (viajes != null) {
             return viajes.stream()

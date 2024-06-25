@@ -27,7 +27,7 @@ public class Guia extends Usuario {
         this.idiomas = idiomas;
     }
 
-    public List<GuiaDTO> buscarGuias(GuiaDTO guiaDTO) {
+    public static List<GuiaDTO> buscarGuias(GuiaDTO guiaDTO) {
         List<Guia> guias = DataBase.getInstance().getGuias();
         return guias.stream()
                 .filter(guia ->
@@ -73,15 +73,23 @@ public class Guia extends Usuario {
         return servicios;
     }
 
-    public void setServicio(Servicio servicio) {
+    public void setServicio(String nombre, String descripcion, Double precio) {
+        Servicio servicio = new Servicio(nombre, descripcion, precio);
         this.servicios.add(servicio);
     }
 
-    public void removeServicio(Servicio servicio) {
-        this.servicios.remove(servicio);
+    public void removeServicio(String nombre) {
+        if (this.servicios != null) {
+            this.servicios.removeIf(servicio -> servicio.getNombre().equalsIgnoreCase(nombre));
+        }
     }
 
     public Credencial getCredencial() {
         return credencial;
+    }
+
+    public List<Reseña> getReseñas(String email) {
+        List<Reseña> reseñas = DataBase.getInstance().getViajesPorTurista();
+        return reseñas;
     }
 }

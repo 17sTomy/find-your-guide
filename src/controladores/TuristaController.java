@@ -5,6 +5,7 @@ import enums.Ciudad;
 import enums.Pais;
 import modelos.DataBase;
 import modelos.clases.*;
+import modelos.dtos.GuiaDTO;
 import modelos.dtos.TuristaDTO;
 import modelos.dtos.UsuarioDTO;
 import modelos.dtos.ViajeDTO;
@@ -55,6 +56,10 @@ public class TuristaController {
             case FACEBOOK -> new RegistroFacebook();
             default -> null;
         };
+    }
+
+    public List<GuiaDTO> buscarGuias(GuiaDTO guiaDTO) {
+        return Guia.buscarGuias(guiaDTO);
     }
 
     public void calificarGuia(Guia guia, Double puntuacion, String comentario) {
