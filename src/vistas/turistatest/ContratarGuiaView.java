@@ -2,11 +2,12 @@ package vistas.turistatest;
 
 import controladores.TuristaController;
 import controladores.ViajeController;
+import controladores.GuiaController;
 import modelos.dtos.GuiaDTO;
 import modelos.clases.Servicio;
 import enums.Ciudad;
 import enums.Pais;
-import modelos.dtos.TuristaDTO;
+import modelos.clases.Reseña;
 import modelos.dtos.ViajeDTO;
 
 import javax.swing.*;
@@ -20,6 +21,7 @@ import java.util.List;
 public class ContratarGuiaView extends JFrame {
     private TuristaController turistaController;
     private ViajeController viajeController;
+    private GuiaController guiaController;
     private String emailGuia;
     private Ciudad ciudad;
     private Pais pais;
@@ -31,29 +33,73 @@ public class ContratarGuiaView extends JFrame {
     public ContratarGuiaView(TuristaController turistaController, String emailGuia, Ciudad ciudad, Pais pais) {
         this.turistaController = turistaController;
         this.viajeController = new ViajeController();
+        this.guiaController = new GuiaController();
         this.emailGuia = emailGuia;
         this.ciudad = ciudad;
         this.pais = pais;
 
         setTitle("Contratar Guía");
-        setSize(400, 400);
+        setSize(600, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel(new BorderLayout());
-        JPanel panelServicios = new JPanel();
-        panelServicios.setLayout(new BoxLayout(panelServicios, BoxLayout.Y_AXIS));
+        JPanel panelPrincipal = new JPanel(new BorderLayout());
 
-        // Obtener servicios del guía
+        // Panel de Información
+        JPanel panelInfo = new JPanel();
+        panelInfo.setLayout(new BoxLayout(panelInfo, BoxLayout.Y_AXIS));
+        panelInfo.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Obtener información del guía
         GuiaDTO guia = turistaController.getGuiaByEmail(emailGuia);
-        System.out.println(emailGuia);
-        System.out.println(guia);
-        List<Servicio> servicios = guia.getServicios();
-        for (Servicio servicio : servicios) {
-            panelServicios.add(new JLabel(servicio.getNombre() + " - " + servicio.getDescripcion() + " - $" + servicio.getPrecio()));
+
+        // Panel de credenciales
+        JPanel panelCredencial = new JPanel(new BorderLayout());
+        panelCredencial.setBorder(BorderFactory.createTitledBorder("Credenciales"));
+        panelCredencial.setBackground(Color.WHITE);
+
+        JLabel puntuacionLabel = new JLabel("Puntuación: " + guia.getPuntuacion());
+        puntuacionLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        puntuacionLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        panelCredencial.add(puntuacionLabel, BorderLayout.NORTH);
+
+        JTextArea reseñasArea = new JTextArea(5, 30);
+        reseñasArea.setEditable(false);
+        reseñasArea.setLineWrap(true);
+        reseñasArea.setWrapStyleWord(true);
+        reseñasArea.setBorder(BorderFactory.createTitledBorder("Reseñas"));
+
+        // Obtener reseñas del controlador
+        List<Reseña> reseñas = guiaController.getReseñas(emailGuia);
+        for (Reseña reseña : reseñas) {
+            reseñasArea.append("• " + reseña.getComentario() + "\n");
         }
 
-        JPanel panelFechas = new JPanel(new GridLayout(3, 2));
+        JScrollPane reseñasScrollPane = new JScrollPane(reseñasArea);
+        panelCredencial.add(reseñasScrollPane, BorderLayout.CENTER);
+
+        panelInfo.add(panelCredencial);
+
+        // Panel de servicios
+        JPanel panelServicios = new JPanel();
+        panelServicios.setBorder(BorderFactory.createTitledBorder("Servicios"));
+        panelServicios.setLayout(new BoxLayout(panelServicios, BoxLayout.Y_AXIS));
+        panelServicios.setBackground(Color.WHITE);
+
+        List<Servicio> servicios = guia.getServicios();
+        for (Servicio servicio : servicios) {
+            JLabel servicioLabel = new JLabel(servicio.getNombre() + " - " + servicio.getDescripcion() + " - $" + servicio.getPrecio());
+            servicioLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+            panelServicios.add(servicioLabel);
+        }
+
+        panelInfo.add(panelServicios);
+
+        // Panel de fechas y resumen
+        JPanel panelFechas = new JPanel(new GridLayout(3, 2, 10, 10));
+        panelFechas.setBorder(BorderFactory.createTitledBorder("Seleccionar Fechas"));
+        panelFechas.setBackground(Color.WHITE);
+
         panelFechas.add(new JLabel("Fecha de Inicio (YYYY-MM-DD):"));
         fechaInicioField = new JTextField();
         panelFechas.add(fechaInicioField);
@@ -69,10 +115,10 @@ public class ContratarGuiaView extends JFrame {
         resumenLabel = new JLabel();
         panelFechas.add(resumenLabel);
 
-        panel.add(panelServicios, BorderLayout.CENTER);
-        panel.add(panelFechas, BorderLayout.SOUTH);
+        panelPrincipal.add(panelInfo, BorderLayout.CENTER);
+        panelPrincipal.add(panelFechas, BorderLayout.SOUTH);
 
-        add(panel);
+        add(panelPrincipal);
 
         // Evento para habilitar el botón de contratar cuando se ingresen las fechas
         ActionListener fechaListener = e -> contratarButton.setEnabled(!fechaInicioField.getText().isEmpty() && !fechaFinField.getText().isEmpty());
@@ -89,7 +135,7 @@ public class ContratarGuiaView extends JFrame {
     }
 
     private void crearViaje() {
-        //try {
+        try {
             LocalDate fechaInicio = LocalDate.parse(fechaInicioField.getText(), DateTimeFormatter.ISO_LOCAL_DATE);
             LocalDate fechaFin = LocalDate.parse(fechaFinField.getText(), DateTimeFormatter.ISO_LOCAL_DATE);
 
@@ -97,14 +143,9 @@ public class ContratarGuiaView extends JFrame {
 
             ViajeDTO viajeDTO = new ViajeDTO(ciudad, pais, fechaInicio, fechaFin);
             viajeController.crearViaje(viajeDTO, emailTurista, emailGuia);
-            //boolean disponible = viajeController.crearViaje(viajeDTO, emailTurista, emailGuia);
-            //if (disponible) {
-            //    resumenLabel.setText("Guía contratado exitosamente.");
-            //} else {
-            //    JOptionPane.showMessageDialog(this, "Las fechas no están disponibles.", "Error", JOptionPane.ERROR_MESSAGE);
-            //}
-        //} catch (Exception ex) {
-        //    JOptionPane.showMessageDialog(this, "Error al contratar el guía: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        //}
+            resumenLabel.setText("Guía contratado exitosamente.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al contratar el guía: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
