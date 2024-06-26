@@ -28,6 +28,8 @@ public class Viaje {
     private Ciudad ciudadDestino;
     private IEstadoViaje estadoViaje;
     private Notificador notificador;
+    private int id;
+    private static int contadorID = 0;
 
     /**
      * Default constructor
@@ -39,6 +41,7 @@ public class Viaje {
         paisDestino = viajeDTO.getPaisDestino();
         estadoViaje = new Activo(this);
         reserva = new Reserva();
+        this.id = generarID();
         this.turista = turista;
         this.guia = guia;
         this.crearFactura();
@@ -60,6 +63,14 @@ public class Viaje {
         notificador = new Notificador();
         notificador.cambiarEstrategia(new Push());
         notificador.enviar(notificacion);
+    }
+
+    private static int generarID(){
+        return contadorID++;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void notificarResenia() {
