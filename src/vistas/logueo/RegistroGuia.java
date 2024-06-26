@@ -4,15 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class RegistroGuia {
     private JFrame frame;
+    private File selectedImageFile; // Variable para almacenar la foto de perfil seleccionada
 
     public RegistroGuia() {
         // Crear el frame principal
         frame = new JFrame("Registro de Guía");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
+        frame.setSize(500, 600); // Aumentar el tamaño para acomodar los nuevos elementos
         frame.setLayout(new BorderLayout());
 
         // Crear el panel superior con el título
@@ -41,50 +43,85 @@ public class RegistroGuia {
         gbc.gridy = 0;
         gbc.weightx = 0.1;
         gbc.gridwidth = 1;
-        centerPanel.add(new JLabel("Correo Electrónico:"), gbc);
+        centerPanel.add(new JLabel("Nombre:"), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
+        JTextField nameField = new JTextField(20);
+        centerPanel.add(nameField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        centerPanel.add(new JLabel("Apellido:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        JTextField surnameField = new JTextField(20);
+        centerPanel.add(surnameField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        centerPanel.add(new JLabel("Sexo:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"Masculino", "Femenino"});
+        centerPanel.add(genderComboBox, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        centerPanel.add(new JLabel("DNI:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        JTextField dniField = new JTextField(20);
+        centerPanel.add(dniField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        centerPanel.add(new JLabel("Correo Electrónico:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
         JTextField emailField = new JTextField(20);
         centerPanel.add(emailField, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 5;
         centerPanel.add(new JLabel("Contraseña:"), gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 5;
         JPasswordField passwordField = new JPasswordField(20);
         centerPanel.add(passwordField, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 6;
         centerPanel.add(new JLabel("Confirmar Contraseña:"), gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 2;
+        gbc.gridy = 6;
         JPasswordField confirmPasswordField = new JPasswordField(20);
         centerPanel.add(confirmPasswordField, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 3;
-        centerPanel.add(new JLabel("ID de Credencial:"), gbc);
+        gbc.gridy = 7;
+        centerPanel.add(new JLabel("Teléfono:"), gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 3;
-        JTextField credentialIdField = new JTextField(20);
-        centerPanel.add(credentialIdField, gbc);
+        gbc.gridy = 7;
+        JTextField phoneField = new JTextField(20);
+        centerPanel.add(phoneField, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 4;
-        centerPanel.add(new JLabel("Cargar Credencial:"), gbc);
+        gbc.gridy = 8;
+        centerPanel.add(new JLabel("Foto de Perfil:"), gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 4;
-        gbc.gridwidth = 1;
-        JButton uploadCredentialButton = new JButton("Cargar Archivo");
-        centerPanel.add(uploadCredentialButton, gbc);
+        gbc.gridy = 8;
+        JButton uploadProfilePictureButton = new JButton("Cargar Foto");
+        centerPanel.add(uploadProfilePictureButton, gbc);
 
         // Crear el panel inferior con el botón de registro y botones de terceros
         JPanel bottomPanel = new JPanel();
@@ -133,13 +170,25 @@ public class RegistroGuia {
         frame.setVisible(true);
 
         // Añadir listeners a los botones (acciones a realizar)
-        uploadCredentialButton.addActionListener(new ActionListener() {
+        uploadProfilePictureButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
+                    @Override
+                    public boolean accept(File f) {
+                        return f.isDirectory() || f.getName().toLowerCase().endsWith(".jpg");
+                    }
+
+                    @Override
+                    public String getDescription() {
+                        return "Archivos JPG (*.jpg)";
+                    }
+                });
                 int returnValue = fileChooser.showOpenDialog(null);
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    System.out.println("Archivo seleccionado: " + fileChooser.getSelectedFile().getAbsolutePath());
+                    selectedImageFile = fileChooser.getSelectedFile();
+                    JOptionPane.showMessageDialog(frame, "Foto de perfil cargada: " + selectedImageFile.getName());
                 }
             }
         });
@@ -150,13 +199,13 @@ public class RegistroGuia {
                 // Validar que las contraseñas coincidan y la ID de credencial sea válida
                 String password = new String(passwordField.getPassword());
                 String confirmPassword = new String(confirmPasswordField.getPassword());
-                String credentialId = credentialIdField.getText();
 
-                if (credentialId.isEmpty()) {
-                    JOptionPane.showMessageDialog(frame, "Ingrese el ID de credencial.", "Error", JOptionPane.ERROR_MESSAGE);
-                } else if (!password.equals(confirmPassword)) {
+                if (!password.equals(confirmPassword)) {
                     JOptionPane.showMessageDialog(frame, "Las contraseñas no coinciden.", "Error", JOptionPane.ERROR_MESSAGE);
+                } else if (selectedImageFile == null || !selectedImageFile.getName().endsWith(".jpg")) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, cargue una foto de perfil válida en formato JPG.", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
+                    // Lógica adicional para el registro
                     JOptionPane.showMessageDialog(frame, "Registro de guía exitoso.");
                 }
             }
@@ -209,14 +258,5 @@ public class RegistroGuia {
         }
 
         return button;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new RegistroGuia();
-            }
-        });
     }
 }
