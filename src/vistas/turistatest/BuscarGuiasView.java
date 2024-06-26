@@ -23,6 +23,7 @@ public class BuscarGuiasView extends JFrame {
     private JTextField serviciosField;
     private JTextField puntuacionField;
     private JButton buscarButton;
+    private JButton contratarButton;
     private JTable resultadosTable;
 
     public BuscarGuiasView(TuristaController turistaController) {
@@ -34,7 +35,7 @@ public class BuscarGuiasView extends JFrame {
         setLocationRelativeTo(null);
 
         // Panel de criterios de búsqueda
-        JPanel panelBusqueda = new JPanel(new GridLayout(8, 2));
+        JPanel panelBusqueda = new JPanel(new GridLayout(9, 2));
         panelBusqueda.add(new JLabel("Nombre:"));
         nombreField = new JTextField();
         panelBusqueda.add(nombreField);
@@ -74,14 +75,36 @@ public class BuscarGuiasView extends JFrame {
         add(panelBusqueda, BorderLayout.NORTH);
 
         // Tabla de resultados
-        resultadosTable = new JTable(new DefaultTableModel(new Object[]{"Nombre", "Apellido", "País", "Ciudad", "Idiomas", "Servicios", "Puntuación"}, 0));
+        resultadosTable = new JTable(new DefaultTableModel(new Object[]{"Nombre", "Apellido", "Email", "País", "Ciudad", "Idiomas", "Servicios", "Puntuación"}, 0));
         add(new JScrollPane(resultadosTable), BorderLayout.CENTER);
+
+        // Botón para contratar guía
+        contratarButton = new JButton("Contratar");
+        contratarButton.setEnabled(false); // Desactivar hasta que se seleccione un guía
+        add(contratarButton, BorderLayout.SOUTH);
 
         // Evento del botón de búsqueda
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 buscarGuias();
+            }
+        });
+
+        // Evento del botón de contratar
+        contratarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contratarGuia();
+            }
+        });
+
+        // Evento de selección de la tabla
+        resultadosTable.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting() && resultadosTable.getSelectedRow() != -1) {
+                contratarButton.setEnabled(true);
+            } else {
+                contratarButton.setEnabled(false);
             }
         });
     }
@@ -113,6 +136,7 @@ public class BuscarGuiasView extends JFrame {
             model.addRow(new Object[]{
                     guia.getNombre(),
                     guia.getApellido(),
+                    guia.getEmail(),
                     guia.getPais().toString(),
                     guia.getCiudad().toString(),
                     guia.getIdiomas().toString(),
@@ -122,5 +146,16 @@ public class BuscarGuiasView extends JFrame {
         }
     }
 
-}
+    private void contratarGuia() {
+        int selectedRow = resultadosTable.getSelectedRow();
+        if (selectedRow != -1) {
+            String emailGuia = (String) resultadosTable.getValueAt(selectedRow, 2); // Suponiendo que el email está en la tercera columna
+            System.out.println(emailGuia);
+            Ciudad ciudad = Ciudad.valueOf((String) resultadosTable.getValueAt(selectedRow, 4)); // Suponiendo que la ciudad está en la cuarta columna
+            Pais pais = Pais.valueOf((String) resultadosTable.getValueAt(selectedRow, 3)); // Suponiendo que el país está en la tercera columna
+            System.out.println(pais);
+            new ContratarGuiaView(turistaController, emailGuia, ciudad, pais).setVisible(true);
+        }
+    }
 
+}
