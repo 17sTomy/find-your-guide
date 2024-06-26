@@ -7,6 +7,7 @@ import enums.Sexo;
 import modelos.clases.Credencial;
 import modelos.clases.Guia;
 import modelos.clases.Servicio;
+import modelos.clases.SistemaVerificacionIA;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class GuiaDTO extends UsuarioDTO {
     private List<Servicio> servicios;
     private Pais pais;
     private Ciudad ciudad;
-    private Credencial credencial;
+    private CredencialDTO credencialDTO;
     private List<Idioma> idiomas;
     private Double puntuacion;
 
@@ -24,17 +25,17 @@ public class GuiaDTO extends UsuarioDTO {
         this.servicios = guia.getServicios();
         this.pais = guia.getPais();
         this.ciudad = guia.getCiudad();
-        this.credencial = guia.getCredencial();
+        this.credencialDTO = convertirCredencialDTO(guia.getCredencial());
         this.idiomas = guia.getIdiomas();
         this.puntuacion = guia.getPuntuacion();
     }
 
-    public GuiaDTO(String nombre, String apellido, String dni, Sexo sexo, String email, String numTelefono, String fotoPerfil, String auth, List<Servicio> servicios, Pais pais, Ciudad ciudad, Credencial credencial, List<Idioma> idiomas, Double puntuacion) {
+    public GuiaDTO(String nombre, String apellido, String dni, Sexo sexo, String email, String numTelefono, String fotoPerfil, String auth, List<Servicio> servicios, Pais pais, Ciudad ciudad, CredencialDTO credencial, List<Idioma> idiomas, Double puntuacion) {
         super(nombre, apellido, dni, sexo, email, numTelefono, fotoPerfil, auth);
         this.servicios = servicios;
         this.pais = pais;
         this.ciudad = ciudad;
-        this.credencial = credencial;
+        this.credencialDTO = credencial;
         this.idiomas = idiomas;
         this.puntuacion = puntuacion;
     }
@@ -54,6 +55,11 @@ public class GuiaDTO extends UsuarioDTO {
     }
 
     public Credencial getCredencial() {
+        Credencial credencial = new Credencial(
+                credencialDTO.getIdCredencial(),
+                credencialDTO.getFotoCredencial(),
+                new SistemaVerificacionIA()
+        );
         return credencial;
     }
 
@@ -65,6 +71,15 @@ public class GuiaDTO extends UsuarioDTO {
         return idiomas;
     }
 
-
+    private CredencialDTO convertirCredencialDTO(Credencial credencial) {
+        if (credencial == null) {
+            return null;
+        }
+        return new CredencialDTO(
+                credencial.getIdCredencial(),
+                credencial.getFotoCredencial(),
+                credencial.getHabilitado()
+        );
+    }
 }
 
