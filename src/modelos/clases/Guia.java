@@ -5,6 +5,7 @@ import enums.Idioma;
 import enums.Pais;
 import enums.Sexo;
 import modelos.DataBase;
+import modelos.dtos.CredencialDTO;
 import modelos.dtos.GuiaDTO;
 import modelos.interfaces.IAuthenticacion;
 
@@ -83,6 +84,7 @@ public class Guia extends Usuario {
     public Credencial getCredencial() {
         return credencial;
     }
+
 
     public List<Reseña> getReseñas(String email) {
         List<Reseña> reseñas = DataBase.getInstance().getReseñasPorEmail(email);
