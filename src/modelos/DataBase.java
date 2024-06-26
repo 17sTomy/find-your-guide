@@ -111,6 +111,15 @@ public class DataBase {
 
     }
 
+    public Viaje getViajeById(int id){
+        for (Viaje viaje : viajes) {
+            if (viaje.getId() == (id)) {
+                return viaje;
+            }
+        }
+        return null;
+    }
+
     public List<Viaje> getViajesPorEmail(String email){
         if (viajes != null) {
             return viajes.stream()
