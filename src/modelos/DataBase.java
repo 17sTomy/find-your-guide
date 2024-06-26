@@ -15,6 +15,7 @@ public class DataBase {
     private DataBase() {
         usuarios = new ArrayList<>();
         reseñas = new ArrayList<>();
+        viajes = new ArrayList<>();
     }
 
     public static DataBase getInstance() {

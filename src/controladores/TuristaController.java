@@ -58,6 +58,12 @@ public class TuristaController {
         };
     }
 
+    public GuiaDTO getGuiaByEmail(String email) {
+        DataBase db = DataBase.getInstance();
+        Guia guia = (Guia) db.getUsuarioByEmail(email);
+        return new GuiaDTO(guia);
+    }
+
     public List<GuiaDTO> buscarGuias(String nombre, String apellido, String idioma, String servicio, Double puntuacion, Pais pais, Ciudad ciudad) {
         return Guia.buscarGuias(nombre, apellido, idioma, servicio, puntuacion, pais, ciudad);
     }
@@ -95,4 +101,11 @@ public class TuristaController {
         }
         return false;
     }
+
+    public TuristaDTO getTuristaDTO() {
+        return new TuristaDTO(this.turista);
+    }
+
+
+
 }
