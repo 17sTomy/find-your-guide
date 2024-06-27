@@ -15,6 +15,10 @@ public class Iniciado implements IEstadoViaje {
 
     }
 
+    public String toString(){
+        return "Iniciado";
+    }
+
     public void cancelarViaje(Viaje viaje) {
         System.out.println("Viaje cancelado");
         viaje.cambiarEstado(new Cancelado());

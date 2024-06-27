@@ -6,6 +6,7 @@ import controladores.ViajeController;
 import enums.Ciudad;
 import enums.Pais;
 import modelos.dtos.GuiaDTO;
+import vistas.guia.GestionarViajesView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +19,6 @@ public class BuscarGuiasView extends JFrame {
     private TuristaController turistaController;
     private GuiaController guiaController;
     private ViajeController viajeController;
-    private JFrame previousFrame;
 
     private JTextField nombreField;
     private JTextField apellidoField;
@@ -36,7 +36,6 @@ public class BuscarGuiasView extends JFrame {
         this.turistaController = turistaController;
         this.guiaController = guiaController;
         this.viajeController = viajeController;
-        this.previousFrame = previousFrame;
 
         setTitle("Buscar Guías");
         setSize(800, 600);
@@ -116,7 +115,7 @@ public class BuscarGuiasView extends JFrame {
         volverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                previousFrame.setVisible(true);
+                new GestionarViajesView(turistaController, guiaController, viajeController).setVisible(true);
                 dispose();
             }
         });

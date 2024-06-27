@@ -4,18 +4,18 @@ import modelos.clases.Reserva;
 
 public class ReservaDTO {
     private int id;
-    private boolean aceptada;
+    private String estado;
 
     public ReservaDTO(Reserva reserva) {
         this.id = reserva.getId();
-        this.aceptada = reserva.estaAceptada();
+        this.estado = reserva.estado();
     }
 
     public int getId() {
         return id;
     }
 
-    public boolean isAceptada() {
-        return aceptada;
+    public String getEstado() {
+        return estado;
     }
 }

@@ -7,6 +7,7 @@ import modelos.dtos.GuiaDTO;
 import modelos.dtos.TuristaDTO;
 import modelos.dtos.ViajeDTO;
 import modelos.interfaces.IAdapterCredencial;
+import vistas.guia.GuiaLandingPage;
 import vistas.turista.TuristaLandingPage;
 
 import javax.swing.*;
@@ -244,11 +245,13 @@ public class Main {
         guiaController.loginGuia("jose@example.com", "123", Auth.BASICO);
 
         // Crear instancia de GuiaController
-        ViajeController viajecontroller = new ViajeController();
+        ViajeController viajeController = new ViajeController();
 
 
         SwingUtilities.invokeLater(() -> {
-            new TuristaLandingPage(turistaController, guiaController, viajecontroller);
+            new TuristaLandingPage(turistaController, guiaController, viajeController);
+            //new GuiaLandingPage (turistaController, guiaController, viajeController);
+
         });
 
         //////////////////

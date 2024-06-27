@@ -26,6 +26,10 @@ public class Cancelada implements IEstadoReserva {
         System.out.println("La reserva está cancelada. No puede volver a aceptarse");
     }
 
+    public String estado(Reserva reserva){
+        return "Cancelada";
+    }
+
     public void cancelarReserva(Reserva reserva) {
         System.out.println("La reserva ya fue cancelada");
     }

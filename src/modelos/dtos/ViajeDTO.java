@@ -18,6 +18,7 @@ public class ViajeDTO {
     private LocalDate fechaFin;
     private GuiaDTO guiaDTO;
     private TuristaDTO turistaDTO;
+    private String estado;
 
     public ViajeDTO(Ciudad ciudadDestino, Pais paisDestino, LocalDate fechaInicio, LocalDate fechaFin) {
         this.ciudadDestino = ciudadDestino;
@@ -26,7 +27,7 @@ public class ViajeDTO {
         this.fechaFin = fechaFin;
     }
 
-    public ViajeDTO(Ciudad ciudadDestino, Pais paisDestino, LocalDate fechaInicio, LocalDate fechaFin, int idViaje, ReservaDTO reserva, String factura){
+    public ViajeDTO(Ciudad ciudadDestino, Pais paisDestino, LocalDate fechaInicio, LocalDate fechaFin, int idViaje, ReservaDTO reserva, String factura, String estado){
         this.ciudadDestino = ciudadDestino;
         this.paisDestino = paisDestino;
         this.fechaInicio = fechaInicio;
@@ -34,6 +35,11 @@ public class ViajeDTO {
         this.factura = factura;
         this.reserva = reserva;
         this.idViaje = idViaje;
+        this.estado = estado;
+    }
+
+    public String getEstado() {
+        return this.estado;
     }
 
     public int getIdViaje() {

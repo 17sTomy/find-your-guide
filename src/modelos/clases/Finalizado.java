@@ -24,6 +24,10 @@ public class Finalizado implements IEstadoViaje {
         this.mostrarMensajeFinalizado();
     }
 
+    public String toString(){
+        return "Finalizado";
+    }
+
     private void mostrarMensajeFinalizado(){
         System.out.println("El viaje ya fue finalizado");
     }

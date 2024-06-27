@@ -129,7 +129,11 @@ public class DataBase {
         }
 
         public void addViaje (Viaje viaje){
+            System.out.println(viaje);
+            System.out.println(this.viajes.size());
             viajes.add(viaje);
+            System.out.println("viajedespues");
+            System.out.println(this.viajes.size());
         }
 
         public void deleteViaje (Viaje viaje){
@@ -159,14 +163,13 @@ public class DataBase {
             return null;
         }
 
-        public List<Viaje> getViajesPorEmail (String email){
-            if (viajes != null) {
-                return viajes.stream()
-                        .filter(viaje -> viaje.getTurista().getEmail().equals(email))
-                        .collect(Collectors.toList());
-            }
-            return new ArrayList<>();
-
+        public List<Viaje> getViajesPorEmail(String email) {
+        if (viajes != null) {
+            return viajes.stream()
+                    .filter(viaje -> viaje.getTurista().getEmail().equals(email) || viaje.getGuia().getEmail().equals(email))
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<>();
         }
 
         public List<Viaje> getViajesPorGuia (Guia guia){

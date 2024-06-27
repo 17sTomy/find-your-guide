@@ -119,9 +119,9 @@ public class Login {
             public void actionPerformed(ActionEvent e) {
                 // Cerrar la ventana actual e iniciar la landing page
                 frame.dispose(); // Cerrar la ventana de login
-                if (role.equals("Guia")) {
-                    new GuiaLandingPage(role); // Abrir la landing page con el rol guia
-                } //else if (role.equals("Turista")) {
+                //if (role.equals("Guia")) {
+                //    new GuiaLandingPage(role); // Abrir la landing page con el rol guia
+                //} //else if (role.equals("Turista")) {
                     //new TuristaLandingPage(role); // Abrir la landing page con el rol turista
                 //}
             }

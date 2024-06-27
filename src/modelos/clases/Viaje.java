@@ -89,6 +89,12 @@ public class Viaje {
         notificador.enviar(notificacion);
     }
 
+    public String getEstado(){
+        return this.estadoViaje.toString();
+    }
+
+
+
 
     public Factura getFactura() {
         return factura;
@@ -160,6 +166,7 @@ public class Viaje {
     }
 
 
+
     public void setAnticipo() {
         this.anticipo = 50.00;
     }
@@ -213,7 +220,8 @@ public class Viaje {
                     viaje.getFechaFin(),
                     viaje.getId(),
                     reservaDTO,
-                    informacionFactura
+                    informacionFactura,
+                    viaje.getEstado()
             );
 
             viajesDTO.add(viajeDTO);

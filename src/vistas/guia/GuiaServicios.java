@@ -142,7 +142,7 @@ public class GuiaServicios extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                new GuiaLandingPage("Guía").frame.setVisible(true);
+                //new GuiaLandingPage("Guía").frame.setVisible(true);
             }
         });
 

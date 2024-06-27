@@ -9,6 +9,10 @@ public class Aceptada implements IEstadoReserva {
         System.out.println("La Reserva ya está Aceptada");
     }
 
+    public String estado(Reserva reserva){
+        return "Aceptada";
+    }
+
     public void cancelarReserva(Reserva reserva) {
         System.out.println("Reserva cancelada");
         reserva.cambiarEstado(new Cancelada());

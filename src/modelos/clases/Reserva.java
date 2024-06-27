@@ -18,6 +18,10 @@ public class Reserva {
         this.id = generarID();
     }
 
+    public String estado() {
+        return this.estadoReserva.estado(this);
+    }
+
     public int getId() {
         return id;
     }

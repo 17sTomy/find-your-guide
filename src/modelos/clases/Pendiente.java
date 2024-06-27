@@ -14,4 +14,8 @@ public class Pendiente implements IEstadoReserva {
         System.out.println("Reserva cancelada");
         reserva.cambiarEstado(new Cancelada());
     }
+
+    public String estado(Reserva reserva){
+        return "Pendiente";
+    }
 }

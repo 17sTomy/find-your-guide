@@ -21,6 +21,12 @@ public class Activo implements IEstadoViaje {
         viaje.cambiarEstado(new Cancelado());
     }
 
+    public String toString(){
+        return "Activo";
+    }
+
+
+
     public void finalizarViaje(Viaje viaje) {
         System.out.println("El viaje nunca fue iniciado");;
     }

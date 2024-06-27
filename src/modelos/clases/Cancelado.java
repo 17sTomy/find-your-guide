@@ -16,6 +16,10 @@ public class Cancelado implements IEstadoViaje {
         System.out.println("El viaje ya se encuentra cancelado.");
     }
 
+    public String toString(){
+        return "Cancelado";
+    }
+
     public void iniciarViaje(Viaje viaje) {
         System.out.println("No se puede iniciar el viaje. El mismo fue cancelado");
     }
