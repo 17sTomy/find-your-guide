@@ -69,6 +69,13 @@ public class TuristaController {
     }
 
     public void calificarGuia(String emailGuia, String emailTurista, Double puntuacion, String comentario) {
+        System.out.println("Feedback enviado:");
+        System.out.println("Email Guía: " + emailGuia);
+        System.out.println("Email Turista: " + emailTurista);
+        System.out.println("Puntuación: " + puntuacion);
+        System.out.println("Comentario: " + comentario);
+
+
         Guia guia = DataBase.getInstance().getGuiaPorEmail(emailGuia);
         Turista turista = DataBase.getInstance().getTuristaPorEmail(emailTurista);
 

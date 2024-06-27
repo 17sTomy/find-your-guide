@@ -1,14 +1,11 @@
 package modelos.clases;
 
-import modelos.interfaces.IAdapterPago;
-
 public class Factura {
     private Double montoTotal;
     private Double comision;
     private Double anticipo;
     private boolean totalPago;
     private boolean anticipoPago;
-    private IAdapterPago adapterPago;
 
     public Factura(double montoTotal) {
         this.montoTotal = montoTotal;

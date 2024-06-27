@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Scanner;
 
 public class HistorialViajesView extends JFrame {
     private TuristaController turistaController;
@@ -111,8 +112,8 @@ public class HistorialViajesView extends JFrame {
                     }
                 });
 
-                // pagarButton.setEnabled(viaje.getEstado().equals("Finalizado"));
-                pagarButton.setEnabled(!viaje.getFacturaPaga());
+                pagarButton.setEnabled(viaje.getEstado().equals("Finalizado") && !viaje.getFacturaPaga());
+                //pagarButton.setEnabled(!viaje.getFacturaPaga());
                 pagarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -121,11 +122,19 @@ public class HistorialViajesView extends JFrame {
                     }
                 });
 
-                calificarButton.setEnabled(viaje.getEstado().equals("Pagado")); // Lógica para habilitar calificar
+                calificarButton.setEnabled(viaje.getFacturaPaga()); // Lógica para habilitar calificar
                 calificarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        Scanner scanner = new Scanner(System.in);
+                        System.out.print("Ingrese el email del guía: ");
+                        String emailGuia = scanner.nextLine();
+                        System.out.print("Ingrese la puntuación: ");
+                        Double puntuacion = Double.parseDouble(scanner.nextLine());
+                        System.out.print("Ingrese el comentario: ");
+                        String comentario = scanner.nextLine();
                         System.out.println("Calificar viaje: " + viaje.getIdViaje());
+                        turistaController.calificarGuia(emailGuia, turistaController.getTuristaDTO().getEmail(), puntuacion, comentario);
                     }
                 });
             }

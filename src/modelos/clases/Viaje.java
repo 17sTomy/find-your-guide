@@ -18,7 +18,6 @@ import java.util.List;
  */
 public class Viaje {
 
-    private ViajeController viajeController;
     private Factura factura;
     private Reserva reserva;
     private Guia guia;
@@ -93,19 +92,12 @@ public class Viaje {
         return this.estadoViaje.toString();
     }
 
-
-
-
     public Factura getFactura() {
         return factura;
     }
 
     public Reserva getReserva() {
         return reserva;
-    }
-
-    public void cobrarAnticipo(Double anticipo, Turista turista) {
-        // To Do. Hay que ver si en realidad no va en la clase reserva
     }
 
     public void aceptarViaje() {
@@ -161,12 +153,6 @@ public class Viaje {
         return guia;
     }
 
-    public Double getAnticipo() {
-        return anticipo;
-    }
-
-
-
     public void setAnticipo() {
         this.anticipo = 50.00;
     }
@@ -184,10 +170,6 @@ public class Viaje {
         return fechaInicio;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
     public LocalDate getFechaFin() {
         return fechaFin;
     }
@@ -198,10 +180,6 @@ public class Viaje {
 
     public Pais getPaisDestino() {
         return paisDestino;
-    }
-
-    public void setFechaFin(LocalDate fechaFin) {
-        this.fechaFin = fechaFin;
     }
 
     public static List<ViajeDTO> getViajesDTO(String email) {
