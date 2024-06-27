@@ -51,13 +51,13 @@ public class ViajeController {
     public void rechazarReserva(int idViaje){
         DataBase db = DataBase.getInstance();
         Viaje viaje = db.getViajeById(idViaje);
-        viaje.getReserva().aceptarReserva();
+        viaje.getReserva().cancelarReserva();
         viaje.cancelarViaje();
         System.out.println("Reserva cancelada");
     }
 
-    public List<Viaje> buscarViajesPorGuia(Guia guia){
-        return DataBase.getInstance().getViajesPorGuia(guia);
+    public List<ViajeDTO> getViajes(String email) {
+        return Viaje.getViajesDTO(email);
     }
 
     public void cambiarEstadoViaje(int idViaje, EstadoViaje estado){
@@ -79,9 +79,7 @@ public class ViajeController {
         }
     }
 
-    public List<Viaje> getViajes(String email) {
-        return Viaje.getViajes(email);
-    }
+
 
 
 }
