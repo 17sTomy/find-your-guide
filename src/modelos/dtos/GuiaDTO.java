@@ -4,10 +4,8 @@ import enums.Ciudad;
 import enums.Idioma;
 import enums.Pais;
 import enums.Sexo;
-import modelos.clases.Credencial;
-import modelos.clases.Guia;
-import modelos.clases.Servicio;
-import modelos.clases.SistemaVerificacionIA;
+import modelos.clases.*;
+import modelos.interfaces.IAdapterCredencial;
 
 import java.util.List;
 
@@ -40,7 +38,9 @@ public class GuiaDTO extends UsuarioDTO {
         this.puntuacion = puntuacion;
     }
 
-
+    public CredencialDTO getCredencialDTO() {
+        return credencialDTO;
+    }
 
     public Pais getPais() {
         return pais;
@@ -54,13 +54,8 @@ public class GuiaDTO extends UsuarioDTO {
         return servicios;
     }
 
-    public Credencial getCredencial() {
-        Credencial credencial = new Credencial(
-                credencialDTO.getIdCredencial(),
-                credencialDTO.getFotoCredencial(),
-                new SistemaVerificacionIA()
-        );
-        return credencial;
+    public Credencial convertirCredencial(IAdapterCredencial adapter) {
+        return CredencialFactory.createCredencial(credencialDTO, adapter);
     }
 
     public Double getPuntuacion() {

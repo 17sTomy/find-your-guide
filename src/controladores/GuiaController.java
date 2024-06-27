@@ -29,7 +29,7 @@ public class GuiaController {
                 guiaDTO.getServicios(),
                 guiaDTO.getPais(),
                 guiaDTO.getCiudad(),
-                guiaDTO.getCredencial(),
+                guiaDTO.convertirCredencial(new SistemaVerificacionIA()),
                 guiaDTO.getIdiomas()
         );
 
@@ -52,7 +52,6 @@ public class GuiaController {
 
 
 
-
     public IAuthenticacion convertAuth(Auth modo) {
         return switch (modo) {
             case APPLEID -> new RegistroAppleId();
@@ -71,7 +70,7 @@ public class GuiaController {
         guia.removeServicio(nombre);
     }
 
-    public List<Reseña> getReseñas(String email) {
+    public List<String> getReseñas(String email) {
         return guia.getReseñas(email);
     }
 }

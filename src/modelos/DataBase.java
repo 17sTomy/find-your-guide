@@ -46,6 +46,7 @@ public class DataBase {
                 .collect(Collectors.toList());
     }
 
+
     public Chat getChat(Usuario turista, Usuario guia){
         if(!chats.isEmpty()){
             for (Chat chat : chats){
@@ -63,6 +64,15 @@ public class DataBase {
                 .map(usuario -> (Guia) usuario)
                 .filter(guia -> guia.getEmail().equals(email))
                 .findAny().get(); // TODO revisar
+
+    public Guia getGuiaPorEmail(String email) {
+        return usuarios.stream()
+                .filter(usuario -> usuario instanceof Guia)
+                .map(usuario -> (Guia) usuario)
+                .filter(guia -> guia.getEmail().equalsIgnoreCase(email))
+                .findFirst()
+                .orElse(null);
+
     }
 
     public boolean usuarioExiste(String dni, String email) {

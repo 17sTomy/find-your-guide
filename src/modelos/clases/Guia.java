@@ -86,8 +86,21 @@ public class Guia extends Usuario {
     }
 
 
-    public List<Reseña> getReseñas(String email) {
-        List<Reseña> reseñas = DataBase.getInstance().getReseñasPorEmail(email);
+    public List<String> getReseñas(String email) {
+        List<Reseña> listadoReseñas = DataBase.getInstance().getReseñasPorEmail(email);
+        List<String> reseñas = listadoReseñas.stream()
+                .map(reseña -> {
+                    Turista turista = reseña.getTurista();
+                    Guia guia = reseña.getGuia();
+                    return String.format("El turista %s %s realizó una reseña sobre el guía %s %s:\nPuntuación: %.1f\nComentario: %s",
+                            turista.getNombre(),
+                            turista.getApellido(),
+                            guia.getNombre(),
+                            guia.getApellido(),
+                            reseña.getPuntuacion(),
+                            reseña.getComentario());
+                })
+                .collect(Collectors.toList());
         return reseñas;
     }
 }

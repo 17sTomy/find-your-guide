@@ -4,11 +4,13 @@ import controladores.ViajeController;
 import enums.Ciudad;
 import enums.Pais;
 import modelos.DataBase;
+import modelos.dtos.ReservaDTO;
 import modelos.dtos.ViajeDTO;
 import modelos.interfaces.IEstadoViaje;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,7 +54,7 @@ public class Viaje {
     public void notificarReservaRealizada() {
         Notificacion notificacion = new Notificacion(
                 "Reserva realizada",
-                "\n" + "Reserva nro: " + reserva.hashCode() + "\n" +
+                "\n" + "Reserva nro: " + reserva.getId() + "\n" +
                 "Fecha: " + fechaInicio + " - " + fechaFin + "\n" +
                 "Destino: " + paisDestino + ", " + ciudadDestino + "\n" +
                 "Turista: " + turista.getNombre() + " " + turista.getApellido() + "\n" +
@@ -183,12 +185,40 @@ public class Viaje {
         return fechaFin;
     }
 
+    public Ciudad getCiudadDestino() {
+        return ciudadDestino;
+    }
+
+    public Pais getPaisDestino() {
+        return paisDestino;
+    }
+
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
 
-    public static List<Viaje> getViajes(String email) {
+    public static List<ViajeDTO> getViajesDTO(String email) {
         List<Viaje> viajes = DataBase.getInstance().getViajesPorEmail(email);
-        return viajes;
+
+        List<ViajeDTO> viajesDTO = new ArrayList<>();
+
+        for (Viaje viaje : viajes) {
+            ReservaDTO reservaDTO = new ReservaDTO(viaje.getReserva());
+            String informacionFactura = viaje.getFactura().toString();
+
+            ViajeDTO viajeDTO = new ViajeDTO(
+                    viaje.getCiudadDestino(),
+                    viaje.getPaisDestino(),
+                    viaje.getFechaInicio(),
+                    viaje.getFechaFin(),
+                    viaje.getId(),
+                    reservaDTO,
+                    informacionFactura
+            );
+
+            viajesDTO.add(viajeDTO);
+        }
+
+        return viajesDTO;
     }
 }
