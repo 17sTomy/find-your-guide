@@ -29,7 +29,7 @@ public class GuiaController {
                 guiaDTO.getServicios(),
                 guiaDTO.getPais(),
                 guiaDTO.getCiudad(),
-                guiaDTO.getCredencial(),
+                guiaDTO.getCredencial(new SistemaVerificacionIA()),
                 guiaDTO.getIdiomas()
         );
 
