@@ -4,6 +4,9 @@ import controladores.GuiaController;
 import controladores.TuristaController;
 import controladores.ViajeController;
 
+import vistas.turista.BuscarGuiasView;
+import vistas.turista.HistorialViajesView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -91,7 +94,8 @@ public class TuristaLandingPage {
         historialViajesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Historial de viajes");
+                frame.setVisible(false);
+                new HistorialViajesView(turistaController, guiaController, viajeController, frame).setVisible(true);
             }
 
         });
@@ -120,6 +124,4 @@ public class TuristaLandingPage {
         button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         return button;
     }
-
 }
-

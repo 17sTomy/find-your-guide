@@ -117,6 +117,9 @@ public class BuscarGuiasView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 new GestionarViajesView(turistaController, guiaController, viajeController).setVisible(true);
                 dispose();
+
+                previousFrame.setVisible(true);
+                dispose();
             }
         });
 

@@ -45,11 +45,12 @@ public class ViajeController {
         DataBase db = DataBase.getInstance();
         Viaje viaje = db.getViajeById(idViaje);
         viaje.getReserva().aceptarReserva();
-        viaje.iniciarViaje();
         System.out.println("Reserva Aceptada");
         db.addChat(new Chat(viaje.getTurista(), viaje.getGuia()));
         System.out.println("Se ha creado un Chat");
     }
+
+
 
     public void rechazarReserva(int idViaje){
         DataBase db = DataBase.getInstance();

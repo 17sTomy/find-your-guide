@@ -21,6 +21,7 @@ public class Iniciado implements IEstadoViaje {
 
     public void cancelarViaje(Viaje viaje) {
         System.out.println("Viaje cancelado");
+
         viaje.cambiarEstado(new Cancelado());
     }
 

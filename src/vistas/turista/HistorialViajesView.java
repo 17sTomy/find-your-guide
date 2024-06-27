@@ -1,4 +1,4 @@
-package vistas.guia;
+package vistas.turista;
 
 import controladores.GuiaController;
 import controladores.TuristaController;
@@ -12,18 +12,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class GestionarViajesView extends JFrame {
+public class HistorialViajesView extends JFrame {
     private TuristaController turistaController;
     private GuiaController guiaController;
     private ViajeController viajeController;
     private JPanel panelViajes; // Hacemos panelViajes una variable de instancia para que pueda ser actualizada
+    private String emailTurista;
 
-    public GestionarViajesView(TuristaController turistaController, GuiaController guiaController, ViajeController viajeController) {
+    public HistorialViajesView(TuristaController turistaController, GuiaController guiaController, ViajeController viajeController, JFrame previousFrame) {
         this.turistaController = turistaController;
         this.guiaController = guiaController;
         this.viajeController = viajeController;
+        this.emailTurista = turistaController.getTuristaDTO().getEmail();
 
-        setTitle("Gestionar Viajes");
+        setTitle("Historial de Viajes");
         setSize(1000, 800);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -34,7 +36,7 @@ public class GestionarViajesView extends JFrame {
         // Inicializamos panelViajes aquí
         panelViajes = new JPanel();
         panelViajes.setLayout(new BoxLayout(panelViajes, BoxLayout.Y_AXIS));
-        panelViajes.setBorder(BorderFactory.createTitledBorder("Viajes del Guía"));
+        panelViajes.setBorder(BorderFactory.createTitledBorder("Viajes del Turista"));
         panelViajes.setBackground(Color.WHITE);
 
         // Llamamos a la función para renderizar los viajes
@@ -46,14 +48,14 @@ public class GestionarViajesView extends JFrame {
         // Botón de volver
         JButton volverButton = new JButton("Volver");
         volverButton.setFont(new Font("Arial", Font.BOLD, 14));
-        volverButton.setBackground(new Color(41, 128, 185));
+        volverButton.setBackground(new Color(39, 174, 96));
         volverButton.setForeground(Color.WHITE);
         volverButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         volverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                previousFrame.setVisible(true);
                 dispose();
-                new GuiaLandingPage(turistaController, guiaController, viajeController).frame.setVisible(true);
             }
         });
 
@@ -64,12 +66,11 @@ public class GestionarViajesView extends JFrame {
         add(panelPrincipal);
     }
 
-    // Función para obtener y renderizar los GuiasDTO
+    // Función para obtener y renderizar los viajes del turista
     private void renderizarViajes() {
         panelViajes.removeAll(); // Limpiamos el panel antes de renderizar
 
-        String emailGuia = guiaController.getEmailGuia();
-        List<ViajeDTO> viajes = viajeController.getViajes(emailGuia);
+        List<ViajeDTO> viajes = viajeController.getViajes(emailTurista);
 
         for (ViajeDTO viaje : viajes) {
             JPanel viajePanel = new JPanel(new BorderLayout());
@@ -90,50 +91,43 @@ public class GestionarViajesView extends JFrame {
             JPanel botonesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
             botonesPanel.setBackground(Color.WHITE);
 
-            JButton aceptarButton = new JButton("Aceptar");
-            aceptarButton.setEnabled(viaje.getReserva().getEstado().equals("Pendiente"));
-            aceptarButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    viajeController.aceptarReserva(viaje.getIdViaje());
-                    renderizarViajes(); // Actualizamos la vista después de aceptar la reserva
-                }
-            });
-
-            JButton iniciarButton = new JButton("Iniciar Viaje");
-            iniciarButton.setEnabled(!viaje.getEstado().equals("Iniciado") && !viaje.getEstado().equals("Finalizado") && !viaje.getEstado().equals("Cancelado"));
-            iniciarButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    viajeController.cambiarEstadoViaje(viaje.getIdViaje(), EstadoViaje.Iniciado);
-                    renderizarViajes(); // Actualizamos la vista después de iniciar el viaje
-                }
-            });
-
             JButton cancelarButton = new JButton("Cancelar");
-            cancelarButton.setEnabled(!viaje.getEstado().equals("Finalizado") && viaje.getReserva().getEstado().equals("Pendiente"));
-            cancelarButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    viajeController.rechazarReserva(viaje.getIdViaje());
-                    renderizarViajes(); // Actualizamos la vista después de rechazar la reserva
-                }
-            });
+            JButton pagarButton = new JButton("Pagar");
+            JButton calificarButton = new JButton("Calificar");
 
-            JButton finalizarButton = new JButton("Finalizar Viaje");
-            finalizarButton.setEnabled(!viaje.getEstado().equals("Finalizado") && !viaje.getReserva().getEstado().equals("Cancelada"));
-            finalizarButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    viajeController.cambiarEstadoViaje(viaje.getIdViaje(), EstadoViaje.Finalizado);
-                    renderizarViajes(); // Actualizamos la vista después de finalizar el viaje
-                }
-            });
+            // Lógica para habilitar/deshabilitar botones según el estado del viaje
+            if (viaje.getEstado().equals(EstadoViaje.Cancelado.toString()) || viaje.getEstado().equals(EstadoViaje.Finalizado.toString())) {
+                cancelarButton.setEnabled(false);
+                pagarButton.setEnabled(false);
+                calificarButton.setEnabled(false);
+            } else {
+                cancelarButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Cancelar viaje: " + viaje.getIdViaje());
+                    }
+                });
 
-            botonesPanel.add(aceptarButton);
-            botonesPanel.add(iniciarButton);
+                pagarButton.setEnabled(viaje.getEstado().equals(EstadoViaje.Finalizado.toString()));
+                pagarButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Pagar viaje: " + viaje.getIdViaje());
+                    }
+                });
+
+                calificarButton.setEnabled(viaje.getEstado().equals("Pagado")); // Lógica para habilitar calificar
+                calificarButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Calificar viaje: " + viaje.getIdViaje());
+                    }
+                });
+            }
+
             botonesPanel.add(cancelarButton);
-            botonesPanel.add(finalizarButton);
+            botonesPanel.add(pagarButton);
+            botonesPanel.add(calificarButton);
 
             viajePanel.add(infoLabel, BorderLayout.CENTER);
             viajePanel.add(botonesPanel, BorderLayout.SOUTH);
