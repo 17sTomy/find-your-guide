@@ -1,10 +1,12 @@
 package vistas.logueo;
 
 import controladores.GuiaController;
+import controladores.TuristaController;
 import enums.*;
 import modelos.clases.Credencial;
 import modelos.dtos.CredencialDTO;
 import modelos.dtos.GuiaDTO;
+import modelos.dtos.TuristaDTO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,6 +63,7 @@ public class RegistroGuia {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Acción para volver atrás
                 frame.dispose();
                 new Login("Guia");
             }
@@ -223,6 +226,8 @@ public class RegistroGuia {
         registerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
         JButton registerButton = createNavButton("Registrarse");
         registerPanel.add(registerButton);
+        registerPanel.add(backButton);
+
 
         // Panel de terceros
         JPanel thirdPartyPanel = new JPanel();
@@ -238,6 +243,115 @@ public class RegistroGuia {
         JButton googleButton = createThirdPartyButton("Google");
         JButton appleButton = createThirdPartyButton("Apple");
         JButton facebookButton = createThirdPartyButton("Facebook");
+
+        googleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombre = nameField.getText();
+                String apellido = surnameField.getText();
+                String sexoStr = (String) genderComboBox.getSelectedItem();
+                Sexo sexo;
+                try {
+                    sexo = Sexo.valueOf(sexoStr.toUpperCase());
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(frame, "Seleccione un sexo válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Salir de la acción si el valor del sexo no es válido
+                }
+
+                String dni = dniField.getText();
+                String email = emailField.getText();
+                String telefono = phoneField.getText();
+                String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
+
+                // Validaciones
+                if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || telefono.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+
+                if (selectedImageFile == null || !selectedImageFile.getName().endsWith(".jpg")) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, cargue una foto de perfil válida en formato JPG.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                TuristaController turistaController = new TuristaController();
+                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "GOOGLE", 0), "google", Auth.GOOGLE);
+                JOptionPane.showMessageDialog(frame, "Registro con Google exitoso.");
+            }
+        });
+
+        appleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombre = nameField.getText();
+                String apellido = surnameField.getText();
+                String sexoStr = (String) genderComboBox.getSelectedItem();
+                Sexo sexo;
+                try {
+                    sexo = Sexo.valueOf(sexoStr.toUpperCase());
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(frame, "Seleccione un sexo válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Salir de la acción si el valor del sexo no es válido
+                }
+
+                String dni = dniField.getText();
+                String email = emailField.getText();
+                String telefono = phoneField.getText();
+                String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
+
+                // Validaciones
+                if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || telefono.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (selectedImageFile == null || !selectedImageFile.getName().endsWith(".jpg")) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, cargue una foto de perfil válida en formato JPG.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                TuristaController turistaController = new TuristaController();
+                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "APPLEID", 0), "apple", Auth.APPLEID);
+                JOptionPane.showMessageDialog(frame, "Registro con Apple exitoso.");
+            }
+        });
+
+        facebookButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombre = nameField.getText();
+                String apellido = surnameField.getText();
+                String sexoStr = (String) genderComboBox.getSelectedItem();
+                Sexo sexo;
+                try {
+                    sexo = Sexo.valueOf(sexoStr.toUpperCase());
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(frame, "Seleccione un sexo válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Salir de la acción si el valor del sexo no es válido
+                }
+
+                String dni = dniField.getText();
+                String email = emailField.getText();
+                String telefono = phoneField.getText();
+                String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
+
+                // Validaciones
+                if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || telefono.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (selectedImageFile == null || !selectedImageFile.getName().endsWith(".jpg")) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, cargue una foto de perfil válida en formato JPG.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                TuristaController turistaController = new TuristaController();
+                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "FACEBOOK", 0), "facebook", Auth.FACEBOOK);
+                JOptionPane.showMessageDialog(frame, "Registro con Facebook exitoso.");
+            }
+        });
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         buttonPanel.setBackground(new Color(255, 255, 255));
@@ -346,14 +460,20 @@ public class RegistroGuia {
         return button;
     }
 
-    // Método auxiliar para crear botones de terceros
-    private JButton createThirdPartyButton(String text) {
-        JButton button = new JButton(text);
+    private JButton createThirdPartyButton(String provider) {
+        JButton button = new JButton(provider);
         button.setFont(new Font("Arial", Font.BOLD, 14));
-        button.setBackground(Color.WHITE);
-        button.setForeground(new Color(0, 102, 204));
+        button.setBackground(new Color(66, 133, 244));
+        button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
-        button.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 2, true));
+        button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
+        if (provider.equals("Apple")) {
+            button.setBackground(new Color(0, 0, 0));
+        } else if (provider.equals("Facebook")) {
+            button.setBackground(new Color(59, 89, 152));
+        }
+
         return button;
     }
 

@@ -174,7 +174,7 @@ public class RegistroTurista {
         registerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
         JButton registerButton = createNavButton("Registrarse");
         registerPanel.add(registerButton);
-        registerPanel.add(backButton); // Asegúrate de agregar el botón "Volver" al panel de registro, no al buttonPanel anterior
+        registerPanel.add(backButton);
 
         // Panel de terceros
         JPanel thirdPartyPanel = new JPanel();
