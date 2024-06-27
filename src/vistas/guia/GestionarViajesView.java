@@ -47,9 +47,12 @@ public class GestionarViajesView extends JFrame {
             viajePanel.setMaximumSize(new Dimension(960, 150));
             viajePanel.setMinimumSize(new Dimension(960, 150));
 
-            String infoViaje = "<html>" + "País: " + viaje.getPaisDestino() + "<br>Ciudad: " + viaje.getCiudadDestino() +
-                    "<br>Fecha Inicio: " + viaje.getFechaInicio() + "<br>Fecha Fin: " + viaje.getFechaFin() +
-                    "<br>Estado: " + viaje.getReserva().getEstado() + "</html>";
+            String infoViaje = "<html>" +
+                        "País: " + viaje.getPaisDestino() + "<br>Ciudad: " + viaje.getCiudadDestino() +
+                        "<br>Fecha Inicio: " + viaje.getFechaInicio() + "<br>Fecha Fin: " + viaje.getFechaFin() +
+                        "<br>Estado Reserva: " + viaje.getReserva().getEstado() +
+                        "<br>Estado Viaje: " + viaje.getEstado()
+                    + "</html>" ;
             JLabel infoLabel = new JLabel(infoViaje);
             infoLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -62,16 +65,15 @@ public class GestionarViajesView extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     viajeController.aceptarReserva(viaje.getIdViaje());
-                    JOptionPane.showMessageDialog(panelPrincipal, "Reserva aceptada.");
                 }
             });
 
             JButton cancelarButton = new JButton("Cancelar");
+            cancelarButton.setEnabled(!viaje.getEstado().equals("Finalizado"));
             cancelarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     viajeController.rechazarReserva(viaje.getIdViaje());
-                    JOptionPane.showMessageDialog(panelPrincipal, "Reserva cancelada.");
                 }
             });
 
@@ -80,7 +82,6 @@ public class GestionarViajesView extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     viajeController.cambiarEstadoViaje(viaje.getIdViaje(), EstadoViaje.Finalizado);
-                    JOptionPane.showMessageDialog(panelPrincipal, "Viaje finalizado.");
                 }
             });
 
