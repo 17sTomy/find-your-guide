@@ -31,6 +31,7 @@ public class RegistroTurista {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 600);
         frame.setLayout(new BorderLayout());
+        frame.setLocationRelativeTo(null);
 
         // Panel superior con título
         JPanel topPanel = new JPanel(new BorderLayout());
