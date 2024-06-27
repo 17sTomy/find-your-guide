@@ -1,36 +1,23 @@
 package modelos.clases;
 
-import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
-/**
- * 
- */
 public class Mensaje {
 
-    /**
-     * Default constructor
-     */
-    public Mensaje() {
+    private String emisor;
+    private String contenido;
+    private String hora;
+    private Usuario receptor; // TODO eliminar
+
+    public Mensaje(Usuario emisor, String contenido) {
+        this.emisor = emisor.getNombre()+" "+emisor.getApellido();
+        this.contenido = contenido;
+        this.hora =  LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));;
     }
 
-    /**
-     * 
-     */
-    private Usuario emisor;
-
-    /**
-     * 
-     */
-    private Usuario receptor;
-
-    /**
-     * 
-     */
-    private String contenido;
-
-    /**
-     * 
-     */
-    private LocalDate fecha;
+    public void mostrarMensaje(){
+        System.out.println(emisor+" "+hora+"\n"+contenido);
+    }
 
 }
