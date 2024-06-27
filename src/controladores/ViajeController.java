@@ -31,7 +31,10 @@ public class ViajeController {
         DataBase db = DataBase.getInstance();
         Viaje viaje = db.getViajeById(idViaje);
         viaje.getFactura().pagarTotalFactura();
-        System.out.println("Total de la factura pago");
+        viaje.getFactura().verDetallesFactura();
+        System.out.println("Monto total del viaje: $" + viaje.getFactura().getMontoTotal());
+        System.out.println("Anticipo abonado anteriormente: $" + viaje.getFactura().getAnticipo());
+        System.out.println("Pagaste: $" + (viaje.getFactura().getMontoTotal() - viaje.getFactura().getAnticipo()));
     }
 
     public void pagarAnticipoFactura(int idViaje){
@@ -55,6 +58,23 @@ public class ViajeController {
     public void rechazarReserva(int idViaje){
         DataBase db = DataBase.getInstance();
         Viaje viaje = db.getViajeById(idViaje);
+        viaje.getReserva().cancelarReserva();
+        viaje.cancelarViaje();
+        System.out.println("Reserva cancelada");
+    }
+
+    public void cancelarReserva(int idViaje){
+        DataBase db = DataBase.getInstance();
+        Viaje viaje = db.getViajeById(idViaje);
+
+        if (viaje.getEstado().equals("Iniciado")) {
+            System.out.println("Se cobra el total del viaje: $" + viaje.getFactura().getMontoTotal());
+        } else if (viaje.getEstado().equals("Activo") && viaje.getReserva().estado().equals("Aceptada")) {
+            System.out.println("Se cobra el 50% del viaje: $" + (viaje.getFactura().getMontoTotal() / 2));
+        } else if (viaje.getEstado().equals("Activo") && viaje.getReserva().estado().equals("Pendiente")) {
+            System.out.println("No se le cobra nada");
+        }
+
         viaje.getReserva().cancelarReserva();
         viaje.cancelarViaje();
         System.out.println("Reserva cancelada");

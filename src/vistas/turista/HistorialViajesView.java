@@ -84,7 +84,9 @@ public class HistorialViajesView extends JFrame {
                     "País: " + viaje.getPaisDestino() + "<br>Ciudad: " + viaje.getCiudadDestino() +
                     "<br>Fecha Inicio: " + viaje.getFechaInicio() + "<br>Fecha Fin: " + viaje.getFechaFin() +
                     "<br>Estado Reserva: " + viaje.getReserva().getEstado() +
-                    "<br>Estado Viaje: " + viaje.getEstado() + "</html>";
+                    "<br>Estado Viaje: " + viaje.getEstado() +
+                    "<br>Factura paga: " + viaje.getFacturaPaga()
+                    + "</html>";
             JLabel infoLabel = new JLabel(infoViaje);
             infoLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -104,15 +106,18 @@ public class HistorialViajesView extends JFrame {
                 cancelarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Cancelar viaje: " + viaje.getIdViaje());
+                        viajeController.cancelarReserva(viaje.getIdViaje());
+                        renderizarViajes(); // Actualiza los viajes después de cancelar
                     }
                 });
 
-                pagarButton.setEnabled(viaje.getEstado().equals(EstadoViaje.Finalizado.toString()));
+                // pagarButton.setEnabled(viaje.getEstado().equals("Finalizado"));
+                pagarButton.setEnabled(!viaje.getFacturaPaga());
                 pagarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Pagar viaje: " + viaje.getIdViaje());
+                        viajeController.pagarTotalFactura(viaje.getIdViaje());
+                        renderizarViajes(); // Actualiza los viajes después de pagar
                     }
                 });
 

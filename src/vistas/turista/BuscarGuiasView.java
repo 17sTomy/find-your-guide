@@ -115,7 +115,8 @@ public class BuscarGuiasView extends JFrame {
         volverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new GestionarViajesView(turistaController, guiaController, viajeController).setVisible(true);
+                // new GestionarViajesView(turistaController, guiaController, viajeController).setVisible(true);
+                new HistorialViajesView(turistaController, guiaController, viajeController, previousFrame);
                 dispose();
 
                 previousFrame.setVisible(true);

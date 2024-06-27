@@ -221,7 +221,8 @@ public class Viaje {
                     viaje.getId(),
                     reservaDTO,
                     informacionFactura,
-                    viaje.getEstado()
+                    viaje.getEstado(),
+                    viaje.getFactura().isTotalPago()
             );
 
             viajesDTO.add(viajeDTO);

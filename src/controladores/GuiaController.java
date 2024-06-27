@@ -64,7 +64,6 @@ public class GuiaController {
     }
 
     public void agregarServicio(String nombre, String descripcion, Double precio) {
-
         guia.setServicio(nombre, descripcion, precio);
     }
 

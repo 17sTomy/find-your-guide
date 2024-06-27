@@ -75,7 +75,8 @@ public class ResumenContratoView extends JFrame {
         confirmarButton.setFont(new Font("Arial", Font.BOLD, 14));
         confirmarButton.setBackground(new Color(34, 139, 34));
         confirmarButton.setForeground(Color.WHITE);
-        confirmarButton.setEnabled(verificarDisponibilidadGuia());
+        // confirmarButton.setEnabled(verificarDisponibilidadGuia());
+        confirmarButton.setEnabled(true);
         confirmarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
