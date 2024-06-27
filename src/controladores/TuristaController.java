@@ -68,7 +68,8 @@ public class TuristaController {
         return Guia.buscarGuias(nombre, apellido, idioma, servicio, puntuacion, pais, ciudad);
     }
 
-    public void calificarGuia(Guia guia, Double puntuacion, String comentario) {
+    public void calificarGuia(String email, Double puntuacion, String comentario) {
+        Guia guia = DataBase.getInstance().getGuiaPorEmail(email);
         Reseña reseña = new Reseña(
                 guia,
                 this.turista,

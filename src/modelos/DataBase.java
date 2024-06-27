@@ -40,6 +40,15 @@ public class DataBase {
                 .collect(Collectors.toList());
     }
 
+    public Guia getGuiaPorEmail(String email) {
+        return usuarios.stream()
+                .filter(usuario -> usuario instanceof Guia)
+                .map(usuario -> (Guia) usuario)
+                .filter(guia -> guia.getEmail().equalsIgnoreCase(email))
+                .findFirst()
+                .orElse(null);
+    }
+
     public boolean usuarioExiste(String dni, String email) {
         for (Usuario usuario : usuarios) {
             if (usuario.getDni().equals(dni) || usuario.getEmail().equals(email)) {
