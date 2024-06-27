@@ -70,7 +70,7 @@ public class GuiaController {
         guia.removeServicio(nombre);
     }
 
-    public List<Reseña> getReseñas(String email) {
+    public List<String> getReseñas(String email) {
         return guia.getReseñas(email);
     }
 }
