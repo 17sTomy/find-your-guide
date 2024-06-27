@@ -215,11 +215,11 @@ public class Main {
         viajeController.crearViaje(viajeDTO1, "marcos@example.com", "carlos@example.com");
         viajeController.crearViaje(viajeDTO1, "marcos@example.com", "ana@example.com");
 
-        turistaController.calificarGuia("laura@example.com", 5.7, "Muy bueno");
-        turistaController.calificarGuia("laura@example.com", 3.2, "Malo");
-        turistaController.calificarGuia("miguel@example.com", 2.3, "Muy malo");
-        turistaController.calificarGuia("carlos@example.com", 8.0, "Buenisimo");
-        turistaController.calificarGuia("ana@example.com", 9.4, "Muy bueno");
+        turistaController.calificarGuia("laura@example.com", "silvina@example.com", 5.7, "Muy bueno");
+        turistaController.calificarGuia("laura@example.com", "pepe@example.com",3.2, "Malo");
+        turistaController.calificarGuia("miguel@example.com", "juan@example.com",2.3, "Muy malo");
+        turistaController.calificarGuia("carlos@example.com", "marcos@example.com",8.0, "Buenisimo");
+        turistaController.calificarGuia("ana@example.com", "marcos@example.com",9.4, "Muy bueno");
 
 
         SwingUtilities.invokeLater(() -> {

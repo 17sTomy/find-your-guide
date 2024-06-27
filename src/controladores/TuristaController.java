@@ -68,11 +68,13 @@ public class TuristaController {
         return Guia.buscarGuias(nombre, apellido, idioma, servicio, puntuacion, pais, ciudad);
     }
 
-    public void calificarGuia(String email, Double puntuacion, String comentario) {
-        Guia guia = DataBase.getInstance().getGuiaPorEmail(email);
+    public void calificarGuia(String emailGuia, String emailTurista, Double puntuacion, String comentario) {
+        Guia guia = DataBase.getInstance().getGuiaPorEmail(emailGuia);
+        Turista turista = DataBase.getInstance().getTuristaPorEmail(emailTurista);
+
         Reseña reseña = new Reseña(
                 guia,
-                this.turista,
+                turista,
                 puntuacion,
                 comentario
         );
