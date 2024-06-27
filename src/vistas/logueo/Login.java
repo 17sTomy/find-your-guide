@@ -120,11 +120,10 @@ public class Login {
         // Hacer visible el frame
         frame.setVisible(true);
 
-        // Añadir listeners a los botones (acciones a realizar)
+  /*      // Añadir listeners a los botones (acciones a realizar)
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 // Cerrar la ventana actual e iniciar la landing page
                 frame.dispose(); // Cerrar la ventana de login
 
@@ -134,7 +133,9 @@ public class Login {
                     new TuristaLandingPage(role);
                 }
             }
-        });
+
+
+        });*/
 
         registerButton.addActionListener(new ActionListener() {
             @Override
