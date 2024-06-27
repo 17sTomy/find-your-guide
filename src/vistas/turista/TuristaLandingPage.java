@@ -4,6 +4,7 @@ import controladores.GuiaController;
 import controladores.TuristaController;
 import controladores.ViajeController;
 
+import vistas.logueo.SeleccionRol;
 import vistas.turista.BuscarGuiasView;
 import vistas.turista.HistorialViajesView;
 
@@ -33,7 +34,7 @@ public class TuristaLandingPage {
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 0));
 
-        JLabel userNameLabel = new JLabel("Usuario: Juan Pérez", JLabel.RIGHT);
+        JLabel userNameLabel = new JLabel("Gracias por elegirnos", JLabel.RIGHT);
         userNameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         userNameLabel.setForeground(Color.WHITE);
         userNameLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 20));
@@ -110,7 +111,9 @@ public class TuristaLandingPage {
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Cerrar sesión");
+                frame.dispose();
+                new SeleccionRol(turistaController, guiaController, viajeController);
+
             }
         });
     }

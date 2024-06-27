@@ -1,18 +1,31 @@
 package vistas.guia;
 
+import controladores.GuiaController;
+import controladores.TuristaController;
+import controladores.ViajeController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GuiaServicios extends JFrame {
+    private TuristaController turistaController;
+    private GuiaController guiaController;
+    private ViajeController viajeController;
+
     private DefaultListModel<String> serviciosListModel;
     private JList<String> serviciosList;
     private JTextField nombreServicioField;
     private JTextField precioServicioField;
     private JButton eliminarServicioButton;
 
-    public GuiaServicios() {
+    public GuiaServicios(TuristaController turistaController, GuiaController guiaController, ViajeController viajeController) {
+
+        this.turistaController = turistaController;
+        this.guiaController = guiaController;
+        this.viajeController = viajeController;
+
         setTitle("Servicios Ofrecidos");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -142,7 +155,7 @@ public class GuiaServicios extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                //new GuiaLandingPage("Guía").frame.setVisible(true);
+                new GuiaLandingPage(turistaController, guiaController, viajeController).frame.setVisible(true);
             }
         });
 
@@ -153,12 +166,4 @@ public class GuiaServicios extends JFrame {
         });
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new GuiaServicios().setVisible(true);
-            }
-        });
-    }
 }

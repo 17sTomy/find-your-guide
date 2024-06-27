@@ -99,7 +99,7 @@ public class HistorialViajesView extends JFrame {
             JButton calificarButton = new JButton("Calificar");
 
             // Lógica para habilitar/deshabilitar botones según el estado del viaje
-            if (viaje.getEstado().equals(EstadoViaje.Cancelado.toString()) || viaje.getEstado().equals(EstadoViaje.Finalizado.toString())) {
+            if (viaje.getEstado().equals(EstadoViaje.Cancelado.toString())) {
                 cancelarButton.setEnabled(false);
                 pagarButton.setEnabled(false);
                 calificarButton.setEnabled(false);

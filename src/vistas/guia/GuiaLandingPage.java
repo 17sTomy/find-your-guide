@@ -3,6 +3,7 @@ package vistas.guia;
 import controladores.GuiaController;
 import controladores.TuristaController;
 import controladores.ViajeController;
+import vistas.logueo.SeleccionRol;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +33,7 @@ public class GuiaLandingPage {
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 0));
 
-        JLabel userNameLabel = new JLabel("Usuario: Juan Pérez", JLabel.RIGHT);
+        JLabel userNameLabel = new JLabel("Gracias por elegirnos", JLabel.RIGHT);
         userNameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         userNameLabel.setForeground(Color.WHITE);
         userNameLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 20));
@@ -55,13 +56,11 @@ public class GuiaLandingPage {
         navPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JButton homeButton = createNavButton("Inicio");
-        JButton profileButton = createNavButton("Perfil");
         JButton servicesButton = createNavButton("Servicios");
         JButton viewTripsButton = createNavButton("Ver Viajes"); // Nuevo botón para ver viajes
         JButton logoutButton = createNavButton("Cerrar Sesión");
 
         navPanel.add(homeButton);
-        navPanel.add(profileButton);
         navPanel.add(servicesButton);
         navPanel.add(viewTripsButton); // Agregar botón al panel de navegación
         navPanel.add(logoutButton);
@@ -82,19 +81,11 @@ public class GuiaLandingPage {
             }
         });
 
-        profileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
-                new GuiaPerfil().frame.setVisible(true);
-            }
-        });
-
         servicesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
-                new GuiaServicios().setVisible(true);
+                new GuiaServicios(turistaController, guiaController, viajeController);
             }
         });
 
@@ -109,7 +100,8 @@ public class GuiaLandingPage {
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Cerrar sesión");
+                frame.dispose();
+                new SeleccionRol(turistaController, guiaController, viajeController);
             }
         });
     }
@@ -125,4 +117,3 @@ public class GuiaLandingPage {
     }
 
 }
-

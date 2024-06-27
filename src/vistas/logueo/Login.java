@@ -236,11 +236,4 @@ public class Login {
         return button;
     }
 
-    public static void main(String[] args) {
-        TuristaController turistaController = new TuristaController();
-        GuiaController guiaController = new GuiaController();
-        ViajeController viajeController = new ViajeController();
-
-        new Login("Turista", turistaController, guiaController, viajeController);
-    }
 }
