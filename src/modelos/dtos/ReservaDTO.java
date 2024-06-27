@@ -7,7 +7,7 @@ public class ReservaDTO {
     private boolean aceptada;
 
     public ReservaDTO(Reserva reserva) {
-        this.id = id;
+        this.id = reserva.getId();
         this.aceptada = reserva.estaAceptada();
     }
 
