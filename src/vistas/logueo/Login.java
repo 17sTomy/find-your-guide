@@ -124,9 +124,6 @@ public class Login {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Obtener el correo electrónico y la contraseña ingresados
-                String email = emailField.getText();
-                String password = new String(passwordField.getPassword());
 
                 // Cerrar la ventana actual e iniciar la landing page
                 frame.dispose(); // Cerrar la ventana de login
