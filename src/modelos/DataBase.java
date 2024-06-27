@@ -11,11 +11,13 @@ public class DataBase {
     private List<Usuario> usuarios;
     private List<Reseña> reseñas;
     private List<Viaje> viajes;
+    private List<Chat> chats;
 
     private DataBase() {
         usuarios = new ArrayList<>();
         reseñas = new ArrayList<>();
         viajes = new ArrayList<>();
+        chats = new ArrayList<>();
     }
 
     public static DataBase getInstance() {
@@ -23,6 +25,10 @@ public class DataBase {
             instance = new DataBase();
         }
         return instance;
+    }
+
+    public void addChat(Chat chat){
+        chats.add(chat);
     }
 
     public void addUsuario(Usuario usuario) {
@@ -40,6 +46,25 @@ public class DataBase {
                 .collect(Collectors.toList());
     }
 
+
+    public Chat getChat(Usuario turista, Usuario guia){
+        if(!chats.isEmpty()){
+            for (Chat chat : chats){
+                if (chat.getTurista().equals(turista) && chat.getGuia().equals(guia)){
+                    return chat;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Guia getGuiaByEmail(String email) {
+        return usuarios.stream()
+                .filter(usuario -> usuario instanceof Guia)
+                .map(usuario -> (Guia) usuario)
+                .filter(guia -> guia.getEmail().equals(email))
+                .findAny().get(); // TODO revisar
+
     public Guia getGuiaPorEmail(String email) {
         return usuarios.stream()
                 .filter(usuario -> usuario instanceof Guia)
@@ -47,6 +72,7 @@ public class DataBase {
                 .filter(guia -> guia.getEmail().equalsIgnoreCase(email))
                 .findFirst()
                 .orElse(null);
+
     }
 
     public boolean usuarioExiste(String dni, String email) {

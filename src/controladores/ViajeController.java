@@ -2,15 +2,12 @@ package controladores;
 
 import enums.EstadoViaje;
 import modelos.DataBase;
+import modelos.clases.Chat;
 import modelos.clases.Guia;
 import modelos.clases.Turista;
-import modelos.clases.Usuario;
 import modelos.clases.Viaje;
-import modelos.dtos.GuiaDTO;
-import modelos.dtos.TuristaDTO;
 import modelos.dtos.ViajeDTO;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class ViajeController {
@@ -47,6 +44,8 @@ public class ViajeController {
         Viaje viaje = db.getViajeById(idViaje);
         viaje.getReserva().aceptarReserva();
         System.out.println("Reserva Aceptada");
+        db.addChat(new Chat(viaje.getTurista(), viaje.getGuia()));
+        System.out.println("Se ha creado un Chat");
     }
     public void rechazarReserva(int idViaje){
         DataBase db = DataBase.getInstance();
