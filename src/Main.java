@@ -1,12 +1,13 @@
 import controladores.GuiaController;
 import controladores.TuristaController;
+import controladores.ViajeController;
 import enums.*;
 import modelos.clases.*;
 import modelos.dtos.GuiaDTO;
 import modelos.dtos.TuristaDTO;
 import modelos.dtos.ViajeDTO;
 import modelos.interfaces.IAdapterCredencial;
-import vistas.turistatest.BuscarGuiasView;
+import vistas.turista.TuristaLandingPage;
 
 import javax.swing.*;
 import java.util.List;
@@ -236,12 +237,18 @@ public class Main {
         // Crear instancia de GuiaController
         GuiaController guiaController = new GuiaController();
 
+
+
         //Acciones
         guiaController.registrarGuia(guiaDTO, "123", Auth.BASICO);
         guiaController.loginGuia("jose@example.com", "123", Auth.BASICO);
 
+        // Crear instancia de GuiaController
+        ViajeController viajecontroller = new ViajeController();
+
+
         SwingUtilities.invokeLater(() -> {
-            new BuscarGuiasView(turistaController).setVisible(true);
+            new TuristaLandingPage(turistaController, guiaController, viajecontroller);
         });
 
         //////////////////

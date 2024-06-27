@@ -12,6 +12,7 @@ import java.util.List;
 public class GuiaController {
     private static Guia guia;
 
+
     public void registrarGuia(GuiaDTO guiaDTO, String password, Auth modoRegistro){
         
         IAuthenticacion autenticacion = this.convertAuth(modoRegistro);
@@ -63,7 +64,12 @@ public class GuiaController {
     }
 
     public void agregarServicio(String nombre, String descripcion, Double precio) {
+
         guia.setServicio(nombre, descripcion, precio);
+    }
+
+    public String getEmailGuia() {
+        return guia.getEmail();
     }
 
     public void eliminarServicio(String nombre) {
