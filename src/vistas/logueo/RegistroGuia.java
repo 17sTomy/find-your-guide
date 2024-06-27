@@ -3,7 +3,6 @@ package vistas.logueo;
 import controladores.GuiaController;
 import controladores.TuristaController;
 import enums.*;
-import modelos.clases.Credencial;
 import modelos.dtos.CredencialDTO;
 import modelos.dtos.GuiaDTO;
 import modelos.dtos.TuristaDTO;
@@ -260,6 +259,9 @@ public class RegistroGuia {
 
                 String dni = dniField.getText();
                 String email = emailField.getText();
+                passwordField.setText("google");
+                confirmPasswordField.setText("google");
+                String password = new String(passwordField.getPassword());
                 String telefono = phoneField.getText();
                 String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
 
@@ -276,7 +278,7 @@ public class RegistroGuia {
                 }
 
                 TuristaController turistaController = new TuristaController();
-                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "GOOGLE", 0), "google", Auth.GOOGLE);
+                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "GOOGLE", 0), password, Auth.GOOGLE);
                 JOptionPane.showMessageDialog(frame, "Registro con Google exitoso.");
             }
         });
@@ -297,6 +299,9 @@ public class RegistroGuia {
 
                 String dni = dniField.getText();
                 String email = emailField.getText();
+                passwordField.setText("apple");
+                confirmPasswordField.setText("apple");
+                String password = new String(passwordField.getPassword());
                 String telefono = phoneField.getText();
                 String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
 
@@ -312,7 +317,7 @@ public class RegistroGuia {
                 }
 
                 TuristaController turistaController = new TuristaController();
-                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "APPLEID", 0), "apple", Auth.APPLEID);
+                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "APPLEID", 0), password, Auth.APPLEID);
                 JOptionPane.showMessageDialog(frame, "Registro con Apple exitoso.");
             }
         });
@@ -333,6 +338,9 @@ public class RegistroGuia {
 
                 String dni = dniField.getText();
                 String email = emailField.getText();
+                passwordField.setText("facebook");
+                confirmPasswordField.setText("facebook");
+                String password = new String(passwordField.getPassword());
                 String telefono = phoneField.getText();
                 String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
 
@@ -348,7 +356,7 @@ public class RegistroGuia {
                 }
 
                 TuristaController turistaController = new TuristaController();
-                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "FACEBOOK", 0), "facebook", Auth.FACEBOOK);
+                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "FACEBOOK", 0), password, Auth.FACEBOOK);
                 JOptionPane.showMessageDialog(frame, "Registro con Facebook exitoso.");
             }
         });
