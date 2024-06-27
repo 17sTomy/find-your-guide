@@ -29,7 +29,7 @@ public class GuiaController {
                 guiaDTO.getServicios(),
                 guiaDTO.getPais(),
                 guiaDTO.getCiudad(),
-                guiaDTO.getCredencial(new SistemaVerificacionIA()),
+                guiaDTO.convertirCredencial(new SistemaVerificacionIA()),
                 guiaDTO.getIdiomas()
         );
 
@@ -49,7 +49,6 @@ public class GuiaController {
         };
         System.out.println(infoGuia);
     }
-
 
 
 

@@ -38,7 +38,9 @@ public class GuiaDTO extends UsuarioDTO {
         this.puntuacion = puntuacion;
     }
 
-
+    public CredencialDTO getCredencialDTO() {
+        return credencialDTO;
+    }
 
     public Pais getPais() {
         return pais;
@@ -52,7 +54,7 @@ public class GuiaDTO extends UsuarioDTO {
         return servicios;
     }
 
-    public Credencial getCredencial(IAdapterCredencial adapter) {
+    public Credencial convertirCredencial(IAdapterCredencial adapter) {
         return CredencialFactory.createCredencial(credencialDTO, adapter);
     }
 
