@@ -132,10 +132,8 @@ public class Login {
                 frame.dispose(); // Cerrar la ventana de login
 
                 if (role.equals("Guia")) {
-                    guiaController.loginGuia(email, password, Auth.BASICO);
                     new GuiaLandingPage(role);
                 } else if (role.equals("Turista")) {
-                    turistaController.loginTurista(email, password, Auth.BASICO);
                     new TuristaLandingPage(role);
                 }
             }
