@@ -8,7 +8,6 @@ public class Mensaje {
     private String emisor;
     private String contenido;
     private String hora;
-    private Usuario receptor; // TODO eliminar
 
     public Mensaje(Usuario emisor, String contenido) {
         this.emisor = emisor.getNombre()+" "+emisor.getApellido();
