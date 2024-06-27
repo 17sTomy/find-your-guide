@@ -16,6 +16,10 @@ public class Credencial {
         this.habilitado = false;
     }
 
+    public void setAdapter(IAdapterCredencial adapter) {
+        this.adapter = adapter;
+    }
+
     public void verificarCredencial() {
         if (adapter.verificarCredencial(this)){
             setHabilitado(true);
