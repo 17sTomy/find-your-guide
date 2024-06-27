@@ -86,7 +86,7 @@ public class Guia extends Usuario {
     }
 
 
-    public List<String> getReseñas(String email) {
+    public static List<String> getReseñas(String email) {
         List<Reseña> listadoReseñas = DataBase.getInstance().getReseñasPorEmail(email);
         List<String> reseñas = listadoReseñas.stream()
                 .map(reseña -> {

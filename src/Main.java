@@ -222,6 +222,8 @@ public class Main {
         turistaController.calificarGuia("ana@example.com", "marcos@example.com",9.4, "Muy bueno");
 
 
+        turistaController.loginTurista("pepe@example.com", "pass1", Auth.BASICO);
+
         SwingUtilities.invokeLater(() -> {
             new TuristaLandingPage(turistaController, guiaController, viajeController);
             //new GuiaLandingPage (turistaController, guiaController, viajeController);

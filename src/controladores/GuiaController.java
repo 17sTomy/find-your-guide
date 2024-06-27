@@ -77,6 +77,6 @@ public class GuiaController {
     }
 
     public List<String> getReseñas(String email) {
-        return guia.getReseñas(email);
+        return Guia.getReseñas(email);
     }
 }
