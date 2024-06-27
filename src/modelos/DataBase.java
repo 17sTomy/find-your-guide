@@ -65,120 +65,128 @@ public class DataBase {
                 .filter(guia -> guia.getEmail().equals(email))
                 .findAny().get(); // TODO revisar
     }
-        public Guia getGuiaPorEmail (String email){
-            return usuarios.stream()
-                    .filter(usuario -> usuario instanceof Guia)
-                    .map(usuario -> (Guia) usuario)
-                    .filter(guia -> guia.getEmail().equalsIgnoreCase(email))
-                    .findFirst()
-                    .orElse(null);
 
-        }
+    public Guia getGuiaPorEmail (String email){
+        return usuarios.stream()
+                .filter(usuario -> usuario instanceof Guia)
+                .map(usuario -> (Guia) usuario)
+                .filter(guia -> guia.getEmail().equalsIgnoreCase(email))
+                .findFirst()
+                .orElse(null);
 
-        public boolean usuarioExiste (String dni, String email){
-            for (Usuario usuario : usuarios) {
-                if (usuario.getDni().equals(dni) || usuario.getEmail().equals(email)) {
-                    return true;
-                }
+    }
+    public Turista getTuristaPorEmail (String email){
+        return usuarios.stream()
+                .filter(usuario -> usuario instanceof Turista)
+                .map(usuario -> (Turista) usuario)
+                .filter(turista -> turista.getEmail().equalsIgnoreCase(email))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public boolean usuarioExiste (String dni, String email){
+        for (Usuario usuario : usuarios) {
+            if (usuario.getDni().equals(dni) || usuario.getEmail().equals(email)) {
+                return true;
             }
-            return false;
         }
+        return false;
+    }
 
-        public Usuario getUsuarioByEmail (String email){
-            for (Usuario usuario : usuarios) {
-                if (usuario.getEmail().equals(email)) {
-                    return usuario;
-                }
+    public Usuario getUsuarioByEmail (String email){
+        for (Usuario usuario : usuarios) {
+            if (usuario.getEmail().equals(email)) {
+                return usuario;
             }
-            return null;
         }
+        return null;
+    }
 
-        public List<Reseña> getReseñas () {
-            return reseñas;
-        }
+    public List<Reseña> getReseñas () {
+        return reseñas;
+    }
 
-        public void setReseñas (Reseña reseña){
-            reseñas.add(reseña);
-        }
+    public void setReseñas (Reseña reseña){
+        reseñas.add(reseña);
+    }
 
-        public List<Reseña> getReseñasPorGuia (Guia guia){
-            if (reseñas != null) {
-                return reseñas.stream()
-                        .filter(reseña -> reseña.getGuia().equals(guia))
-                        .collect(Collectors.toList());
-            }
-            return new ArrayList<>();
-        }
-
-        public List<Reseña> getReseñasPorEmail (String email){
-            if (reseñas != null) {
-                return reseñas.stream()
-                        .filter(reseña -> reseña.getGuia().getEmail().equals(email))
-                        .collect(Collectors.toList());
-            }
-            return new ArrayList<>();
-        }
-
-        public List<Reseña> getReseñasPorTurista (Turista turista){
-            if (reseñas != null) {
-                return reseñas.stream()
-                        .filter(reseña -> reseña.getTurista().equals(turista))
-                        .collect(Collectors.toList());
-            }
-            return new ArrayList<>();
-        }
-
-        public void addViaje (Viaje viaje){
-            System.out.println(viaje);
-            System.out.println(this.viajes.size());
-            viajes.add(viaje);
-            System.out.println("viajedespues");
-            System.out.println(this.viajes.size());
-        }
-
-        public void deleteViaje (Viaje viaje){
-            viajes.remove(viaje);
-        }
-
-        public List<Viaje> getViajes () {
-            return viajes;
-        }
-
-        public List<Viaje> getViajesPorTurista (Turista turista){
-            if (viajes != null) {
-                return viajes.stream()
-                        .filter(viaje -> viaje.getTurista().equals(turista))
-                        .collect(Collectors.toList());
-            }
-            return new ArrayList<>();
-
-        }
-
-        public Viaje getViajeById ( int id){
-            for (Viaje viaje : viajes) {
-                if (viaje.getId() == (id)) {
-                    return viaje;
-                }
-            }
-            return null;
-        }
-
-        public List<Viaje> getViajesPorEmail(String email) {
-        if (viajes != null) {
-            return viajes.stream()
-                    .filter(viaje -> viaje.getTurista().getEmail().equals(email) || viaje.getGuia().getEmail().equals(email))
+    public List<Reseña> getReseñasPorGuia (Guia guia){
+        if (reseñas != null) {
+            return reseñas.stream()
+                    .filter(reseña -> reseña.getGuia().equals(guia))
                     .collect(Collectors.toList());
         }
         return new ArrayList<>();
-        }
+    }
 
-        public List<Viaje> getViajesPorGuia (Guia guia){
-            if (viajes != null) {
-                return viajes.stream()
-                        .filter(viaje -> viaje.getGuia().equals(guia))
-                        .collect(Collectors.toList());
+    public List<Reseña> getReseñasPorEmail (String email){
+        if (reseñas != null) {
+            return reseñas.stream()
+                    .filter(reseña -> reseña.getGuia().getEmail().equals(email))
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<>();
+    }
+
+    public List<Reseña> getReseñasPorTurista (Turista turista){
+        if (reseñas != null) {
+            return reseñas.stream()
+                    .filter(reseña -> reseña.getTurista().equals(turista))
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<>();
+    }
+
+    public void addViaje (Viaje viaje){
+        System.out.println(viaje);
+        System.out.println(this.viajes.size());
+        viajes.add(viaje);
+        System.out.println("viajedespues");
+        System.out.println(this.viajes.size());
+    }
+
+    public void deleteViaje (Viaje viaje){
+        viajes.remove(viaje);
+    }
+
+    public List<Viaje> getViajes () {
+        return viajes;
+    }
+
+    public List<Viaje> getViajesPorTurista (Turista turista){
+        if (viajes != null) {
+            return viajes.stream()
+                    .filter(viaje -> viaje.getTurista().equals(turista))
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<>();
+
+    }
+
+    public Viaje getViajeById ( int id){
+        for (Viaje viaje : viajes) {
+            if (viaje.getId() == (id)) {
+                return viaje;
             }
-            return new ArrayList<>();
         }
+        return null;
+    }
 
+    public List<Viaje> getViajesPorEmail(String email) {
+    if (viajes != null) {
+        return viajes.stream()
+                .filter(viaje -> viaje.getTurista().getEmail().equals(email) || viaje.getGuia().getEmail().equals(email))
+                .collect(Collectors.toList());
+    }
+    return new ArrayList<>();
+    }
+
+    public List<Viaje> getViajesPorGuia (Guia guia){
+        if (viajes != null) {
+            return viajes.stream()
+                    .filter(viaje -> viaje.getGuia().equals(guia))
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<>();
+    }
 }
