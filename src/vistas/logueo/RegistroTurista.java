@@ -207,10 +207,21 @@ public class RegistroTurista {
 
                 String dni = dniField.getText();
                 String email = emailField.getText();
-                String password = new String(passwordField.getPassword());
-                String confirmPassword = new String(confirmPasswordField.getPassword());
                 String telefono = phoneField.getText();
                 String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
+
+                // Validaciones
+                if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || telefono.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+
+                if (selectedImageFile == null || !selectedImageFile.getName().endsWith(".jpg")) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, cargue una foto de perfil válida en formato JPG.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 TuristaController turistaController = new TuristaController();
                 turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "GOOGLE", 0), "google", Auth.GOOGLE);
                 JOptionPane.showMessageDialog(frame, "Registro con Google exitoso.");
@@ -233,10 +244,20 @@ public class RegistroTurista {
 
                 String dni = dniField.getText();
                 String email = emailField.getText();
-                String password = new String(passwordField.getPassword());
-                String confirmPassword = new String(confirmPasswordField.getPassword());
                 String telefono = phoneField.getText();
                 String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
+
+                // Validaciones
+                if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || telefono.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (selectedImageFile == null || !selectedImageFile.getName().endsWith(".jpg")) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, cargue una foto de perfil válida en formato JPG.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 TuristaController turistaController = new TuristaController();
                 turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "APPLEID", 0), "apple", Auth.APPLEID);
                 JOptionPane.showMessageDialog(frame, "Registro con Apple exitoso.");
@@ -259,10 +280,20 @@ public class RegistroTurista {
 
                 String dni = dniField.getText();
                 String email = emailField.getText();
-                String password = new String(passwordField.getPassword());
-                String confirmPassword = new String(confirmPasswordField.getPassword());
                 String telefono = phoneField.getText();
                 String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
+
+                // Validaciones
+                if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || telefono.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (selectedImageFile == null || !selectedImageFile.getName().endsWith(".jpg")) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, cargue una foto de perfil válida en formato JPG.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 TuristaController turistaController = new TuristaController();
                 turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "FACEBOOK", 0), "facebook", Auth.FACEBOOK);
                 JOptionPane.showMessageDialog(frame, "Registro con Facebook exitoso.");
