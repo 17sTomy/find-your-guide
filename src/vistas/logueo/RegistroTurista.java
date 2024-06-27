@@ -1,10 +1,13 @@
 package vistas;
 
+import controladores.GuiaController;
 import controladores.TuristaController;
 import enums.Auth;
 import enums.Sexo;
 import modelos.clases.RegistroBasico;
 import modelos.clases.Turista;
+import modelos.dtos.CredencialDTO;
+import modelos.dtos.GuiaDTO;
 import modelos.dtos.TuristaDTO;
 import vistas.logueo.Login;
 
@@ -188,6 +191,84 @@ public class RegistroTurista {
         JButton appleButton = createThirdPartyButton("Apple");
         JButton facebookButton = createThirdPartyButton("Facebook");
 
+        googleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombre = nameField.getText();
+                String apellido = surnameField.getText();
+                String sexoStr = (String) genderComboBox.getSelectedItem();
+                Sexo sexo;
+                try {
+                    sexo = Sexo.valueOf(sexoStr.toUpperCase());
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(frame, "Seleccione un sexo válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Salir de la acción si el valor del sexo no es válido
+                }
+
+                String dni = dniField.getText();
+                String email = emailField.getText();
+                String password = new String(passwordField.getPassword());
+                String confirmPassword = new String(confirmPasswordField.getPassword());
+                String telefono = phoneField.getText();
+                String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
+                TuristaController turistaController = new TuristaController();
+                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "GOOGLE", 0), "google", Auth.GOOGLE);
+                JOptionPane.showMessageDialog(frame, "Registro con Google exitoso.");
+            }
+        });
+
+        appleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombre = nameField.getText();
+                String apellido = surnameField.getText();
+                String sexoStr = (String) genderComboBox.getSelectedItem();
+                Sexo sexo;
+                try {
+                    sexo = Sexo.valueOf(sexoStr.toUpperCase());
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(frame, "Seleccione un sexo válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Salir de la acción si el valor del sexo no es válido
+                }
+
+                String dni = dniField.getText();
+                String email = emailField.getText();
+                String password = new String(passwordField.getPassword());
+                String confirmPassword = new String(confirmPasswordField.getPassword());
+                String telefono = phoneField.getText();
+                String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
+                TuristaController turistaController = new TuristaController();
+                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "APPLEID", 0), "apple", Auth.APPLEID);
+                JOptionPane.showMessageDialog(frame, "Registro con Apple exitoso.");
+            }
+        });
+
+        facebookButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombre = nameField.getText();
+                String apellido = surnameField.getText();
+                String sexoStr = (String) genderComboBox.getSelectedItem();
+                Sexo sexo;
+                try {
+                    sexo = Sexo.valueOf(sexoStr.toUpperCase());
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(frame, "Seleccione un sexo válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Salir de la acción si el valor del sexo no es válido
+                }
+
+                String dni = dniField.getText();
+                String email = emailField.getText();
+                String password = new String(passwordField.getPassword());
+                String confirmPassword = new String(confirmPasswordField.getPassword());
+                String telefono = phoneField.getText();
+                String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
+                TuristaController turistaController = new TuristaController();
+                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "FACEBOOK", 0), "facebook", Auth.FACEBOOK);
+                JOptionPane.showMessageDialog(frame, "Registro con Facebook exitoso.");
+            }
+        });
+
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         buttonPanel.add(googleButton);
         buttonPanel.add(appleButton);
@@ -275,16 +356,10 @@ public class RegistroTurista {
                     return;
                 }
 
-                Auth modoRegistro = Auth.BASICO;
-                RegistroBasico autenticacion = new RegistroBasico();
-
-                Turista turista = new Turista(nombre, apellido, sexo, dni, email, password, telefono, fotoPerfil, autenticacion);
-
-                TuristaDTO nuevoTuristaDTO = new TuristaDTO(turista);
-
-                turistaController.registrarTurista(nuevoTuristaDTO, password, modoRegistro);
-
+                TuristaController turistaController = new TuristaController();
+                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "BASICO", 0), password, Auth.BASICO);
                 JOptionPane.showMessageDialog(frame, "Registro exitoso.");
+
             }
         });
     }

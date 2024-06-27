@@ -131,7 +131,6 @@ public class Login {
                 // Cerrar la ventana actual e iniciar la landing page
                 frame.dispose(); // Cerrar la ventana de login
 
-                // Llamar al método para iniciar sesión en TuristaController
                 if (role.equals("Guia")) {
                     guiaController.loginGuia(email, password, Auth.BASICO);
                     new GuiaLandingPage(role);
