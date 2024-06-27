@@ -2,12 +2,17 @@ package modelos.dtos;
 
 import enums.Ciudad;
 import enums.Pais;
+import modelos.clases.Factura;
+import modelos.clases.Reserva;
 
 import java.time.LocalDate;
 
 public class ViajeDTO {
 // TODO quiza hay que eliminar guiaDTO y turistaDTO
     private Ciudad ciudadDestino;
+    private int idViaje;
+    private  FacturaDTO factura;
+    private ReservaDTO reserva;
     private Pais paisDestino;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
@@ -19,6 +24,28 @@ public class ViajeDTO {
         this.paisDestino = paisDestino;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+    }
+
+    public ViajeDTO(Ciudad ciudadDestino, Pais paisDestino, LocalDate fechaInicio, LocalDate fechaFin, int idViaje, ReservaDTO reserva, FacturaDTO factura){
+        this.ciudadDestino = ciudadDestino;
+        this.paisDestino = paisDestino;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.factura = factura;
+        this.reserva = reserva;
+        this.idViaje = idViaje;
+    }
+
+    public int getIdViaje() {
+        return idViaje;
+    }
+
+    public FacturaDTO getFactura() {
+        return factura;
+    }
+
+    public ReservaDTO getReserva() {
+        return reserva;
     }
 
     public Ciudad getCiudadDestino() {
