@@ -18,6 +18,8 @@ public class Login {
     private TuristaController turistaController;
     private GuiaController guiaController;
     private ViajeController viajeController;
+    private JTextField emailField;
+    private JPasswordField passwordField;
 
     public Login(String role, TuristaController turistaController, GuiaController guiaController, ViajeController viajeController) {
         this.role = role;
@@ -60,7 +62,7 @@ public class Login {
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
-        JTextField emailField = new JTextField(20);
+        emailField = new JTextField(20);
         centerPanel.add(emailField, gbc);
 
         gbc.gridx = 0;
@@ -69,7 +71,7 @@ public class Login {
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        JPasswordField passwordField = new JPasswordField(20);
+        passwordField = new JPasswordField(20);
         centerPanel.add(passwordField, gbc);
 
         // Crear el panel inferior con los botones
@@ -150,42 +152,61 @@ public class Login {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                frame.dispose();
                 if (role.equals("Guía")) {
                     new RegistroGuia(guiaController, turistaController, viajeController);
                 } else if (role.equals("Turista")) {
                     new RegistroTurista(turistaController, guiaController, viajeController);
                 }
-
-                frame.dispose();
             }
-
         });
 
         // Añadir listeners para los botones de terceros
         googleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Logueo con Google exitoso.");
+                passwordField.setText("google");
+                autenticarConProveedor(Auth.GOOGLE, emailField.getText(), "google");
             }
         });
 
         appleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Logueo con Apple exitoso.");
+                passwordField.setText("apple");
+                autenticarConProveedor(Auth.APPLEID, emailField.getText(), "apple");
             }
         });
 
         facebookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Logueo con Facebook exitoso.");
+                passwordField.setText("facebook");
+                autenticarConProveedor(Auth.FACEBOOK, emailField.getText(), "facebook");
             }
         });
 
         // Centrar el frame en la pantalla
         frame.setLocationRelativeTo(null);
+    }
+
+    private void autenticarConProveedor(Auth authMethod, String email, String password) {
+        System.out.println(email + " " + password);
+        if (role.equals("Guía")) {
+            if (guiaController.loginGuia(email, password, authMethod)) {
+                frame.dispose();
+                new GuiaLandingPage(turistaController, guiaController, viajeController).frame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Credenciales incorrectas. Por favor, inténtelo de nuevo.", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (role.equals("Turista")) {
+            if (turistaController.loginTurista(email, password, authMethod)) {
+                frame.dispose();
+                new TuristaLandingPage(turistaController, guiaController, viajeController).frame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Credenciales incorrectas. Por favor, inténtelo de nuevo.", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     private JButton createNavButton(String text) {
@@ -215,4 +236,11 @@ public class Login {
         return button;
     }
 
+    public static void main(String[] args) {
+        TuristaController turistaController = new TuristaController();
+        GuiaController guiaController = new GuiaController();
+        ViajeController viajeController = new ViajeController();
+
+        new Login("Turista", turistaController, guiaController, viajeController);
+    }
 }
