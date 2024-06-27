@@ -1,16 +1,14 @@
 package modelos.dtos;
 
-import java.util.stream.Stream;
-
 public class CredencialDTO {
     private String idCredencial;
     private String fotoCredencial;
     private Boolean habilitado;
 
-    public CredencialDTO(String idCredencial, String fotoCredencial, Boolean habilitado) {
+    public CredencialDTO(String idCredencial, String fotoCredencial) {
         this.idCredencial = idCredencial;
         this.fotoCredencial = fotoCredencial;
-        this.habilitado = habilitado;
+        this.habilitado = false;
     }
 
     public String getIdCredencial() {

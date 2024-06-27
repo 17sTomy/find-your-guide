@@ -77,8 +77,7 @@ public class GuiaDTO extends UsuarioDTO {
         }
         return new CredencialDTO(
                 credencial.getIdCredencial(),
-                credencial.getFotoCredencial(),
-                credencial.getHabilitado()
+                credencial.getFotoCredencial()
         );
     }
 }

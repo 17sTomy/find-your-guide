@@ -1,15 +1,8 @@
 package vistas.logueo;
 
 import controladores.GuiaController;
-import enums.Auth;
-import enums.Ciudad;
-import enums.Idioma;
-import enums.Pais;
-import enums.Sexo;
+import enums.*;
 import modelos.clases.Credencial;
-import modelos.clases.RegistroBasico;
-import modelos.clases.Guia;
-import modelos.clases.Servicio;
 import modelos.dtos.GuiaDTO;
 
 import javax.swing.*;
@@ -295,7 +288,7 @@ public class RegistroGuia {
 
                 Pais pais = (Pais) paisComboBox.getSelectedItem();
                 Ciudad ciudad = (Ciudad) ciudadComboBox.getSelectedItem();
-                Credencial credencial = (Credencial) credencialComboBox.getSelectedItem();
+                //Credencial credencial = (Credencial) credencialComboBox.getSelectedItem(); TODO agregar para credencial dto
 
                 String serviciosStr = serviciosTextArea.getText();
                 List<String> servicios = List.of(serviciosStr.split(",")).stream().map(String::trim).toList();
@@ -319,17 +312,8 @@ public class RegistroGuia {
                     return;
                 }
 
-                // Crear la autenticación básica
-                Auth modoRegistro = Auth.BASICO;
-                RegistroBasico autenticacion = new RegistroBasico();
-
-                Guia guia = new Guia(
-                        nombre, apellido, sexo, dni, email, password, telefono, fotoPerfil,
-                        autenticacion, servicios, pais, ciudad, credencial, idiomas
-                );
-
-                GuiaDTO nuevoGuiaDTO = new GuiaDTO(guia);
-
+                GuiaController guiaController = new GuiaController();
+                guiaController.registrarGuia(new GuiaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "BASICO", null, pais,ciudad,null,idiomas,null), password, Auth.BASICO);
                 JOptionPane.showMessageDialog(frame, "Registro exitoso.");
 
             }
