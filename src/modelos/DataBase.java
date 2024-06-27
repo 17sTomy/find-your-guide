@@ -139,10 +139,7 @@ public class DataBase {
 
     public void addViaje (Viaje viaje){
         System.out.println(viaje);
-        System.out.println(this.viajes.size());
         viajes.add(viaje);
-        System.out.println("viajedespues");
-        System.out.println(this.viajes.size());
     }
 
     public void deleteViaje (Viaje viaje){

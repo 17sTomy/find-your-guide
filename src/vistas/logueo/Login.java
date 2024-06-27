@@ -191,7 +191,6 @@ public class Login {
     }
 
     private void autenticarConProveedor(Auth authMethod, String email, String password) {
-        System.out.println(email + " " + password);
         if (role.equals("Guía")) {
             if (guiaController.loginGuia(email, password, authMethod)) {
                 frame.dispose();

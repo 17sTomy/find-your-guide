@@ -88,23 +88,4 @@ public class ViajeDTO {
         return fechaFin;
     }
 
-    public void setFechaFin(LocalDate fechaFin) {
-        this.fechaFin = fechaFin;
-    }
-
-    public GuiaDTO getGuiaDTO() {
-        return guiaDTO;
-    }
-
-    public void setGuiaDTO(GuiaDTO guiaDTO) {
-        this.guiaDTO = guiaDTO;
-    }
-
-    public TuristaDTO getTuristaDTO() {
-        return turistaDTO;
-    }
-
-    public void setTuristaDTO(TuristaDTO turistaDTO) {
-        this.turistaDTO = turistaDTO;
-    }
 }

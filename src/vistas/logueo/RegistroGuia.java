@@ -241,16 +241,24 @@ public class RegistroGuia {
                     sexo = Sexo.valueOf(sexoStr.toUpperCase());
                 } catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(frame, "Seleccione un sexo válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return; // Salir de la acción si el valor del sexo no es válido
+                    return;
                 }
-
                 String dni = dniField.getText();
                 String email = emailField.getText();
                 passwordField.setText("google");
                 confirmPasswordField.setText("google");
                 String password = new String(passwordField.getPassword());
+
                 String telefono = phoneField.getText();
-                String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
+                String fotoPerfil = selectedImageFile != null ? selectedImageFile.getAbsolutePath() : null;
+                String credencial = credencialField.getText(); // Obtener texto de la credencial
+                String fotoCredencial = selectedCredencialFile != null ? selectedCredencialFile.getAbsolutePath() : null;
+
+                Pais pais = (Pais) paisComboBox.getSelectedItem();
+                Ciudad ciudad = (Ciudad) ciudadComboBox.getSelectedItem();
+                Idioma idioma = (Idioma) idiomaComboBox.getSelectedItem();
+                List<Idioma> idiomas = new ArrayList<>();
+                idiomas.add(idioma);
 
                 // Validaciones
                 if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || telefono.isEmpty()) {
@@ -263,8 +271,7 @@ public class RegistroGuia {
                     return;
                 }
 
-                TuristaController turistaController = new TuristaController();
-                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "GOOGLE", 0), password, Auth.GOOGLE);
+                guiaController.registrarGuia(new GuiaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "GOOGLE", null, pais, ciudad, new CredencialDTO(credencial, fotoCredencial), idiomas, null), password, Auth.GOOGLE);
                 JOptionPane.showMessageDialog(frame, "Registro con Google exitoso.");
             }
         });
@@ -280,16 +287,24 @@ public class RegistroGuia {
                     sexo = Sexo.valueOf(sexoStr.toUpperCase());
                 } catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(frame, "Seleccione un sexo válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return; // Salir de la acción si el valor del sexo no es válido
+                    return;
                 }
-
                 String dni = dniField.getText();
                 String email = emailField.getText();
                 passwordField.setText("apple");
                 confirmPasswordField.setText("apple");
                 String password = new String(passwordField.getPassword());
+
                 String telefono = phoneField.getText();
-                String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
+                String fotoPerfil = selectedImageFile != null ? selectedImageFile.getAbsolutePath() : null;
+                String credencial = credencialField.getText(); // Obtener texto de la credencial
+                String fotoCredencial = selectedCredencialFile != null ? selectedCredencialFile.getAbsolutePath() : null;
+
+                Pais pais = (Pais) paisComboBox.getSelectedItem();
+                Ciudad ciudad = (Ciudad) ciudadComboBox.getSelectedItem();
+                Idioma idioma = (Idioma) idiomaComboBox.getSelectedItem();
+                List<Idioma> idiomas = new ArrayList<>();
+                idiomas.add(idioma);
 
                 // Validaciones
                 if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || telefono.isEmpty()) {
@@ -302,8 +317,7 @@ public class RegistroGuia {
                     return;
                 }
 
-                TuristaController turistaController = new TuristaController();
-                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "APPLEID", 0), password, Auth.APPLEID);
+                guiaController.registrarGuia(new GuiaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "APPLEID", null, pais, ciudad, new CredencialDTO(credencial, fotoCredencial), idiomas, null), password, Auth.APPLEID);
                 JOptionPane.showMessageDialog(frame, "Registro con Apple exitoso.");
             }
         });
@@ -319,16 +333,25 @@ public class RegistroGuia {
                     sexo = Sexo.valueOf(sexoStr.toUpperCase());
                 } catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(frame, "Seleccione un sexo válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return; // Salir de la acción si el valor del sexo no es válido
+                    return;
                 }
-
                 String dni = dniField.getText();
                 String email = emailField.getText();
                 passwordField.setText("facebook");
                 confirmPasswordField.setText("facebook");
                 String password = new String(passwordField.getPassword());
+
                 String telefono = phoneField.getText();
-                String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
+                String fotoPerfil = selectedImageFile != null ? selectedImageFile.getAbsolutePath() : null;
+                String credencial = credencialField.getText(); // Obtener texto de la credencial
+                String fotoCredencial = selectedCredencialFile != null ? selectedCredencialFile.getAbsolutePath() : null;
+
+                Pais pais = (Pais) paisComboBox.getSelectedItem();
+                Ciudad ciudad = (Ciudad) ciudadComboBox.getSelectedItem();
+                Idioma idioma = (Idioma) idiomaComboBox.getSelectedItem();
+                List<Idioma> idiomas = new ArrayList<>();
+                idiomas.add(idioma);
+
 
                 // Validaciones
                 if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || telefono.isEmpty()) {
@@ -341,8 +364,7 @@ public class RegistroGuia {
                     return;
                 }
 
-                TuristaController turistaController = new TuristaController();
-                turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "FACEBOOK", 0), password, Auth.FACEBOOK);
+                guiaController.registrarGuia(new GuiaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "FACEBOOK", null, pais, ciudad, new CredencialDTO(credencial, fotoCredencial), idiomas, null), password, Auth.FACEBOOK);
                 JOptionPane.showMessageDialog(frame, "Registro con Facebook exitoso.");
             }
         });
