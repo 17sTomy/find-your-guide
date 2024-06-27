@@ -4,11 +4,13 @@ import controladores.ViajeController;
 import enums.Ciudad;
 import enums.Pais;
 import modelos.DataBase;
+import modelos.dtos.ReservaDTO;
 import modelos.dtos.ViajeDTO;
 import modelos.interfaces.IEstadoViaje;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +30,8 @@ public class Viaje {
     private Ciudad ciudadDestino;
     private IEstadoViaje estadoViaje;
     private Notificador notificador;
+    private int id;
+    private static int contadorID = 0;
 
     /**
      * Default constructor
@@ -39,6 +43,7 @@ public class Viaje {
         paisDestino = viajeDTO.getPaisDestino();
         estadoViaje = new Activo(this);
         reserva = new Reserva();
+        this.id = generarID();
         this.turista = turista;
         this.guia = guia;
         this.crearFactura();
@@ -49,7 +54,7 @@ public class Viaje {
     public void notificarReservaRealizada() {
         Notificacion notificacion = new Notificacion(
                 "Reserva realizada",
-                "\n" + "Reserva nro: " + reserva.hashCode() + "\n" +
+                "\n" + "Reserva nro: " + reserva.getId() + "\n" +
                 "Fecha: " + fechaInicio + " - " + fechaFin + "\n" +
                 "Destino: " + paisDestino + ", " + ciudadDestino + "\n" +
                 "Turista: " + turista.getNombre() + " " + turista.getApellido() + "\n" +
@@ -60,6 +65,14 @@ public class Viaje {
         notificador = new Notificador();
         notificador.cambiarEstrategia(new Push());
         notificador.enviar(notificacion);
+    }
+
+    private static int generarID(){
+        return contadorID++;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void notificarResenia() {
@@ -75,6 +88,12 @@ public class Viaje {
         notificador.cambiarEstrategia(new Mail(new JavaMail()));
         notificador.enviar(notificacion);
     }
+
+    public String getEstado(){
+        return this.estadoViaje.toString();
+    }
+
+
 
 
     public Factura getFactura() {
@@ -147,6 +166,7 @@ public class Viaje {
     }
 
 
+
     public void setAnticipo() {
         this.anticipo = 50.00;
     }
@@ -172,12 +192,41 @@ public class Viaje {
         return fechaFin;
     }
 
+    public Ciudad getCiudadDestino() {
+        return ciudadDestino;
+    }
+
+    public Pais getPaisDestino() {
+        return paisDestino;
+    }
+
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
 
-    public static List<Viaje> getViajes(String email) {
+    public static List<ViajeDTO> getViajesDTO(String email) {
         List<Viaje> viajes = DataBase.getInstance().getViajesPorEmail(email);
-        return viajes;
+
+        List<ViajeDTO> viajesDTO = new ArrayList<>();
+
+        for (Viaje viaje : viajes) {
+            ReservaDTO reservaDTO = new ReservaDTO(viaje.getReserva());
+            String informacionFactura = viaje.getFactura().toString();
+
+            ViajeDTO viajeDTO = new ViajeDTO(
+                    viaje.getCiudadDestino(),
+                    viaje.getPaisDestino(),
+                    viaje.getFechaInicio(),
+                    viaje.getFechaFin(),
+                    viaje.getId(),
+                    reservaDTO,
+                    informacionFactura,
+                    viaje.getEstado()
+            );
+
+            viajesDTO.add(viajeDTO);
+        }
+
+        return viajesDTO;
     }
 }

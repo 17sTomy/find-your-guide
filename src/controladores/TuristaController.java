@@ -68,7 +68,8 @@ public class TuristaController {
         return Guia.buscarGuias(nombre, apellido, idioma, servicio, puntuacion, pais, ciudad);
     }
 
-    public void calificarGuia(Guia guia, Double puntuacion, String comentario) {
+    public void calificarGuia(String email, Double puntuacion, String comentario) {
+        Guia guia = DataBase.getInstance().getGuiaPorEmail(email);
         Reseña reseña = new Reseña(
                 guia,
                 this.turista,
@@ -86,14 +87,8 @@ public class TuristaController {
         DataBase.getInstance().setReseñas(reseña);
     }
 
-    public void contratarGuia(Ciudad ciudadDestino, Pais paisDestino, LocalDate fechaInicio, LocalDate fechaFin, Guia guia) {
-        List<Viaje> viajesDelGuia = DataBase.getInstance().getViajesPorGuia(guia);
-        if (verificarDisponibilidadGuia(viajesDelGuia, fechaInicio, fechaFin)) {
-            DataBase.getInstance().addViaje(new Viaje(new ViajeDTO(ciudadDestino,paisDestino,fechaInicio,fechaFin), this.turista, guia));
-        }
-    }
-
-    public boolean verificarDisponibilidadGuia(List<Viaje> viajes, LocalDate fechaInicio, LocalDate fechaFin) {
+    public boolean verificarDisponibilidadGuia(String email, LocalDate fechaInicio, LocalDate fechaFin) {
+        List<Viaje> viajes = DataBase.getInstance().getViajesPorEmail(email);
         if (fechaInicio.isBefore(fechaFin) || fechaInicio.isEqual(fechaFin)){
             return viajes.stream()
                         .filter(viaje -> fechaFin.isBefore(viaje.getFechaInicio()) || fechaInicio.isAfter(viaje.getFechaFin()))

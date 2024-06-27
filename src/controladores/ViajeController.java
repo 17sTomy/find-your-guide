@@ -2,21 +2,20 @@ package controladores;
 
 import enums.EstadoViaje;
 import modelos.DataBase;
+import modelos.clases.Chat;
 import modelos.clases.Guia;
 import modelos.clases.Turista;
-import modelos.clases.Usuario;
 import modelos.clases.Viaje;
-import modelos.dtos.GuiaDTO;
-import modelos.dtos.TuristaDTO;
+import modelos.dtos.ReservaDTO;
 import modelos.dtos.ViajeDTO;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViajeController {
 
 
-    public void crearViaje(ViajeDTO viajeDTO, String emailTurista, String emailGuia){
+    public int crearViaje(ViajeDTO viajeDTO, String emailTurista, String emailGuia){
         DataBase db = DataBase.getInstance();
 
         Turista turista = (Turista) db.getUsuarioByEmail(emailTurista);
@@ -24,28 +23,66 @@ public class ViajeController {
 
         Viaje nuevoViaje = new Viaje(viajeDTO, turista, guia);
         db.addViaje(nuevoViaje);
+
+        return nuevoViaje.getId();
     }
 
-    public void pagarTotalFactura(Viaje viaje){
+    public void pagarTotalFactura(int idViaje){
+        DataBase db = DataBase.getInstance();
+        Viaje viaje = db.getViajeById(idViaje);
         viaje.getFactura().pagarTotalFactura();
+        System.out.println("Total de la factura pago");
     }
 
-    public void pagarAnticipoFactura(Viaje viaje){
+    public void pagarAnticipoFactura(int idViaje){
+        DataBase db = DataBase.getInstance();
+        Viaje viaje = db.getViajeById(idViaje);
         viaje.getFactura().pagarAnticipoFactura();
+        System.out.println("Anticipo pagado");
     }
 
-    public void aceptarReserva(Viaje viaje){
+    public void aceptarReserva(int idViaje){
+        DataBase db = DataBase.getInstance();
+        Viaje viaje = db.getViajeById(idViaje);
         viaje.getReserva().aceptarReserva();
+        viaje.iniciarViaje();
+        System.out.println("Reserva Aceptada");
+        db.addChat(new Chat(viaje.getTurista(), viaje.getGuia()));
+        System.out.println("Se ha creado un Chat");
     }
-    public void rechazarReserva(Viaje viaje){
+
+    public void rechazarReserva(int idViaje){
+        DataBase db = DataBase.getInstance();
+        Viaje viaje = db.getViajeById(idViaje);
+        viaje.getReserva().cancelarReserva();
         viaje.cancelarViaje();
+        System.out.println("Reserva cancelada");
     }
 
-    public List<Viaje> buscarViajesPorGuia(Guia guia){
-        return DataBase.getInstance().getViajesPorGuia(guia);
+    public List<ViajeDTO> getViajes(String email) {
+        return Viaje.getViajesDTO(email);
     }
 
-    public void cambiarEstadoViaje(Viaje viaje, EstadoViaje estado){
+    public void eliminarViaje(int idViaje){
+        DataBase db = DataBase.getInstance();
+
+        Viaje viaje = db.getViajeById(idViaje);
+
+        db.deleteViaje(viaje);
+    }
+
+    public String getInformacionFactura(int idViaje){
+        DataBase db = DataBase.getInstance();
+
+        Viaje viaje = db.getViajeById(idViaje);
+
+        return "Monto Total: " + viaje.getFactura().getMontoTotal() + ", Anticipo: " + viaje.getFactura().getAnticipo();
+    }
+
+    public void cambiarEstadoViaje(int idViaje, EstadoViaje estado){
+        DataBase db = DataBase.getInstance();
+        Viaje viaje = db.getViajeById(idViaje);
+        
         switch (estado) {
             case Iniciado:
                 viaje.iniciarViaje();
@@ -61,9 +98,7 @@ public class ViajeController {
         }
     }
 
-    public List<Viaje> getViajes(String email) {
-        return Viaje.getViajes(email);
-    }
+
 
 
 }

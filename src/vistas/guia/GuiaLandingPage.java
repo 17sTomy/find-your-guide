@@ -1,5 +1,9 @@
 package vistas.guia;
 
+import controladores.GuiaController;
+import controladores.TuristaController;
+import controladores.ViajeController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,7 +13,7 @@ public class GuiaLandingPage {
     public JFrame frame;
     private String role;
 
-    public GuiaLandingPage(String role) {
+    public GuiaLandingPage(TuristaController turistaController, GuiaController guiaController, ViajeController viajeController) {
         this.role = role;
 
         // Crear el frame principal
@@ -53,11 +57,13 @@ public class GuiaLandingPage {
         JButton homeButton = createNavButton("Inicio");
         JButton profileButton = createNavButton("Perfil");
         JButton servicesButton = createNavButton("Servicios");
+        JButton viewTripsButton = createNavButton("Ver Viajes"); // Nuevo botón para ver viajes
         JButton logoutButton = createNavButton("Cerrar Sesión");
 
         navPanel.add(homeButton);
         navPanel.add(profileButton);
         navPanel.add(servicesButton);
+        navPanel.add(viewTripsButton); // Agregar botón al panel de navegación
         navPanel.add(logoutButton);
 
         // Añadir paneles al frame
@@ -92,6 +98,14 @@ public class GuiaLandingPage {
             }
         });
 
+        viewTripsButton.addActionListener(new ActionListener() { // Listener para ver viajes
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+                new GestionarViajesView(turistaController, guiaController, viajeController).setVisible(true);
+            }
+        });
+
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -110,12 +124,5 @@ public class GuiaLandingPage {
         return button;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new GuiaLandingPage("Guía");
-            }
-        });
-    }
 }
+

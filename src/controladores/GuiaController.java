@@ -12,6 +12,7 @@ import java.util.List;
 public class GuiaController {
     private static Guia guia;
 
+
     public void registrarGuia(GuiaDTO guiaDTO, String password, Auth modoRegistro){
         
         IAuthenticacion autenticacion = this.convertAuth(modoRegistro);
@@ -29,7 +30,7 @@ public class GuiaController {
                 guiaDTO.getServicios(),
                 guiaDTO.getPais(),
                 guiaDTO.getCiudad(),
-                guiaDTO.getCredencial(),
+                guiaDTO.convertirCredencial(new SistemaVerificacionIA()),
                 guiaDTO.getIdiomas()
         );
 
@@ -52,7 +53,6 @@ public class GuiaController {
 
 
 
-
     public IAuthenticacion convertAuth(Auth modo) {
         return switch (modo) {
             case APPLEID -> new RegistroAppleId();
@@ -64,14 +64,19 @@ public class GuiaController {
     }
 
     public void agregarServicio(String nombre, String descripcion, Double precio) {
+
         guia.setServicio(nombre, descripcion, precio);
+    }
+
+    public String getEmailGuia() {
+        return guia.getEmail();
     }
 
     public void eliminarServicio(String nombre) {
         guia.removeServicio(nombre);
     }
 
-    public List<Reseña> getReseñas(String email) {
+    public List<String> getReseñas(String email) {
         return guia.getReseñas(email);
     }
 }

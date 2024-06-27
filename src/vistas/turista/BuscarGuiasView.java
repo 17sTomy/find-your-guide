@@ -1,9 +1,12 @@
-package vistas.turistatest;
+package vistas.turista;
 
+import controladores.GuiaController;
 import controladores.TuristaController;
+import controladores.ViajeController;
 import enums.Ciudad;
 import enums.Pais;
 import modelos.dtos.GuiaDTO;
+import vistas.guia.GestionarViajesView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,6 +17,8 @@ import java.util.List;
 
 public class BuscarGuiasView extends JFrame {
     private TuristaController turistaController;
+    private GuiaController guiaController;
+    private ViajeController viajeController;
 
     private JTextField nombreField;
     private JTextField apellidoField;
@@ -24,10 +29,13 @@ public class BuscarGuiasView extends JFrame {
     private JTextField puntuacionField;
     private JButton buscarButton;
     private JButton contratarButton;
+    private JButton volverButton;
     private JTable resultadosTable;
 
-    public BuscarGuiasView(TuristaController turistaController) {
+    public BuscarGuiasView(TuristaController turistaController, GuiaController guiaController, ViajeController viajeController, JFrame previousFrame) {
         this.turistaController = turistaController;
+        this.guiaController = guiaController;
+        this.viajeController = viajeController;
 
         setTitle("Buscar Guías");
         setSize(800, 600);
@@ -74,6 +82,10 @@ public class BuscarGuiasView extends JFrame {
 
         add(panelBusqueda, BorderLayout.NORTH);
 
+        // Agregar botón de Volver
+        volverButton = new JButton("Volver");
+        panelBusqueda.add(volverButton);
+
         // Tabla de resultados
         resultadosTable = new JTable(new DefaultTableModel(new Object[]{"Nombre", "Apellido", "Email", "País", "Ciudad", "Idiomas", "Servicios", "Puntuación"}, 0));
         add(new JScrollPane(resultadosTable), BorderLayout.CENTER);
@@ -96,6 +108,15 @@ public class BuscarGuiasView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 contratarGuia();
+            }
+        });
+
+        // Evento del botón de volver
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new GestionarViajesView(turistaController, guiaController, viajeController).setVisible(true);
+                dispose();
             }
         });
 
@@ -154,7 +175,7 @@ public class BuscarGuiasView extends JFrame {
             Ciudad ciudad = Ciudad.valueOf((String) resultadosTable.getValueAt(selectedRow, 4)); // Suponiendo que la ciudad está en la cuarta columna
             Pais pais = Pais.valueOf((String) resultadosTable.getValueAt(selectedRow, 3)); // Suponiendo que el país está en la tercera columna
             System.out.println(pais);
-            new ContratarGuiaView(turistaController, emailGuia, ciudad, pais).setVisible(true);
+            new ContratarGuiaView(turistaController, guiaController, viajeController, emailGuia, ciudad, pais).setVisible(true);
         }
     }
 

@@ -1,5 +1,9 @@
 package vistas.turista;
 
+import controladores.GuiaController;
+import controladores.TuristaController;
+import controladores.ViajeController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,10 +11,8 @@ import java.awt.event.ActionListener;
 
 public class TuristaLandingPage {
     public JFrame frame;
-    private String role;
 
-    public TuristaLandingPage(String role) {
-        this.role = role;
+    public TuristaLandingPage(TuristaController turistaController, GuiaController guiaController, ViajeController viajeController) {
 
         // Crear el frame principal
         frame = new JFrame("FindYourGuide - Landing Page (Turista)");
@@ -82,7 +84,7 @@ public class TuristaLandingPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
-                new BuscarGuiasPage().setVisible(true);
+                new BuscarGuiasView(turistaController, guiaController, viajeController, frame).setVisible(true);
             }
         });
 
@@ -91,6 +93,7 @@ public class TuristaLandingPage {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(frame, "Historial de viajes");
             }
+
         });
 
         perfilButton.addActionListener(new ActionListener() {
@@ -118,13 +121,5 @@ public class TuristaLandingPage {
         return button;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new TuristaLandingPage("Turista");
-            }
-        });
-    }
 }
 
