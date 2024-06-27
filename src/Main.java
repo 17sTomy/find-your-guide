@@ -64,7 +64,7 @@ public class Main {
                 "APPLEID",
                 0
         );
-        turistaController.registrarTurista(turista3, "pass3", Auth.APPLEID);
+        turistaController.registrarTurista(turista3, "apple", Auth.APPLEID);
 
 
         TuristaDTO turista4 = new TuristaDTO(
@@ -153,7 +153,7 @@ public class Main {
                 List.of(Idioma.ESPAÑOL, Idioma.FRANCES),
                 4.8
         );
-        guiaController.registrarGuia(guia3, "pass3", Auth.GOOGLE);
+        guiaController.registrarGuia(guia3, "google", Auth.GOOGLE);
 
 
         CredencialDTO credencial4 = new CredencialDTO("126", "ruta/a/la/foto4.jpg");
@@ -173,7 +173,7 @@ public class Main {
                 List.of(Idioma.ESPAÑOL, Idioma.PORTUGUES),
                 8.0
         );
-        guiaController.registrarGuia(guia4, "pass4", Auth.APPLEID);
+        guiaController.registrarGuia(guia4, "apple", Auth.APPLEID);
 
 
         CredencialDTO credencial5 = new CredencialDTO("127", "ruta/a/la/foto5.jpg");
