@@ -8,7 +8,6 @@ import modelos.clases.*;
 import modelos.dtos.GuiaDTO;
 import modelos.dtos.TuristaDTO;
 import modelos.dtos.UsuarioDTO;
-import modelos.dtos.ViajeDTO;
 import modelos.interfaces.IAuthenticacion;
 
 import java.time.LocalDate;
@@ -91,10 +90,8 @@ public class TuristaController {
 
     public boolean verificarDisponibilidadGuia(String email, LocalDate fechaInicio, LocalDate fechaFin) {
         List<Viaje> viajes = DataBase.getInstance().getViajesPorEmail(email);
-        if (fechaInicio.isBefore(fechaFin) || fechaInicio.isEqual(fechaFin)){
-            return viajes.stream()
-                        .filter(viaje -> fechaFin.isBefore(viaje.getFechaInicio()) || fechaInicio.isAfter(viaje.getFechaFin()))
-                    .count() == 0;
+        if (fechaInicio.isBefore(fechaFin)){
+            return (viajes.stream().filter(viaje -> fechaFin.isBefore(viaje.getFechaInicio()) || fechaInicio.isAfter(viaje.getFechaFin())).count()) == 0;
         }
         return false;
     }
@@ -102,7 +99,5 @@ public class TuristaController {
     public TuristaDTO getTuristaDTO() {
         return new TuristaDTO(this.turista);
     }
-
-
 
 }

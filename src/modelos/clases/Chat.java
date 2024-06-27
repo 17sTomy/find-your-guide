@@ -2,6 +2,7 @@ package modelos.clases;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Chat {
 
@@ -40,4 +41,10 @@ public class Chat {
         mensaje.mostrarMensaje();
     }
 
+    public String escribirMensaje(){
+        Scanner scanner = new Scanner(System.in);
+        String mensaje = scanner.nextLine();
+        scanner.close();
+        return mensaje;
+    }
 }
