@@ -132,6 +132,10 @@ public class DataBase {
         viajes.add(viaje);
     }
 
+    public void deleteViaje(Viaje viaje){
+        viajes.remove(viaje);
+    }
+
     public List<Viaje> getViajes() {
         return viajes;
     }
@@ -173,4 +177,6 @@ public class DataBase {
         }
         return new ArrayList<>();
     }
+
+
 }

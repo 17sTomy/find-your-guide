@@ -121,9 +121,9 @@ public class Login {
                 frame.dispose(); // Cerrar la ventana de login
                 if (role.equals("Guia")) {
                     new GuiaLandingPage(role); // Abrir la landing page con el rol guia
-                } else if (role.equals("Turista")) {
-                    new TuristaLandingPage(role); // Abrir la landing page con el rol turista
-                }
+                } //else if (role.equals("Turista")) {
+                    //new TuristaLandingPage(role); // Abrir la landing page con el rol turista
+                //}
             }
         });
 

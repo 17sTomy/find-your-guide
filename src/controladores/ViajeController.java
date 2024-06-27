@@ -59,6 +59,22 @@ public class ViajeController {
         return Viaje.getViajesDTO(email);
     }
 
+    public void eliminarViaje(int idViaje){
+        DataBase db = DataBase.getInstance();
+
+        Viaje viaje = db.getViajeById(idViaje);
+
+        db.deleteViaje(viaje);
+    }
+
+    public String getInformacionFactura(int idViaje){
+        DataBase db = DataBase.getInstance();
+
+        Viaje viaje = db.getViajeById(idViaje);
+
+        return "Monto Total: " + viaje.getFactura().getMontoTotal() + ", Anticipo: " + viaje.getFactura().getAnticipo();
+    }
+
     public void cambiarEstadoViaje(int idViaje, EstadoViaje estado){
         DataBase db = DataBase.getInstance();
         Viaje viaje = db.getViajeById(idViaje);

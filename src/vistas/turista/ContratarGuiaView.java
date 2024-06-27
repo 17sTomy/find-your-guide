@@ -1,8 +1,9 @@
-package vistas.turistatest;
+package vistas.turista;
 
 import controladores.TuristaController;
 import controladores.ViajeController;
 import controladores.GuiaController;
+
 import modelos.dtos.GuiaDTO;
 import modelos.clases.Servicio;
 import enums.Ciudad;
@@ -30,16 +31,16 @@ public class ContratarGuiaView extends JFrame {
     private JButton contratarButton;
     private JLabel resumenLabel;
 
-    public ContratarGuiaView(TuristaController turistaController, String emailGuia, Ciudad ciudad, Pais pais) {
+    public ContratarGuiaView(TuristaController turistaController, GuiaController guiaController, ViajeController viajeController, String emailGuia, Ciudad ciudad, Pais pais) {
         this.turistaController = turistaController;
-        this.viajeController = new ViajeController();
-        this.guiaController = new GuiaController();
+        this.viajeController = viajeController;
+        this.guiaController = guiaController;
         this.emailGuia = emailGuia;
         this.ciudad = ciudad;
         this.pais = pais;
 
         setTitle("Contratar Guía");
-        setSize(600, 600);
+        setSize(600, 800);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -58,10 +59,18 @@ public class ContratarGuiaView extends JFrame {
         panelCredencial.setBorder(BorderFactory.createTitledBorder("Credenciales"));
         panelCredencial.setBackground(Color.WHITE);
 
+        JLabel credencialLabel = new JLabel("ID Credencial: " + guia.getCredencialDTO().getIdCredencial());
+        credencialLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        credencialLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        panelCredencial.add(credencialLabel, BorderLayout.NORTH);
+
+        JLabel fotoCredencialLabel = new JLabel(new ImageIcon(guia.getCredencialDTO().getFotoCredencial()));
+        panelCredencial.add(fotoCredencialLabel, BorderLayout.CENTER);
+
         JLabel puntuacionLabel = new JLabel("Puntuación: " + guia.getPuntuacion());
         puntuacionLabel.setFont(new Font("Arial", Font.BOLD, 14));
         puntuacionLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        panelCredencial.add(puntuacionLabel, BorderLayout.NORTH);
+        panelCredencial.add(puntuacionLabel, BorderLayout.SOUTH);
 
         JTextArea reseñasArea = new JTextArea(5, 30);
         reseñasArea.setEditable(false);
@@ -70,13 +79,13 @@ public class ContratarGuiaView extends JFrame {
         reseñasArea.setBorder(BorderFactory.createTitledBorder("Reseñas"));
 
         // Obtener reseñas del controlador
-        List<Reseña> reseñas = guiaController.getReseñas(emailGuia);
-        for (Reseña reseña : reseñas) {
-            reseñasArea.append("• " + reseña.getComentario() + "\n");
+        List<String> reseñas = guiaController.getReseñas(emailGuia);
+        for (String reseña : reseñas) {
+            reseñasArea.append(reseña);
         }
 
         JScrollPane reseñasScrollPane = new JScrollPane(reseñasArea);
-        panelCredencial.add(reseñasScrollPane, BorderLayout.CENTER);
+        panelCredencial.add(reseñasScrollPane, BorderLayout.SOUTH);
 
         panelInfo.add(panelCredencial);
 
@@ -94,6 +103,21 @@ public class ContratarGuiaView extends JFrame {
         }
 
         panelInfo.add(panelServicios);
+
+        // Panel de viajes realizados
+        JPanel panelViajes = new JPanel();
+        panelViajes.setBorder(BorderFactory.createTitledBorder("Viajes Realizados"));
+        panelViajes.setLayout(new BoxLayout(panelViajes, BoxLayout.Y_AXIS));
+        panelViajes.setBackground(Color.WHITE);
+
+        List<ViajeDTO> viajesRealizados = viajeController.getViajes(emailGuia);
+        for (ViajeDTO viaje : viajesRealizados) {
+            JLabel viajeLabel = new JLabel(viaje.toString());
+            viajeLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+            panelViajes.add(viajeLabel);
+        }
+
+        panelInfo.add(panelViajes);
 
         // Panel de fechas y resumen
         JPanel panelFechas = new JPanel(new GridLayout(3, 2, 10, 10));
@@ -142,8 +166,9 @@ public class ContratarGuiaView extends JFrame {
             String emailTurista = turistaController.getTuristaDTO().getEmail();
 
             ViajeDTO viajeDTO = new ViajeDTO(ciudad, pais, fechaInicio, fechaFin);
-            viajeController.crearViaje(viajeDTO, emailTurista, emailGuia);
-            resumenLabel.setText("Guía contratado exitosamente.");
+            int idViaje = viajeController.crearViaje(viajeDTO, emailTurista, emailGuia);
+
+            new ResumenContratoView(turistaController, viajeController, idViaje, emailGuia, fechaInicio, fechaFin).setVisible(true);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error al contratar el guía: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
