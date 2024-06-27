@@ -99,7 +99,10 @@ public class TuristaController {
     public boolean verificarDisponibilidadGuia(String email, LocalDate fechaInicio, LocalDate fechaFin) {
         List<Viaje> viajes = DataBase.getInstance().getViajesPorEmail(email);
         if (fechaInicio.isBefore(fechaFin)){
-            return (viajes.stream().filter(viaje -> fechaFin.isBefore(viaje.getFechaInicio()) || fechaInicio.isAfter(viaje.getFechaFin())).count()) == 0;
+            return (viajes.stream()
+                    .filter(viaje -> viaje.getEstado() != "Cancelado")
+                    .filter(viaje -> (viaje.getFechaFin().isEqual(fechaFin) || viaje.getFechaFin().isBefore(fechaFin)) && (viaje.getFechaInicio().isEqual(fechaInicio) || viaje.getFechaInicio().isAfter(fechaInicio)))
+                    .count()) <= 1;
         }
         return false;
     }

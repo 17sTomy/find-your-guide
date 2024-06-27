@@ -1,14 +1,12 @@
 package vistas.turista;
 
+import controladores.GuiaController;
 import controladores.TuristaController;
 import controladores.ViajeController;
-import controladores.GuiaController;
-
-import modelos.dtos.GuiaDTO;
-import modelos.clases.Servicio;
 import enums.Ciudad;
 import enums.Pais;
-import modelos.clases.Reseña;
+import modelos.clases.Servicio;
+import modelos.dtos.GuiaDTO;
 import modelos.dtos.ViajeDTO;
 
 import javax.swing.*;
@@ -153,7 +151,7 @@ public class ContratarGuiaView extends JFrame {
         contratarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                crearViaje();
+                crearViaje(); // TODO
             }
         });
     }
@@ -168,7 +166,7 @@ public class ContratarGuiaView extends JFrame {
             ViajeDTO viajeDTO = new ViajeDTO(ciudad, pais, fechaInicio, fechaFin);
             int idViaje = viajeController.crearViaje(viajeDTO, emailTurista, emailGuia);
 
-            new ResumenContratoView(turistaController, viajeController, idViaje, emailGuia, fechaInicio, fechaFin).setVisible(true);
+            new ResumenContratoView(turistaController, viajeController, idViaje, emailGuia, fechaInicio, fechaFin).setVisible(true); // TODO revisar
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error al contratar el guía: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
