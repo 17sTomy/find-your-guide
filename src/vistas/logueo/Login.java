@@ -4,17 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import controladores.GuiaController;
+import controladores.TuristaController;
+import enums.Auth;
 import vistas.guia.GuiaLandingPage;
 import vistas.turista.TuristaLandingPage;
-import vistas.RegistroGuia;
 import vistas.RegistroTurista;
 
 public class Login {
     private JFrame frame;
     private String role;
+    private TuristaController turistaController;
+    private GuiaController guiaController;;
 
     public Login(String role) {
         this.role = role;
+        this.turistaController = new TuristaController();
+        this.guiaController = new GuiaController();
 
         // Crear el frame principal
         frame = new JFrame("Iniciar Sesión - " + role);
@@ -113,7 +120,7 @@ public class Login {
         // Hacer visible el frame
         frame.setVisible(true);
 
-        // Añadir listeners a los botones (acciones a realizar)
+  /*      // Añadir listeners a los botones (acciones a realizar)
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -125,7 +132,9 @@ public class Login {
                     //new TuristaLandingPage(role); // Abrir la landing page con el rol turista
                 //}
             }
-        });
+
+
+        });*/
 
         registerButton.addActionListener(new ActionListener() {
             @Override

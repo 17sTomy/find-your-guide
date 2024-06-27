@@ -1,5 +1,6 @@
 package modelos.dtos;
 
+import enums.Auth;
 import enums.Sexo;
 import modelos.clases.Turista;
 

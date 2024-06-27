@@ -14,6 +14,7 @@ public class SeleccionRol {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cerrar la aplicación al salir
         frame.setSize(400, 300);
         frame.setLayout(new BorderLayout());
+        frame.setLocationRelativeTo(null);
 
         // Crear el panel superior con el título
         JPanel topPanel = new JPanel(new BorderLayout());
