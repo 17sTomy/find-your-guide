@@ -4,7 +4,6 @@ import controladores.ViajeController;
 import enums.Ciudad;
 import enums.Pais;
 import modelos.DataBase;
-import modelos.dtos.FacturaDTO;
 import modelos.dtos.ReservaDTO;
 import modelos.dtos.ViajeDTO;
 import modelos.interfaces.IEstadoViaje;
@@ -204,8 +203,8 @@ public class Viaje {
         List<ViajeDTO> viajesDTO = new ArrayList<>();
 
         for (Viaje viaje : viajes) {
-            FacturaDTO facturaDTO = new FacturaDTO(viaje.getFactura());
             ReservaDTO reservaDTO = new ReservaDTO(viaje.getReserva());
+            String informacionFactura = viaje.getFactura().toString();
 
             ViajeDTO viajeDTO = new ViajeDTO(
                     viaje.getCiudadDestino(),
@@ -214,7 +213,7 @@ public class Viaje {
                     viaje.getFechaFin(),
                     viaje.getId(),
                     reservaDTO,
-                    facturaDTO
+                    informacionFactura
             );
 
             viajesDTO.add(viajeDTO);

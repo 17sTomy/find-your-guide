@@ -11,7 +11,7 @@ public class ViajeDTO {
 // TODO quiza hay que eliminar guiaDTO y turistaDTO
     private Ciudad ciudadDestino;
     private int idViaje;
-    private  FacturaDTO factura;
+    private  String factura;
     private ReservaDTO reserva;
     private Pais paisDestino;
     private LocalDate fechaInicio;
@@ -26,7 +26,7 @@ public class ViajeDTO {
         this.fechaFin = fechaFin;
     }
 
-    public ViajeDTO(Ciudad ciudadDestino, Pais paisDestino, LocalDate fechaInicio, LocalDate fechaFin, int idViaje, ReservaDTO reserva, FacturaDTO factura){
+    public ViajeDTO(Ciudad ciudadDestino, Pais paisDestino, LocalDate fechaInicio, LocalDate fechaFin, int idViaje, ReservaDTO reserva, String factura){
         this.ciudadDestino = ciudadDestino;
         this.paisDestino = paisDestino;
         this.fechaInicio = fechaInicio;
@@ -40,7 +40,7 @@ public class ViajeDTO {
         return idViaje;
     }
 
-    public FacturaDTO getFactura() {
+    public String getFactura() {
         return factura;
     }
 
