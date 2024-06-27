@@ -56,7 +56,7 @@ public class RegistroTurista {
             public void actionPerformed(ActionEvent e) {
                 // Acción para volver atrás
                 frame.dispose(); // Cierra la ventana actual de registro
-                new Login(null); // Abre la ventana de login (asumiendo que no hay usuario registrado para pasar)
+                new Login("Turista"); // Abre la ventana de login (asumiendo que no hay usuario registrado para pasar)
             }
         });
 

@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import controladores.GuiaController;
+import controladores.TuristaController;
+import enums.Auth;
 import vistas.guia.GuiaLandingPage;
 import vistas.turista.TuristaLandingPage;
 import vistas.RegistroTurista;
@@ -11,10 +15,13 @@ import vistas.RegistroTurista;
 public class Login {
     private JFrame frame;
     private String role;
-
+    private TuristaController turistaController;
+    private GuiaController guiaController;;
 
     public Login(String role) {
         this.role = role;
+        this.turistaController = new TuristaController();
+        this.guiaController = new GuiaController();
 
         // Crear el frame principal
         frame = new JFrame("Iniciar Sesión - " + role);
@@ -117,12 +124,20 @@ public class Login {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Obtener el correo electrónico y la contraseña ingresados
+                String email = emailField.getText();
+                String password = new String(passwordField.getPassword());
+
                 // Cerrar la ventana actual e iniciar la landing page
                 frame.dispose(); // Cerrar la ventana de login
+
+                // Llamar al método para iniciar sesión en TuristaController
                 if (role.equals("Guia")) {
-                    new GuiaLandingPage(role); // Abrir la landing page con el rol guia
+                    guiaController.loginGuia(email, password, Auth.BASICO);
+                    new GuiaLandingPage(role);
                 } else if (role.equals("Turista")) {
-                    new TuristaLandingPage(role); // Abrir la landing page con el rol turista
+                    turistaController.loginTurista(email, password, Auth.BASICO);
+                    new TuristaLandingPage(role);
                 }
             }
         });

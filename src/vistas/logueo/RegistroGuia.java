@@ -1,41 +1,50 @@
 package vistas.logueo;
 
+import controladores.GuiaController;
+import enums.Auth;
 import enums.Ciudad;
 import enums.Idioma;
 import enums.Pais;
-import vistas.logueo.Login;
+import enums.Sexo;
+import modelos.clases.Credencial;
+import modelos.clases.RegistroBasico;
+import modelos.clases.Guia;
+import modelos.clases.Servicio;
+import modelos.dtos.GuiaDTO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegistroGuia {
     private JFrame frame;
-    private File selectedImageFile; // Variable para almacenar la foto de perfil seleccionada
-    private JTextField nameField;
-    private JTextField surnameField;
-    private JComboBox<String> genderComboBox;
-    private JTextField dniField;
-    private JTextField emailField;
-    private JPasswordField passwordField;
-    private JPasswordField confirmPasswordField;
-    private JTextField phoneField;
+    private File selectedImageFile;
+    private GuiaController guiaController;
+    private GuiaDTO guiaDTO;
+    private Auth modoRegistro;
+
     private JComboBox<Pais> paisComboBox;
     private JComboBox<Ciudad> ciudadComboBox;
-    private JComboBox<String> credencialComboBox;
+    private JComboBox<Credencial> credencialComboBox;
     private JTextArea serviciosTextArea;
-    private JComboBox<Idioma> idiomasComboBox;
+    private JComboBox<Idioma> idiomaComboBox;
 
     public RegistroGuia() {
+        this.guiaDTO = guiaDTO;
+        this.modoRegistro = modoRegistro;
+        guiaController = new GuiaController();
+
         // Crear el frame principal
         frame = new JFrame("Registro de Guía");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 700); // Aumentar el tamaño para acomodar los nuevos elementos
+        frame.setSize(500, 800);
         frame.setLayout(new BorderLayout());
 
-        // Crear el panel superior con el título
+        // Panel superior con título
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBackground(new Color(0, 102, 204));
         topPanel.setPreferredSize(new Dimension(frame.getWidth(), 60));
@@ -53,19 +62,18 @@ public class RegistroGuia {
         backButton.setBackground(new Color(0, 102, 204));
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
-        backButton.setBorder(BorderFactory.createEmptyBorder(11, 54, 12, 54));
+        backButton.setBorder(BorderFactory.createEmptyBorder(12, 54, 12, 54));
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Acción para volver atrás
-                frame.dispose(); // Cierra la ventana actual de registro
-                new Login(null); // Abre la ventana de login (asumiendo que no hay usuario registrado para pasar)
+                frame.dispose();
+                new Login("Guia");
             }
         });
 
         topPanel.add(backButton, BorderLayout.WEST);
 
-        // Crear el panel central con los campos de texto
+        // Panel central con campos de texto
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.setBackground(new Color(230, 230, 250));
         centerPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -74,17 +82,16 @@ public class RegistroGuia {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Añadir los componentes con restricciones específicas
+        // Campos de formulario
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 0.1;
-        gbc.gridwidth = 1;
         centerPanel.add(new JLabel("Nombre:"), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        nameField = new JTextField(20);
+        JTextField nameField = new JTextField(20);
+        if (guiaDTO != null) nameField.setText(guiaDTO.getNombre());
         centerPanel.add(nameField, gbc);
 
         gbc.gridx = 0;
@@ -93,7 +100,8 @@ public class RegistroGuia {
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        surnameField = new JTextField(20);
+        JTextField surnameField = new JTextField(20);
+        if (guiaDTO != null) surnameField.setText(guiaDTO.getApellido());
         centerPanel.add(surnameField, gbc);
 
         gbc.gridx = 0;
@@ -102,7 +110,7 @@ public class RegistroGuia {
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-        genderComboBox = new JComboBox<>(new String[]{"Masculino", "Femenino"});
+        JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"MASCULINO", "FEMENINO"});
         centerPanel.add(genderComboBox, gbc);
 
         gbc.gridx = 0;
@@ -111,7 +119,8 @@ public class RegistroGuia {
 
         gbc.gridx = 1;
         gbc.gridy = 3;
-        dniField = new JTextField(20);
+        JTextField dniField = new JTextField(20);
+        if (guiaDTO != null) dniField.setText(guiaDTO.getDni());
         centerPanel.add(dniField, gbc);
 
         gbc.gridx = 0;
@@ -120,7 +129,8 @@ public class RegistroGuia {
 
         gbc.gridx = 1;
         gbc.gridy = 4;
-        emailField = new JTextField(20);
+        JTextField emailField = new JTextField(20);
+        if (guiaDTO != null) emailField.setText(guiaDTO.getEmail());
         centerPanel.add(emailField, gbc);
 
         gbc.gridx = 0;
@@ -129,7 +139,7 @@ public class RegistroGuia {
 
         gbc.gridx = 1;
         gbc.gridy = 5;
-        passwordField = new JPasswordField(20);
+        JPasswordField passwordField = new JPasswordField(20);
         centerPanel.add(passwordField, gbc);
 
         gbc.gridx = 0;
@@ -138,7 +148,7 @@ public class RegistroGuia {
 
         gbc.gridx = 1;
         gbc.gridy = 6;
-        confirmPasswordField = new JPasswordField(20);
+        JPasswordField confirmPasswordField = new JPasswordField(20);
         centerPanel.add(confirmPasswordField, gbc);
 
         gbc.gridx = 0;
@@ -147,56 +157,67 @@ public class RegistroGuia {
 
         gbc.gridx = 1;
         gbc.gridy = 7;
-        phoneField = new JTextField(20);
+        JTextField phoneField = new JTextField(20);
+        if (guiaDTO != null) phoneField.setText(guiaDTO.getNumTelefono());
         centerPanel.add(phoneField, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 8;
-        centerPanel.add(new JLabel("País:"), gbc);
+        centerPanel.add(new JLabel("Foto de Perfil (JPG):"), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 8;
-        paisComboBox = new JComboBox<>(Pais.values()); // Utilizando el enum Pais
+        JButton uploadProfilePictureButton = new JButton("Cargar Foto");
+        centerPanel.add(uploadProfilePictureButton, gbc);
+
+        // Campos adicionales
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        centerPanel.add(new JLabel("Servicios (separados por comas):"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 9;
+        serviciosTextArea = new JTextArea(4, 20);
+        serviciosTextArea.setLineWrap(true);
+        centerPanel.add(new JScrollPane(serviciosTextArea), gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 10;
+        centerPanel.add(new JLabel("País:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 10;
+        paisComboBox = new JComboBox<>(Pais.values());
         centerPanel.add(paisComboBox, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 9;
+        gbc.gridy = 11;
         centerPanel.add(new JLabel("Ciudad:"), gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 9;
-        ciudadComboBox = new JComboBox<>(Ciudad.values()); // Utilizando el enum Ciudad
+        gbc.gridy = 11;
+        ciudadComboBox = new JComboBox<>(Ciudad.values());
         centerPanel.add(ciudadComboBox, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 10;
+        gbc.gridy = 12;
         centerPanel.add(new JLabel("Credencial:"), gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 10;
-        credencialComboBox = new JComboBox<>(new String[]{"Tipo A", "Tipo B", "Tipo C"});
+        gbc.gridy = 12;
+        JComboBox<Integer> credencialComboBox = new JComboBox<>(new Integer[]{1, 2, 3});
         centerPanel.add(credencialComboBox, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 11;
-        centerPanel.add(new JLabel("Servicios:"), gbc);
+        gbc.gridy = 13;
+        centerPanel.add(new JLabel("Idioma:"), gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 11;
-        serviciosTextArea = new JTextArea(4, 20);
-        JScrollPane serviciosScrollPane = new JScrollPane(serviciosTextArea);
-        centerPanel.add(serviciosScrollPane, gbc);
+        gbc.gridy = 13;
+        idiomaComboBox = new JComboBox<>(Idioma.values());
+        centerPanel.add(idiomaComboBox, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 12;
-        centerPanel.add(new JLabel("Idiomas:"), gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 12;
-        idiomasComboBox = new JComboBox<>(Idioma.values());
-        centerPanel.add(idiomasComboBox, gbc);
-
-        // Crear el panel inferior con el botón de registro y botones de terceros
+        // Panel inferior con botón de registro
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(new Color(255, 255, 255));
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
@@ -207,7 +228,6 @@ public class RegistroGuia {
         registerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
         JButton registerButton = createNavButton("Registrarse");
         registerPanel.add(registerButton);
-        registerPanel.add(backButton);
 
         // Panel de terceros
         JPanel thirdPartyPanel = new JPanel();
@@ -225,136 +245,120 @@ public class RegistroGuia {
         JButton facebookButton = createThirdPartyButton("Facebook");
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        buttonPanel.setBackground(new Color(255, 255, 255));
         buttonPanel.add(googleButton);
         buttonPanel.add(appleButton);
         buttonPanel.add(facebookButton);
 
+        thirdPartyPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         thirdPartyPanel.add(buttonPanel);
 
-        // Añadir paneles al bottomPanel
+        // Añadir componentes al panel inferior
         bottomPanel.add(registerPanel);
+        bottomPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         bottomPanel.add(thirdPartyPanel);
 
         // Añadir paneles al frame
         frame.add(topPanel, BorderLayout.NORTH);
-        frame.add(centerPanel, BorderLayout.CENTER);
+        frame.add(new JScrollPane(centerPanel), BorderLayout.CENTER);
         frame.add(bottomPanel, BorderLayout.SOUTH);
 
-        // Hacer visible el frame
+        // Mostrar el frame
         frame.setVisible(true);
 
-        // Añadir listeners a los botones (acciones a realizar)
+        // Acción del botón para cargar foto de perfil
+        uploadProfilePictureButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                int result = fileChooser.showOpenDialog(frame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    selectedImageFile = fileChooser.getSelectedFile();
+                }
+            }
+        });
+
+        // Acción del botón para registrarse
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                registrarGuia();
-            }
-        });
+                // Obtener valores de los campos
+                String nombre = nameField.getText();
+                String apellido = surnameField.getText();
+                Sexo sexo = Sexo.valueOf((String) genderComboBox.getSelectedItem());
+                String dni = dniField.getText();
+                String email = emailField.getText();
+                String password = new String(passwordField.getPassword());
+                String confirmPassword = new String(confirmPasswordField.getPassword());
+                String telefono = phoneField.getText();
+                String fotoPerfil = selectedImageFile != null ? selectedImageFile.getAbsolutePath() : null;
 
-        googleButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Lógica para registrar con Google
-                JOptionPane.showMessageDialog(frame, "Registro con Google aún no implementado", "Registro con Google", JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
+                Pais pais = (Pais) paisComboBox.getSelectedItem();
+                Ciudad ciudad = (Ciudad) ciudadComboBox.getSelectedItem();
+                Credencial credencial = (Credencial) credencialComboBox.getSelectedItem();
 
-        appleButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Lógica para registrar con Apple
-                JOptionPane.showMessageDialog(frame, "Registro con Apple aún no implementado", "Registro con Apple", JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
+                String serviciosStr = serviciosTextArea.getText();
+                List<String> servicios = List.of(serviciosStr.split(",")).stream().map(String::trim).toList();
+                Idioma idioma = (Idioma) idiomaComboBox.getSelectedItem();
+                List<Idioma> idiomas = new ArrayList<>();
+                idiomas.add(idioma);
 
-        facebookButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Lógica para registrar con Facebook
-                JOptionPane.showMessageDialog(frame, "Registro con Facebook aún no implementado", "Registro con Facebook", JOptionPane.INFORMATION_MESSAGE);
+                // Validaciones
+                if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || password.isEmpty() || telefono.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (!password.equals(confirmPassword)) {
+                    JOptionPane.showMessageDialog(frame, "Las contraseñas no coinciden.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (selectedImageFile == null || !selectedImageFile.getName().endsWith(".jpg")) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, cargue una foto de perfil válida en formato JPG.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Crear la autenticación básica
+                Auth modoRegistro = Auth.BASICO;
+                RegistroBasico autenticacion = new RegistroBasico();
+
+                Guia guia = new Guia(
+                        nombre, apellido, sexo, dni, email, password, telefono, fotoPerfil,
+                        autenticacion, servicios, pais, ciudad, credencial, idiomas
+                );
+
+                GuiaDTO nuevoGuiaDTO = new GuiaDTO(guia);
+
+                JOptionPane.showMessageDialog(frame, "Registro exitoso.");
+
             }
         });
     }
 
-    // Método para crear botones de navegación personalizados
+    // Método auxiliar para crear botones de navegación
     private JButton createNavButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Arial", Font.BOLD, 14));
         button.setBackground(new Color(0, 102, 204));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
-        button.setBorder(BorderFactory.createEmptyBorder(11, 54, 12, 54));
+        button.setBorder(BorderFactory.createEmptyBorder(12, 54, 12, 54));
         return button;
     }
 
-    // Método para crear botones de terceros personalizados
+    // Método auxiliar para crear botones de terceros
     private JButton createThirdPartyButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Arial", Font.BOLD, 14));
-        button.setBackground(new Color(59, 89, 152));
-        button.setForeground(Color.WHITE);
+        button.setBackground(Color.WHITE);
+        button.setForeground(new Color(0, 102, 204));
         button.setFocusPainted(false);
-        button.setPreferredSize(new Dimension(120, 40));
+        button.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 2, true));
         return button;
     }
 
-    // Método para registrar al guía
-    private void registrarGuia() {
-        // Obtener los valores de los campos
-        String nombre = nameField.getText();
-        String apellido = surnameField.getText();
-        String sexo = (String) genderComboBox.getSelectedItem();
-        String dni = dniField.getText();
-        String email = emailField.getText();
-        String password = new String(passwordField.getPassword());
-        String confirmPassword = new String(confirmPasswordField.getPassword());
-        String telefono = phoneField.getText();
-        Pais pais = (Pais) paisComboBox.getSelectedItem();
-        Ciudad ciudad = (Ciudad) ciudadComboBox.getSelectedItem();
-        String credencial = (String) credencialComboBox.getSelectedItem();
-        String servicios = serviciosTextArea.getText();
-        Idioma idioma = (Idioma) idiomasComboBox.getSelectedItem();
-
-        // Mostrar mensaje de registro exitoso
-        JOptionPane.showMessageDialog(frame,
-                "Registro exitoso!\nNombre: " + nombre + " " + apellido +
-                        "\nSexo: " + sexo +
-                        "\nDNI: " + dni +
-                        "\nEmail: " + email +
-                        "\nTeléfono: " + telefono +
-                        "\nPaís: " + pais +
-                        "\nCiudad: " + ciudad +
-                        "\nCredencial: " + credencial +
-                        "\nServicios: " + servicios +
-                        "\nIdioma: " + idioma,
-                "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
-
-        limpiarCampos();
-    }
-
-    // Método para limpiar los campos del formulario después del registro
-    private void limpiarCampos() {
-        nameField.setText("");
-        surnameField.setText("");
-        genderComboBox.setSelectedIndex(0);
-        dniField.setText("");
-        emailField.setText("");
-        passwordField.setText("");
-        confirmPasswordField.setText("");
-        phoneField.setText("");
-        paisComboBox.setSelectedIndex(0);
-        ciudadComboBox.setSelectedIndex(0);
-        credencialComboBox.setSelectedIndex(0);
-        serviciosTextArea.setText("");
-        idiomasComboBox.setSelectedIndex(0);
-    }
-
     public static void main(String[] args) {
-        // Ejecutar la aplicación
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new RegistroGuia();
-            }
-        });
+        new RegistroGuia();
     }
 }
