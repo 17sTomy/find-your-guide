@@ -1,8 +1,10 @@
 import controladores.GuiaController;
 import controladores.TuristaController;
+
 import controladores.ViajeController;
 import enums.*;
 import modelos.clases.*;
+import modelos.dtos.CredencialDTO;
 import modelos.dtos.GuiaDTO;
 import modelos.dtos.TuristaDTO;
 import modelos.dtos.ViajeDTO;
@@ -16,183 +18,182 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
+        // Creacion Turistas
+        TuristaController turistaController = new TuristaController();
+        GuiaController guiaController = new GuiaController();
+        ViajeController viajeController = new ViajeController();
 
 
-        // Datos del nuevo turista
-        RegistroBasico autenticacion = new RegistroBasico();
-        Turista turista = new Turista(
-                "Juan",
+        TuristaDTO turista1 = new TuristaDTO(
+                "Pepe",
                 "Pérez",
+                "1234",
                 Sexo.MASCULINO,
-                "12345678",
-                "juan@example.com",
-                "password123",
+                "pepe@example.com",
                 "123456789",
                 "ruta/a/la/foto.jpg",
-                autenticacion
+                "BASICO",
+                0
         );
+        turistaController.registrarTurista(turista1, "pass1", Auth.BASICO);
 
-        TuristaDTO nuevoTuristaDTO = new TuristaDTO(turista);
 
-        RegistroBasico autenticacion1 = new RegistroBasico();
-        Turista turista1 = new Turista(
-                "Maria",
-                "Gomez",
+        TuristaDTO turista2 = new TuristaDTO(
+                "Juana",
+                "Gómez",
+                "5678",
                 Sexo.FEMENINO,
-                "87654321",
-                "maria@example.com",
-                "password456",
+                "juana@example.com",
                 "987654321",
-                "ruta/a/la/foto1.jpg",
-                autenticacion1
-        );
-        TuristaDTO nuevoTuristaDTO1 = new TuristaDTO(turista1);
-
-        RegistroBasico autenticacion2 = new RegistroBasico();
-        Turista turista2 = new Turista(
-                "Carlos",
-                "Lopez",
-                Sexo.MASCULINO,
-                "56781234",
-                "carlos@example.com",
-                "password789",
-                "456789123",
                 "ruta/a/la/foto2.jpg",
-                autenticacion2
+                "BASICO",
+                0
         );
-        TuristaDTO nuevoTuristaDTO2 = new TuristaDTO(turista2);
+        turistaController.registrarTurista(turista2, "pass2", Auth.BASICO);
 
-        RegistroBasico autenticacion3 = new RegistroBasico();
-        Turista turista3 = new Turista(
-                "Ana",
-                "Martinez",
-                Sexo.FEMENINO,
-                "43218765",
-                "ana@example.com",
-                "password012",
-                "321654987",
+
+        TuristaDTO turista3 = new TuristaDTO(
+                "Juan",
+                "Rodríguez",
+                "91011",
+                Sexo.MASCULINO,
+                "juan@example.com",
+                "123123123",
                 "ruta/a/la/foto3.jpg",
-                autenticacion3
+                "APPLEID",
+                0
         );
-        TuristaDTO nuevoTuristaDTO3 = new TuristaDTO(turista3);
+        turistaController.registrarTurista(turista3, "pass3", Auth.APPLEID);
 
 
-        // Modo de registro (por ejemplo, registro básico)
-        Auth modoRegistro = Auth.BASICO;
-
-        // Modo de inicio de sesión (por ejemplo, autenticación básica)
-        Auth modoLogin = Auth.BASICO;
-
-        // Crear instancia de turistaController
-        TuristaController turistaController = new TuristaController();
-
-
-        //Registrar al nuevo turista
-        turistaController.registrarTurista(nuevoTuristaDTO, "password123", modoRegistro);
-
-        // Datos de inicio de sesión
-        String email = "juan@example.com";
-        String password = "password123";
-
-        // Iniciar sesión del turista
-        turistaController.loginTurista(email, password, modoLogin);
+        TuristaDTO turista4 = new TuristaDTO(
+                "Silvina",
+                "Fernández",
+                "1213",
+                Sexo.FEMENINO,
+                "silvina@example.com",
+                "456456456",
+                "ruta/a/la/foto4.jpg",
+                "GOOGLE",
+                0
+        );
+        turistaController.registrarTurista(turista4, "google", Auth.GOOGLE);
 
 
-        //////////////////
-        // PRUEBA GUIA //
-        //////////////////
+        TuristaDTO turista5 = new TuristaDTO(
+                "Marcos",
+                "Torres",
+                "1415",
+                Sexo.MASCULINO,
+                "marcos@example.com",
+                "789789789",
+                "ruta/a/la/foto5.jpg",
+                "FACEBOOK",
+                0
+        );
+        turistaController.registrarTurista(turista5, "facebook", Auth.FACEBOOK);
 
-        // Crear GuiaDTO
-        IAdapterCredencial adapCreden = new SistemaVerificacionIA();
-        Servicio servicios = new Servicio("trabajador", "pala", 5.5);
-        Credencial credencial = new Credencial("a", "a", adapCreden);
-        RegistroBasico autenticacionGuia = new RegistroBasico();
-        Guia guia = new Guia(
+
+        // Creacion Guias
+        CredencialDTO credencial1 = new CredencialDTO("123", "ruta/a/la/foto1.jpg");
+        GuiaDTO guia1 = new GuiaDTO(
                 "Jose",
                 "Pérez",
+                "12345678",
                 Sexo.MASCULINO,
-                "dni:4324324",
                 "jose@example.com",
                 "123",
-                "123456789",
                 "ruta/a/la/foto.jpg",
-                autenticacionGuia,
-                List.of(servicios),
+                "BASICO",
+                List.of(new Servicio("Tour por la ciudad", "Un tour guiado por la ciudad", 50.0)),
                 Pais.ARGENTINA,
                 Ciudad.BUENOS_AIRES,
-                credencial,
-                List.of(Idioma.ESPAÑOL)
-        );
-        GuiaDTO guiaDTO = new GuiaDTO(guia);
-
-
-        IAdapterCredencial adapCreden1 = new SistemaVerificacionIA();
-        Servicio servicios1 = new Servicio("guía turístico", "guía en tours históricos", 10.0);
-        Credencial credencial1 = new Credencial("b", "fotoB.jpg", adapCreden1);
-        RegistroBasico autenticacionGuia1 = new RegistroBasico();
-        Guia guia1 = new Guia(
-                "Maria",
-                "Gonzalez",
-                Sexo.FEMENINO,
-                "dni:1234567",
-                "maria@example.com",
-                "password123",
-                "987654321",
-                "ruta/a/la/foto1.jpg",
-                autenticacionGuia1,
-                List.of(servicios1),
-                Pais.BRASIL,
-                Ciudad.RIO_DE_JANEIRO,
                 credencial1,
-                List.of(Idioma.PORTUGUES)
+                List.of(Idioma.ESPAÑOL),
+                6.5
         );
-        GuiaDTO guiaDTO1 = new GuiaDTO(guia1);
+        guiaController.registrarGuia(guia1, "pass1", Auth.BASICO);
 
 
-        IAdapterCredencial adapCreden2 = new SistemaVerificacionIA();
-        Servicio servicios2 = new Servicio("fotógrafo", "fotografía en tours", 15.0);
-        Credencial credencial2 = new Credencial("c", "fotoC.jpg", adapCreden2);
-        RegistroBasico autenticacionGuia2 = new RegistroBasico();
-        Guia guia2 = new Guia(
-                "Luis",
-                "Martinez",
-                Sexo.MASCULINO,
-                "dni:9876543",
-                "luis@example.com",
-                "password456",
-                "123123123",
-                "ruta/a/la/foto2.jpg",
-                autenticacionGuia2,
-                List.of(servicios2),
-                Pais.MEXICO,
-                Ciudad.CIUDAD_DE_MEXICO,
-                credencial2,
-                List.of(Idioma.ESPAÑOL)
-        );
-        GuiaDTO guiaDTO2 = new GuiaDTO(guia2);
-
-
-        IAdapterCredencial adapCreden3 = new SistemaVerificacionIA();
-        Servicio servicios3 = new Servicio("conductor", "conductor de vehículos turísticos", 20.0);
-        Credencial credencial3 = new Credencial("d", "fotoD.jpg", adapCreden3);
-        RegistroBasico autenticacionGuia3 = new RegistroBasico();
-        Guia guia3 = new Guia(
+        CredencialDTO credencial2 = new CredencialDTO("124", "ruta/a/la/foto2.jpg");
+        GuiaDTO guia2 = new GuiaDTO(
                 "Ana",
-                "Lopez",
+                "González",
+                "23456789",
                 Sexo.FEMENINO,
-                "dni:7654321",
                 "ana@example.com",
-                "password789",
-                "456456456",
+                "124",
+                "ruta/a/la/foto2.jpg",
+                "FACEBOOK",
+                List.of(new Servicio("Excursión a la montaña", "Una excursión guiada a la montaña", 70.0)),
+                Pais.CHILE,
+                Ciudad.SANTIAGO,
+                credencial2,
+                List.of(Idioma.INGLES, Idioma.ESPAÑOL),
+                2.4
+        );
+        guiaController.registrarGuia(guia2, "facebook", Auth.FACEBOOK);
+
+
+        CredencialDTO credencial3 = new CredencialDTO("125", "ruta/a/la/foto3.jpg");
+        GuiaDTO guia3 = new GuiaDTO(
+                "Carlos",
+                "Martínez",
+                "34567890",
+                Sexo.MASCULINO,
+                "carlos@example.com",
+                "125",
                 "ruta/a/la/foto3.jpg",
-                autenticacionGuia3,
-                List.of(servicios3),
+                "GOOGLE",
+                List.of(new Servicio("Visita al museo", "Una visita guiada al museo", 30.0)),
                 Pais.ESPAÑA,
                 Ciudad.MADRID,
                 credencial3,
-                List.of(Idioma.ESPAÑOL, Idioma.INGLES)
+                List.of(Idioma.ESPAÑOL, Idioma.FRANCES),
+                4.8
         );
-        GuiaDTO guiaDTO3 = new GuiaDTO(guia3);
+        guiaController.registrarGuia(guia3, "pass3", Auth.GOOGLE);
+
+
+        CredencialDTO credencial4 = new CredencialDTO("126", "ruta/a/la/foto4.jpg");
+        GuiaDTO guia4 = new GuiaDTO(
+                "Laura",
+                "Rodríguez",
+                "45678901",
+                Sexo.FEMENINO,
+                "laura@example.com",
+                "126",
+                "ruta/a/la/foto4.jpg",
+                "APPLEID",
+                List.of(new Servicio("Recorrido histórico", "Un recorrido histórico por la ciudad", 40.0)),
+                Pais.COLOMBIA,
+                Ciudad.BOGOTA,
+                credencial4,
+                List.of(Idioma.ESPAÑOL, Idioma.PORTUGUES),
+                8.0
+        );
+        guiaController.registrarGuia(guia4, "pass4", Auth.APPLEID);
+
+
+        CredencialDTO credencial5 = new CredencialDTO("127", "ruta/a/la/foto5.jpg");
+        GuiaDTO guia5 = new GuiaDTO(
+                "Miguel",
+                "Fernández",
+                "56789012",
+                Sexo.MASCULINO,
+                "miguel@example.com",
+                "127",
+                "ruta/a/la/foto5.jpg",
+                "BASICO",
+                List.of(new Servicio("Tour gastronómico", "Un tour guiado de gastronomía", 60.0)),
+                Pais.MEXICO,
+                Ciudad.CIUDAD_DE_MEXICO,
+                credencial5,
+                List.of(Idioma.ESPAÑOL, Idioma.INGLES),
+                0.0
+        );
+        guiaController.registrarGuia(guia5, "pass5", Auth.BASICO);
+
 
         ViajeDTO viajeDTO1 = new ViajeDTO(
                 Ciudad.MADRID,
@@ -204,74 +205,27 @@ public class Main {
         ViajeDTO viajeDTO2 = new ViajeDTO(
                 Ciudad.PARIS,
                 Pais.FRANCIA,
-                LocalDate.of(2024, 8, 1),
-                LocalDate.of(2024, 8, 15)
+                LocalDate.of(2025, 8, 15),
+                LocalDate.of(2025, 8, 20)
         );
 
-        Viaje viaje = new Viaje(
-                viajeDTO1,
-                turista1,
-                guia1
-        );
+        viajeController.crearViaje(viajeDTO1, "silvina@example.com", "laura@example.com");
+        viajeController.crearViaje(viajeDTO1, "pepe@example.com", "laura@example.com");
+        viajeController.crearViaje(viajeDTO1, "juan@example.com", "miguel@example.com");
+        viajeController.crearViaje(viajeDTO1, "marcos@example.com", "carlos@example.com");
+        viajeController.crearViaje(viajeDTO1, "marcos@example.com", "ana@example.com");
 
-        Viaje viaje2 = new Viaje(
-                viajeDTO2,
-                turista2,
-                guia2
-        );
-
-        Reseña reseña = new Reseña (
-                guia1,
-                turista1,
-                5.0,
-                "bueno"
-        );
-
-        Reseña reseña2 = new Reseña (
-                guia1,
-                turista2,
-                2.0,
-                "malo"
-        );
-
-
-        // Crear instancia de GuiaController
-        GuiaController guiaController = new GuiaController();
-
-
-
-        //Acciones
-        guiaController.registrarGuia(guiaDTO, "123", Auth.BASICO);
-        guiaController.loginGuia("jose@example.com", "123", Auth.BASICO);
-
-        // Crear instancia de GuiaController
-        ViajeController viajeController = new ViajeController();
+        turistaController.calificarGuia("laura@example.com", 5.7, "Muy bueno");
+        turistaController.calificarGuia("laura@example.com", 3.2, "Malo");
+        turistaController.calificarGuia("miguel@example.com", 2.3, "Muy malo");
+        turistaController.calificarGuia("carlos@example.com", 8.0, "Buenisimo");
+        turistaController.calificarGuia("ana@example.com", 9.4, "Muy bueno");
 
 
         SwingUtilities.invokeLater(() -> {
             new TuristaLandingPage(turistaController, guiaController, viajeController);
             //new GuiaLandingPage (turistaController, guiaController, viajeController);
-
         });
-
-        //////////////////
-        // PRUEBA VIAJE //
-        //////////////////
-        //ViajeController viajeController = new ViajeController();
-
-        //ViajeDTO viajeDTO = new ViajeDTO(
-        //        Ciudad.ABU_DABI, Pais.ALBANIA,
-        //        LocalDate.of(2024, 6, 20),
-        //        LocalDate.of(2024, 7, 5)
-        //);
-
-        //viajeController.crearViaje(viajeDTO, "juan@example.com", "jose@example.com");
-
-
-
-
-
-
     }
 
 }
