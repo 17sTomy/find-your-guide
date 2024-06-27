@@ -1,5 +1,9 @@
 package vistas.logueo;
 
+import controladores.GuiaController;
+import controladores.TuristaController;
+import controladores.ViajeController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,7 +12,7 @@ import java.awt.event.ActionListener;
 public class SeleccionRol {
     private JFrame frame;
 
-    public SeleccionRol() {
+    public SeleccionRol(TuristaController turistaController, GuiaController guiaController, ViajeController viajeController) {
         // Crear el frame principal
         frame = new JFrame("Seleccionar Rol");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cerrar la aplicación al salir
@@ -34,7 +38,7 @@ public class SeleccionRol {
         centerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
 
         JButton turistaButton = createRoleButton("Turista");
-        JButton guiaButton = createRoleButton("Guia");
+        JButton guiaButton = createRoleButton("Guía");
 
         centerPanel.add(turistaButton);
         centerPanel.add(guiaButton);
@@ -52,7 +56,7 @@ public class SeleccionRol {
             public void actionPerformed(ActionEvent e) {
                 // Abrir la ventana de inicio de sesión como Turista
                 frame.dispose(); // Cerrar la ventana actual
-                new Login("Turista"); // Abrir la ventana de login
+                new Login("Turista", turistaController, guiaController, viajeController); // Abrir la ventana de login
             }
         });
 
@@ -61,7 +65,7 @@ public class SeleccionRol {
             public void actionPerformed(ActionEvent e) {
                 // Abrir la ventana de inicio de sesión como Guía
                 frame.dispose(); // Cerrar la ventana actual
-                new Login("Guia"); // Abrir la ventana de login
+                new Login("Guía", turistaController, guiaController, viajeController); // Abrir la ventana de login
             }
         });
     }
@@ -76,8 +80,4 @@ public class SeleccionRol {
         return button;
     }
 
-    public static void main(String[] args) {
-        // Lanzar la vista de selección de rol
-        new SeleccionRol();
-    }
 }

@@ -39,7 +39,7 @@ public class GuiaController {
         nuevoGuia.register();
     }
 
-    public void loginGuia(String email, String password, Auth modoLogin){
+    public boolean loginGuia(String email, String password, Auth modoLogin){
         IAuthenticacion autenticacion = this.convertAuth(modoLogin);
 
         UsuarioDTO infoGuia =  Usuario.login(email, password, autenticacion);
@@ -47,8 +47,11 @@ public class GuiaController {
             DataBase db = DataBase.getInstance();
             Usuario guia = db.getUsuarioByEmail(email);
             this.guia = (Guia)guia;
+            return true;
         };
-        System.out.println(infoGuia);
+        return false;
+
+
     }
 
 

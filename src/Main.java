@@ -10,6 +10,7 @@ import modelos.dtos.TuristaDTO;
 import modelos.dtos.ViajeDTO;
 import modelos.interfaces.IAdapterCredencial;
 import vistas.guia.GuiaLandingPage;
+import vistas.logueo.SeleccionRol;
 import vistas.turista.TuristaLandingPage;
 
 import javax.swing.*;
@@ -224,8 +225,10 @@ public class Main {
 
         turistaController.loginTurista("pepe@example.com", "pass1", Auth.BASICO);
 
+
+
         SwingUtilities.invokeLater(() -> {
-            new TuristaLandingPage(turistaController, guiaController, viajeController);
+            new SeleccionRol(turistaController, guiaController, viajeController);
             //new GuiaLandingPage (turistaController, guiaController, viajeController);
         });
     }

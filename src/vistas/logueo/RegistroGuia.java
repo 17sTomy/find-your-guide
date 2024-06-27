@@ -2,6 +2,7 @@ package vistas.logueo;
 
 import controladores.GuiaController;
 import controladores.TuristaController;
+import controladores.ViajeController;
 import enums.*;
 import modelos.dtos.CredencialDTO;
 import modelos.dtos.GuiaDTO;
@@ -18,20 +19,14 @@ import java.util.List;
 public class RegistroGuia {
     private JFrame frame;
     private File selectedImageFile;
+    private File selectedCredencialFile;
     private GuiaController guiaController;
-    private GuiaDTO guiaDTO;
-    private Auth modoRegistro;
-
     private JComboBox<Pais> paisComboBox;
     private JComboBox<Ciudad> ciudadComboBox;
     private JComboBox<Idioma> idiomaComboBox;
-    private File selectedCredencialFile;
 
-
-    public RegistroGuia() {
-        this.guiaDTO = guiaDTO;
-        this.modoRegistro = modoRegistro;
-        guiaController = new GuiaController();
+    public RegistroGuia(GuiaController guiaController, TuristaController turistaController, ViajeController viajeController) {
+        this.guiaController = guiaController;
 
         // Crear el frame principal
         frame = new JFrame("Registro de Guía");
@@ -64,7 +59,7 @@ public class RegistroGuia {
             public void actionPerformed(ActionEvent e) {
                 // Acción para volver atrás
                 frame.dispose();
-                new Login("Guia");
+                new SeleccionRol(turistaController, guiaController, viajeController);
             }
         });
 
@@ -88,7 +83,6 @@ public class RegistroGuia {
         gbc.gridx = 1;
         gbc.gridy = 0;
         JTextField nameField = new JTextField(20);
-        if (guiaDTO != null) nameField.setText(guiaDTO.getNombre());
         centerPanel.add(nameField, gbc);
 
         gbc.gridx = 0;
@@ -98,7 +92,6 @@ public class RegistroGuia {
         gbc.gridx = 1;
         gbc.gridy = 1;
         JTextField surnameField = new JTextField(20);
-        if (guiaDTO != null) surnameField.setText(guiaDTO.getApellido());
         centerPanel.add(surnameField, gbc);
 
         gbc.gridx = 0;
@@ -117,7 +110,6 @@ public class RegistroGuia {
         gbc.gridx = 1;
         gbc.gridy = 3;
         JTextField dniField = new JTextField(20);
-        if (guiaDTO != null) dniField.setText(guiaDTO.getDni());
         centerPanel.add(dniField, gbc);
 
         gbc.gridx = 0;
@@ -127,7 +119,6 @@ public class RegistroGuia {
         gbc.gridx = 1;
         gbc.gridy = 4;
         JTextField emailField = new JTextField(20);
-        if (guiaDTO != null) emailField.setText(guiaDTO.getEmail());
         centerPanel.add(emailField, gbc);
 
         gbc.gridx = 0;
@@ -155,7 +146,6 @@ public class RegistroGuia {
         gbc.gridx = 1;
         gbc.gridy = 7;
         JTextField phoneField = new JTextField(20);
-        if (guiaDTO != null) phoneField.setText(guiaDTO.getNumTelefono());
         centerPanel.add(phoneField, gbc);
 
         gbc.gridx = 0;
@@ -217,8 +207,6 @@ public class RegistroGuia {
         bottomPanel.setBackground(new Color(255, 255, 255));
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
 
-
-
         // Botón de registro
         JPanel registerPanel = new JPanel();
         registerPanel.setBackground(new Color(255, 255, 255));
@@ -226,7 +214,6 @@ public class RegistroGuia {
         JButton registerButton = createNavButton("Registrarse");
         registerPanel.add(registerButton);
         registerPanel.add(backButton);
-
 
         // Panel de terceros
         JPanel thirdPartyPanel = new JPanel();
@@ -270,7 +257,6 @@ public class RegistroGuia {
                     JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
 
                 if (selectedImageFile == null || !selectedImageFile.getName().endsWith(".jpg")) {
                     JOptionPane.showMessageDialog(frame, "Por favor, cargue una foto de perfil válida en formato JPG.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -423,11 +409,8 @@ public class RegistroGuia {
                 String credencial = credencialField.getText(); // Obtener texto de la credencial
                 String fotoCredencial = selectedCredencialFile != null ? selectedCredencialFile.getAbsolutePath() : null;
 
-
                 Pais pais = (Pais) paisComboBox.getSelectedItem();
                 Ciudad ciudad = (Ciudad) ciudadComboBox.getSelectedItem();
-                //Credencial credencial = (Credencial) credencialComboBox.getSelectedItem(); TODO agregar para credencial dto
-
                 Idioma idioma = (Idioma) idiomaComboBox.getSelectedItem();
                 List<Idioma> idiomas = new ArrayList<>();
                 idiomas.add(idioma);
@@ -448,11 +431,10 @@ public class RegistroGuia {
                     return;
                 }
 
-                GuiaController guiaController = new GuiaController();
-                guiaController.registrarGuia(new GuiaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "BASICO", null, pais,ciudad,new CredencialDTO(credencial,fotoCredencial),idiomas, null), password, Auth.BASICO);
+                guiaController.registrarGuia(new GuiaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "BASICO", null, pais, ciudad, new CredencialDTO(credencial, fotoCredencial), idiomas, null), password, Auth.BASICO);
                 JOptionPane.showMessageDialog(frame, "Registro exitoso.");
-
-
+                frame.dispose();
+                new SeleccionRol(turistaController, guiaController, viajeController);
             }
         });
     }
@@ -485,7 +467,4 @@ public class RegistroGuia {
         return button;
     }
 
-    public static void main(String[] args) {
-        new RegistroGuia();
-    }
 }

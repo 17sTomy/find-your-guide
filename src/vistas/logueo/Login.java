@@ -1,27 +1,29 @@
 package vistas.logueo;
 
+import controladores.GuiaController;
+import controladores.TuristaController;
+import controladores.ViajeController;
+import enums.Auth;
+import vistas.guia.GuiaLandingPage;
+import vistas.turista.TuristaLandingPage;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import controladores.GuiaController;
-import controladores.TuristaController;
-import enums.Auth;
-import vistas.guia.GuiaLandingPage;
-import vistas.turista.TuristaLandingPage;
-import vistas.RegistroTurista;
-
 public class Login {
     private JFrame frame;
     private String role;
     private TuristaController turistaController;
-    private GuiaController guiaController;;
+    private GuiaController guiaController;
+    private ViajeController viajeController;
 
-    public Login(String role) {
+    public Login(String role, TuristaController turistaController, GuiaController guiaController, ViajeController viajeController) {
         this.role = role;
-        this.turistaController = new TuristaController();
-        this.guiaController = new GuiaController();
+        this.turistaController = turistaController;
+        this.guiaController = guiaController;
+        this.viajeController = viajeController;
 
         // Crear el frame principal
         frame = new JFrame("Iniciar Sesión - " + role);
@@ -120,33 +122,44 @@ public class Login {
         // Hacer visible el frame
         frame.setVisible(true);
 
-  /*      // Añadir listeners a los botones (acciones a realizar)
+        // Añadir listeners a los botones (acciones a realizar)
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Cerrar la ventana actual e iniciar la landing page
-                frame.dispose(); // Cerrar la ventana de login
-                //if (role.equals("Guia")) {
-                //    new GuiaLandingPage(role); // Abrir la landing page con el rol guia
-                //} //else if (role.equals("Turista")) {
-                    //new TuristaLandingPage(role); // Abrir la landing page con el rol turista
-                //}
+                String email = emailField.getText();
+                String password = new String(passwordField.getPassword());
+
+                if (role.equals("Guía")) {
+                    if (guiaController.loginGuia(email, password, Auth.BASICO)) {
+                        frame.dispose();
+                        new GuiaLandingPage(turistaController, guiaController, viajeController).frame.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Credenciales incorrectas. Por favor, inténtelo de nuevo.", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else if (role.equals("Turista")) {
+                    if (turistaController.loginTurista(email, password, Auth.BASICO)) {
+                        frame.dispose();
+                        new TuristaLandingPage(turistaController, guiaController, viajeController).frame.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Credenciales incorrectas. Por favor, inténtelo de nuevo.", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             }
-
-
-        });*/
+        });
 
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Verificar el rol y abrir la ventana de registro correspondiente
-                frame.dispose(); // Cerrar la ventana actual
-                if (role.equals("Guia")) {
-                    new RegistroGuia(); // Abrir la ventana de registro para guía
+
+                if (role.equals("Guía")) {
+                    new RegistroGuia(guiaController, turistaController, viajeController);
                 } else if (role.equals("Turista")) {
-                    new RegistroTurista(); // Abrir la ventana de registro para turista
+                    new RegistroTurista(turistaController, guiaController, viajeController);
                 }
+
+                frame.dispose();
             }
+
         });
 
         // Añadir listeners para los botones de terceros
@@ -202,12 +215,4 @@ public class Login {
         return button;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Login("Turista");
-            }
-        });
-    }
 }

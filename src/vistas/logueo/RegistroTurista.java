@@ -1,10 +1,12 @@
-package vistas;
+package vistas.logueo;
 
+import controladores.GuiaController;
 import controladores.TuristaController;
+import controladores.ViajeController;
 import enums.Auth;
 import enums.Sexo;
 import modelos.dtos.TuristaDTO;
-import vistas.logueo.Login;
+import vistas.logueo.SeleccionRol;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,13 +18,10 @@ public class RegistroTurista {
     private JFrame frame;
     private File selectedImageFile;
     private TuristaController turistaController;
-    private TuristaDTO turistaDTO;
-    private Auth modoRegistro;
+    private JComboBox<String> genderComboBox;
 
-    public RegistroTurista() {
-        this.turistaDTO = turistaDTO;
-        this.modoRegistro = modoRegistro;
-        turistaController = new TuristaController();
+    public RegistroTurista(TuristaController turistaController, GuiaController guiaController, ViajeController viajeController) {
+        this.turistaController = turistaController;
 
         // Crear el frame principal
         frame = new JFrame("Registro de Turista");
@@ -53,9 +52,8 @@ public class RegistroTurista {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Acción para volver atrás
-                frame.dispose(); // Cierra la ventana actual de registro
-                new Login("Turista"); // Abre la ventana de login (asumiendo que no hay usuario registrado para pasar)
+                frame.dispose();
+                new SeleccionRol(turistaController, guiaController, viajeController);
             }
         });
 
@@ -79,7 +77,6 @@ public class RegistroTurista {
         gbc.gridx = 1;
         gbc.gridy = 0;
         JTextField nameField = new JTextField(20);
-        if (turistaDTO != null) nameField.setText(turistaDTO.getNombre());
         centerPanel.add(nameField, gbc);
 
         gbc.gridx = 0;
@@ -89,7 +86,6 @@ public class RegistroTurista {
         gbc.gridx = 1;
         gbc.gridy = 1;
         JTextField surnameField = new JTextField(20);
-        if (turistaDTO != null) surnameField.setText(turistaDTO.getApellido());
         centerPanel.add(surnameField, gbc);
 
         gbc.gridx = 0;
@@ -98,7 +94,7 @@ public class RegistroTurista {
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-        JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"MASCULINO", "FEMENINO"});
+        genderComboBox = new JComboBox<>(new String[]{"MASCULINO", "FEMENINO"});
         centerPanel.add(genderComboBox, gbc);
 
         gbc.gridx = 0;
@@ -108,7 +104,6 @@ public class RegistroTurista {
         gbc.gridx = 1;
         gbc.gridy = 3;
         JTextField dniField = new JTextField(20);
-        if (turistaDTO != null) dniField.setText(turistaDTO.getDni());
         centerPanel.add(dniField, gbc);
 
         gbc.gridx = 0;
@@ -118,7 +113,6 @@ public class RegistroTurista {
         gbc.gridx = 1;
         gbc.gridy = 4;
         JTextField emailField = new JTextField(20);
-        if (turistaDTO != null) emailField.setText(turistaDTO.getEmail());
         centerPanel.add(emailField, gbc);
 
         gbc.gridx = 0;
@@ -146,7 +140,6 @@ public class RegistroTurista {
         gbc.gridx = 1;
         gbc.gridy = 7;
         JTextField phoneField = new JTextField(20);
-        if (turistaDTO != null) phoneField.setText(turistaDTO.getNumTelefono());
         centerPanel.add(phoneField, gbc);
 
         gbc.gridx = 0;
@@ -169,7 +162,6 @@ public class RegistroTurista {
         registerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
         JButton registerButton = createNavButton("Registrarse");
         registerPanel.add(registerButton);
-        registerPanel.add(backButton);
 
         // Panel de terceros
         JPanel thirdPartyPanel = new JPanel();
@@ -197,7 +189,7 @@ public class RegistroTurista {
                     sexo = Sexo.valueOf(sexoStr.toUpperCase());
                 } catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(frame, "Seleccione un sexo válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return; // Salir de la acción si el valor del sexo no es válido
+                    return;
                 }
 
                 String dni = dniField.getText();
@@ -208,21 +200,20 @@ public class RegistroTurista {
                 String telefono = phoneField.getText();
                 String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
 
-                // Validaciones
                 if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || telefono.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
 
                 if (selectedImageFile == null || !selectedImageFile.getName().endsWith(".jpg")) {
                     JOptionPane.showMessageDialog(frame, "Por favor, cargue una foto de perfil válida en formato JPG.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                TuristaController turistaController = new TuristaController();
                 turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "GOOGLE", 0), password, Auth.GOOGLE);
                 JOptionPane.showMessageDialog(frame, "Registro con Google exitoso.");
+                frame.dispose();
+                new SeleccionRol(turistaController, guiaController, viajeController);
             }
         });
 
@@ -237,7 +228,7 @@ public class RegistroTurista {
                     sexo = Sexo.valueOf(sexoStr.toUpperCase());
                 } catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(frame, "Seleccione un sexo válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return; // Salir de la acción si el valor del sexo no es válido
+                    return;
                 }
 
                 String dni = dniField.getText();
@@ -248,7 +239,6 @@ public class RegistroTurista {
                 String telefono = phoneField.getText();
                 String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
 
-                // Validaciones
                 if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || telefono.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
@@ -259,9 +249,10 @@ public class RegistroTurista {
                     return;
                 }
 
-                TuristaController turistaController = new TuristaController();
                 turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "APPLEID", 0), password, Auth.APPLEID);
                 JOptionPane.showMessageDialog(frame, "Registro con Apple exitoso.");
+                frame.dispose();
+                new SeleccionRol(turistaController, guiaController, viajeController);
             }
         });
 
@@ -276,18 +267,17 @@ public class RegistroTurista {
                     sexo = Sexo.valueOf(sexoStr.toUpperCase());
                 } catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(frame, "Seleccione un sexo válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return; // Salir de la acción si el valor del sexo no es válido
+                    return;
                 }
 
                 String dni = dniField.getText();
                 String email = emailField.getText();
                 passwordField.setText("facebook");
-                String password = new String(passwordField.getPassword());
                 confirmPasswordField.setText("facebook");
+                String password = new String(passwordField.getPassword());
                 String telefono = phoneField.getText();
                 String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
 
-                // Validaciones
                 if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || telefono.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
@@ -298,9 +288,10 @@ public class RegistroTurista {
                     return;
                 }
 
-                TuristaController turistaController = new TuristaController();
                 turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "FACEBOOK", 0), password, Auth.FACEBOOK);
                 JOptionPane.showMessageDialog(frame, "Registro con Facebook exitoso.");
+                frame.dispose();
+                new SeleccionRol(turistaController, guiaController, viajeController);
             }
         });
 
@@ -314,12 +305,6 @@ public class RegistroTurista {
         // Añadir paneles al bottomPanel
         bottomPanel.add(registerPanel);
         bottomPanel.add(thirdPartyPanel);
-
-        // Añadir paneles al frame
-        frame.add(topPanel, BorderLayout.NORTH);
-        frame.add(centerPanel, BorderLayout.CENTER);
-        frame.add(bottomPanel, BorderLayout.SOUTH);
-        bottomPanel.add(registerPanel);
 
         // Añadir paneles al frame
         frame.add(topPanel, BorderLayout.NORTH);
@@ -365,7 +350,7 @@ public class RegistroTurista {
                     sexo = Sexo.valueOf(sexoStr.toUpperCase());
                 } catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(frame, "Seleccione un sexo válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return; // Salir de la acción si el valor del sexo no es válido
+                    return;
                 }
 
                 String dni = dniField.getText();
@@ -375,7 +360,6 @@ public class RegistroTurista {
                 String telefono = phoneField.getText();
                 String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
 
-                // Validaciones
                 if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || password.isEmpty() || telefono.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
@@ -391,14 +375,13 @@ public class RegistroTurista {
                     return;
                 }
 
-                TuristaController turistaController = new TuristaController();
                 turistaController.registrarTurista(new TuristaDTO(nombre, apellido, dni, sexo, email, telefono, fotoPerfil, "BASICO", 0), password, Auth.BASICO);
                 JOptionPane.showMessageDialog(frame, "Registro exitoso.");
-
+                frame.dispose();
+                new SeleccionRol(turistaController, guiaController, viajeController);
             }
         });
     }
-
 
     private JButton createNavButton(String text) {
         JButton button = new JButton(text);
@@ -428,7 +411,4 @@ public class RegistroTurista {
         return button;
     }
 
-    public static void main(String[] args) {
-        new RegistroTurista();
-    }
 }

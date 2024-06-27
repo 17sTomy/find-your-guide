@@ -35,7 +35,7 @@ public class TuristaController {
         System.out.println(registroExitoso);
     }
 
-    public void loginTurista(String email, String password, Auth modoLogin){
+    public boolean loginTurista(String email, String password, Auth modoLogin){
         IAuthenticacion autenticacion = this.convertAuth(modoLogin);
 
         UsuarioDTO infoTurista =  Usuario.login(email, password, autenticacion);
@@ -43,8 +43,9 @@ public class TuristaController {
             DataBase db = DataBase.getInstance();
             Usuario turista = db.getUsuarioByEmail(email);
             this.turista = (Turista)turista;
+            return true;
         };
-        System.out.println(infoTurista);
+        return false;
     }
 
     public IAuthenticacion convertAuth(Auth modo) {
