@@ -2,8 +2,11 @@ package vistas;
 
 import controladores.TuristaController;
 import enums.Auth;
+import enums.Sexo;
+import modelos.clases.RegistroBasico;
 import modelos.clases.Turista;
 import modelos.dtos.TuristaDTO;
+import vistas.logueo.Login;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +20,6 @@ public class RegistroTurista {
     private TuristaController turistaController;
     private TuristaDTO turistaDTO;
     private Auth modoRegistro;
-    private Turista turista;
 
     public RegistroTurista() {
         this.turistaDTO = turistaDTO;
@@ -41,6 +43,24 @@ public class RegistroTurista {
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
         topPanel.add(titleLabel, BorderLayout.CENTER);
+
+        // Botón de retroceso
+        JButton backButton = new JButton("Atrás");
+        backButton.setFont(new Font("Arial", Font.BOLD, 14));
+        backButton.setBackground(new Color(0, 102, 204));
+        backButton.setForeground(Color.WHITE);
+        backButton.setFocusPainted(false);
+        backButton.setBorder(BorderFactory.createEmptyBorder(12, 54, 12, 54));
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Acción para volver atrás
+                frame.dispose(); // Cierra la ventana actual de registro
+                new Login(null); // Abre la ventana de login (asumiendo que no hay usuario registrado para pasar)
+            }
+        });
+
+        topPanel.add(backButton, BorderLayout.WEST);
 
         // Panel central con campos de texto
         JPanel centerPanel = new JPanel(new GridBagLayout());
@@ -79,7 +99,7 @@ public class RegistroTurista {
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-        JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"Masculino", "Femenino"});
+        JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"MASCULINO", "FEMENINO"});
         centerPanel.add(genderComboBox, gbc);
 
         gbc.gridx = 0;
@@ -150,7 +170,38 @@ public class RegistroTurista {
         registerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
         JButton registerButton = createNavButton("Registrarse");
         registerPanel.add(registerButton);
+        registerPanel.add(backButton); // Asegúrate de agregar el botón "Volver" al panel de registro, no al buttonPanel anterior
 
+        // Panel de terceros
+        JPanel thirdPartyPanel = new JPanel();
+        thirdPartyPanel.setBackground(new Color(255, 255, 255));
+        thirdPartyPanel.setLayout(new BoxLayout(thirdPartyPanel, BoxLayout.Y_AXIS));
+
+        JLabel thirdPartyLabel = new JLabel("También puede registrarse con:");
+        thirdPartyLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        thirdPartyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        thirdPartyPanel.add(thirdPartyLabel);
+
+        // Añadir botones de terceros
+        JButton googleButton = createThirdPartyButton("Google");
+        JButton appleButton = createThirdPartyButton("Apple");
+        JButton facebookButton = createThirdPartyButton("Facebook");
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        buttonPanel.add(googleButton);
+        buttonPanel.add(appleButton);
+        buttonPanel.add(facebookButton);
+
+        thirdPartyPanel.add(buttonPanel);
+
+        // Añadir paneles al bottomPanel
+        bottomPanel.add(registerPanel);
+        bottomPanel.add(thirdPartyPanel);
+
+        // Añadir paneles al frame
+        frame.add(topPanel, BorderLayout.NORTH);
+        frame.add(centerPanel, BorderLayout.CENTER);
+        frame.add(bottomPanel, BorderLayout.SOUTH);
         bottomPanel.add(registerPanel);
 
         // Añadir paneles al frame
@@ -191,7 +242,15 @@ public class RegistroTurista {
                 // Capturar los datos del formulario
                 String nombre = nameField.getText();
                 String apellido = surnameField.getText();
-                String sexo = (String) genderComboBox.getSelectedItem();
+                String sexoStr = (String) genderComboBox.getSelectedItem();
+                Sexo sexo;
+                try {
+                    sexo = Sexo.valueOf(sexoStr.toUpperCase());
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(frame, "Seleccione un sexo válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Salir de la acción si el valor del sexo no es válido
+                }
+
                 String dni = dniField.getText();
                 String email = emailField.getText();
                 String password = new String(passwordField.getPassword());
@@ -199,13 +258,36 @@ public class RegistroTurista {
                 String telefono = phoneField.getText();
                 String fotoPerfil = (selectedImageFile != null) ? selectedImageFile.getAbsolutePath() : "";
 
+                // Validaciones
+                if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() || password.isEmpty() || telefono.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (!password.equals(confirmPassword)) {
+                    JOptionPane.showMessageDialog(frame, "Las contraseñas no coinciden.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (selectedImageFile == null || !selectedImageFile.getName().endsWith(".jpg")) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, cargue una foto de perfil válida en formato JPG.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 Auth modoRegistro = Auth.BASICO;
+                RegistroBasico autenticacion = new RegistroBasico();
 
-                Turista turista = new Turista(nombre, apellido, sexo.toString(), dni, email, password, telefono, fotoPerfil, modoRegistro);
+                Turista turista = new Turista(nombre, apellido, sexo, dni, email, password, telefono, fotoPerfil, autenticacion);
 
+                TuristaDTO nuevoTuristaDTO = new TuristaDTO(turista);
+
+                turistaController.registrarTurista(nuevoTuristaDTO, password, modoRegistro);
+
+                JOptionPane.showMessageDialog(frame, "Registro exitoso.");
             }
         });
     }
+
 
     private JButton createNavButton(String text) {
         JButton button = new JButton(text);
@@ -216,5 +298,26 @@ public class RegistroTurista {
         button.setBorderPainted(false);
         button.setPreferredSize(new Dimension(150, 40));
         return button;
+    }
+
+    private JButton createThirdPartyButton(String provider) {
+        JButton button = new JButton(provider);
+        button.setFont(new Font("Arial", Font.BOLD, 14));
+        button.setBackground(new Color(66, 133, 244));
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
+        if (provider.equals("Apple")) {
+            button.setBackground(new Color(0, 0, 0));
+        } else if (provider.equals("Facebook")) {
+            button.setBackground(new Color(59, 89, 152));
+        }
+
+        return button;
+    }
+
+    public static void main(String[] args) {
+        new RegistroTurista();
     }
 }

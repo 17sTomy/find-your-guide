@@ -6,12 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import vistas.guia.GuiaLandingPage;
 import vistas.turista.TuristaLandingPage;
-import vistas.RegistroGuia;
 import vistas.RegistroTurista;
 
 public class Login {
     private JFrame frame;
     private String role;
+
 
     public Login(String role) {
         this.role = role;
