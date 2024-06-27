@@ -9,6 +9,7 @@ import modelos.clases.Guia;
 import modelos.clases.Servicio;
 import modelos.clases.SistemaVerificacionIA;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GuiaDTO extends UsuarioDTO {
@@ -32,7 +33,11 @@ public class GuiaDTO extends UsuarioDTO {
 
     public GuiaDTO(String nombre, String apellido, String dni, Sexo sexo, String email, String numTelefono, String fotoPerfil, String auth, List<Servicio> servicios, Pais pais, Ciudad ciudad, CredencialDTO credencial, List<Idioma> idiomas, Double puntuacion) {
         super(nombre, apellido, dni, sexo, email, numTelefono, fotoPerfil, auth);
-        this.servicios = servicios;
+        if(servicios == null){
+            this.servicios = new ArrayList<>();
+        }else{
+            this.servicios = servicios;
+        }
         this.pais = pais;
         this.ciudad = ciudad;
         this.credencialDTO = credencial;
