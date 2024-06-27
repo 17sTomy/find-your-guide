@@ -78,6 +78,7 @@ public class GestionarViajesView extends JFrame {
             });
 
             JButton finalizarButton = new JButton("Finalizar Viaje");
+            finalizarButton.setEnabled(!viaje.getEstado().equals("Finalizado"));
             finalizarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
